@@ -1,12 +1,14 @@
+ 90 lines (90 sloc)  1.82 KB
+
 #########################################################################################################
-##	This is an example .gitignore file for Vivado, please treat it as an example as 
+##	This is an example .gitignore file for Vivado, please treat it as an example as
 ##	it might not be complete. In addition, XAPP 1165 should be followed.
 #########################################################################################################
 #########
 #Exclude all
 #########
 *
-# !*/
+!*/
 !.gitignore
 ###########################################################################
 ##	VIVADO
@@ -17,6 +19,7 @@
 #Do NOT ignore VHDL, Verilog, block diagrams or EDIF files.
 !*.vhd
 !*.v
+!*.sv
 !*.bd
 !*.edif
 #########
@@ -26,6 +29,9 @@
 #.xci + .dcp: implementation possible but not re-synthesis
 #*.xci(www.spiritconsortium.org)
 !*.xci
+#.xcix: Core container file
+#.xcix: https://www.xilinx.com/support/documentation/sw_manuals/xilinx2016_2/ug896-vivado-ip.pdf (Page 41)
+!*.xcix
 #*.dcp(checkpoint files)
 !*.dcp
 !*.vds
@@ -84,4 +90,7 @@
 !*.elf
 !*.bmm
 !*.xmp
-!*.md
+minisys1.sim
+minisys1.cache
+minisys1.runs
+
