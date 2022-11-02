@@ -1,10 +1,10 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
-// Date        : Sun Oct 30 15:12:08 2022
+// Date        : Tue Nov  1 21:00:45 2022
 // Host        : JyDesktop running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode synth_stub
-//               d:/Repo/reborn/cpu/minisys1/minisys1.srcs/sources_1/ip/prgrom/prgrom_stub.v
+//               D:/Repo/reborn/cpu/minisys1/minisys1.srcs/sources_1/ip/prgrom/prgrom_stub.v
 // Design      : prgrom
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a100tfgg484-1

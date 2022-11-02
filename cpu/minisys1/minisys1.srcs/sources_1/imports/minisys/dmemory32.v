@@ -13,5 +13,12 @@ module dmemory32(read_data,address,write_data,Memwrite,clock);
                              //  备好要晚大约半个时钟，从而得到正确地址。
     
     //分配64KB RAM，编译器实际只用 64KB RAM
+    mem ram(
+        .clka(clk),
+        .wea(Memwrite),
+        .addra(address[15:2]),
+        .dina(write_data),
+        .douta(read_data)
+    );
  
 endmodule

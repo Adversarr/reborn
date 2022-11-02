@@ -68,7 +68,7 @@ always @* begin  // 6种移位指令
         ALU_Result = ALU_output_mux[31:0]; //otherwise
     end
  
-    assign Branch_Add = PC_plus_4[31:2] + Sign_extend[31:0];
+    assign Branch_Add = PC_plus_4[31:2] + $signed(Sign_extend[31:0]);
     assign Add_Result = Branch_Add[31:0];   //算出的下一个PC值已经做了除4处理，所以不需左移16位
     assign Zero = (ALU_output_mux[31:0]== 32'h00000000) ? 1'b1 : 1'b0;
     
