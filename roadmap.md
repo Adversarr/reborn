@@ -1,5 +1,17 @@
 # Roadmap
 
+## Requirements
+
+1. basic req:
+   1. hw: cpu, mem, interface
+   2. sw: asm, cp, bios, ld, ide
+   3. misc: application.
+2. advanced:
+   1. hw: cache
+   2. sw: compiler optimize.
+   3. mics: complex application.
+
+
 ## Before In-Progress-Inspection
 
 ### Software
