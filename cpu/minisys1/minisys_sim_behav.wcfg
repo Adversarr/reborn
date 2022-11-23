@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="5451000000fs"></ZoomStartTime>
-      <ZoomEndTime time="6110000001fs"></ZoomEndTime>
-      <Cursor1Time time="5702000000fs"></Cursor1Time>
+      <ZoomStartTime time="2633820000fs"></ZoomStartTime>
+      <ZoomEndTime time="2987320001fs"></ZoomEndTime>
+      <Cursor1Time time="2711320000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="219"></NameColumnWidth>
-      <ValueColumnWidth column_width="97"></ValueColumnWidth>
+      <ValueColumnWidth column_width="93"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="44" />
+   <WVObjectSize size="46" />
    <wvobject fp_name="/minisys_sim/prst" type="logic">
       <obj_property name="ElementShortName">prst</obj_property>
       <obj_property name="ObjectShortName">prst</obj_property>
@@ -40,6 +40,14 @@
       <obj_property name="ElementShortName">instruction[31:0]</obj_property>
       <obj_property name="ObjectShortName">instruction[31:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/minisys_sim/U/idecode/Sign_extend" type="array">
+      <obj_property name="ElementShortName">Sign_extend[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Sign_extend[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/minisys_sim/U/idecode/sign" type="logic">
+      <obj_property name="ElementShortName">sign</obj_property>
+      <obj_property name="ObjectShortName">sign</obj_property>
    </wvobject>
    <wvobject fp_name="/minisys_sim/U/ifetch/PC" type="array">
       <obj_property name="ElementShortName">PC[31:0]</obj_property>
@@ -194,7 +202,7 @@
       <obj_property name="ObjectShortName">ledaddr[1:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/minisys_sim/U/led16/ledout" type="array">
-      <obj_property name="ElementShortName">ledout[15:0]</obj_property>
-      <obj_property name="ObjectShortName">ledout[15:0]</obj_property>
+      <obj_property name="ElementShortName">ledout[23:0]</obj_property>
+      <obj_property name="ObjectShortName">ledout[23:0]</obj_property>
    </wvobject>
 </wave_config>

@@ -1,0 +1,571 @@
+#-----------------------------------------------------------
+# Vivado v2017.4 (64-bit)
+# SW Build 2086221 on Fri Dec 15 20:55:39 MST 2017
+# IP Build 2085800 on Fri Dec 15 22:25:07 MST 2017
+# Start of session at: Wed Nov 23 16:00:02 2022
+# Process ID: 18152
+# Current directory: D:/Repo/reborn/cpu/m1aours/m1aours.runs/synth_1
+# Command line: vivado.exe -log cpu.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source cpu.tcl
+# Log file: D:/Repo/reborn/cpu/m1aours/m1aours.runs/synth_1/cpu.vds
+# Journal file: D:/Repo/reborn/cpu/m1aours/m1aours.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source cpu.tcl -notrace
+Command: synth_design -top cpu -part xc7a100tfgg484-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 23536 
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 338.766 ; gain = 101.316
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'cpu' [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:22]
+INFO: [Synth 8-638] synthesizing module 'stage_if' [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_if.v:3]
+INFO: [Synth 8-638] synthesizing module 'pc' [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/pc.v:3]
+INFO: [Synth 8-256] done synthesizing module 'pc' (1#1) [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/pc.v:3]
+INFO: [Synth 8-256] done synthesizing module 'stage_if' (2#1) [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_if.v:3]
+INFO: [Synth 8-638] synthesizing module 'tran_if_id' [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/tran_if_id.v:3]
+INFO: [Synth 8-256] done synthesizing module 'tran_if_id' (3#1) [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/tran_if_id.v:3]
+WARNING: [Synth 8-350] instance 'tran_if_id_inst' of module 'tran_if_id' requires 8 connections, but only 6 given [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:100]
+INFO: [Synth 8-638] synthesizing module 'stage_id' [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_id.v:22]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_id.v:121]
+WARNING: [Synth 8-3848] Net pause_out in module/entity stage_id does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_id.v:51]
+INFO: [Synth 8-256] done synthesizing module 'stage_id' (4#1) [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_id.v:22]
+WARNING: [Synth 8-689] width (32) of port connection 'pc_in' does not match port width (1) of module 'stage_id' [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:111]
+WARNING: [Synth 8-689] width (32) of port connection 'branch_enable_out' does not match port width (1) of module 'stage_id' [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:134]
+WARNING: [Synth 8-3848] Net bus_addr_out in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:30]
+WARNING: [Synth 8-3848] Net bus_data_out in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:31]
+WARNING: [Synth 8-3848] Net bus_enable_out in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:32]
+WARNING: [Synth 8-3848] Net bus_write_out in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:33]
+WARNING: [Synth 8-3848] Net bus_byte_sel_out in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:34]
+WARNING: [Synth 8-3848] Net pause in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:83]
+WARNING: [Synth 8-3848] Net branch_enable in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:44]
+WARNING: [Synth 8-3848] Net branch_addr in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:45]
+WARNING: [Synth 8-3848] Net interrupt_enable in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:47]
+WARNING: [Synth 8-3848] Net interrupt_addr in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:48]
+WARNING: [Synth 8-3848] Net reg1_data in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:55]
+WARNING: [Synth 8-3848] Net reg2_data in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:56]
+WARNING: [Synth 8-3848] Net ex_write_reg_enable in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:57]
+WARNING: [Synth 8-3848] Net ex_write_reg_data in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:58]
+WARNING: [Synth 8-3848] Net ex_write_reg_addr in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:59]
+WARNING: [Synth 8-3848] Net mem_write_reg_enable in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:60]
+WARNING: [Synth 8-3848] Net mem_write_reg_data in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:61]
+WARNING: [Synth 8-3848] Net mem_write_reg_addr in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:62]
+WARNING: [Synth 8-3848] Net id_is_in_delayslot_in in module/entity cpu does not have driver. [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:63]
+INFO: [Synth 8-256] done synthesizing module 'cpu' (5#1) [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v:22]
+WARNING: [Synth 8-3331] design stage_id has unconnected port pause_out
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[31]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[30]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[29]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[28]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[27]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[26]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[25]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[24]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[23]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[22]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[21]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[20]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[19]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[18]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[17]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[16]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[15]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[14]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[13]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[12]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[11]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[10]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[9]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[8]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[7]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[6]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[5]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[4]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[3]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[2]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[1]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_addr_out[0]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[31]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[30]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[29]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[28]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[27]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[26]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[25]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[24]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[23]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[22]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[21]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[20]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[19]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[18]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[17]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[16]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[15]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[14]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[13]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[12]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[11]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[10]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[9]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[8]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[7]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[6]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[5]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[4]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[3]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[2]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[1]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_out[0]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_enable_out
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_write_out
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_byte_sel_out[3]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_byte_sel_out[2]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_byte_sel_out[1]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_byte_sel_out[0]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[31]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[30]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[29]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[28]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[27]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[26]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[25]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[24]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[23]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[22]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[21]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[20]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[19]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[18]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[17]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[16]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[15]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[14]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[13]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[12]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[11]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[10]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[9]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[8]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[7]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[6]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[5]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[4]
+WARNING: [Synth 8-3331] design cpu has unconnected port bus_data_in[3]
+INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 390.348 ; gain = 152.898
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 390.348 ; gain = 152.898
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a100tfgg484-1
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7a100tfgg484-1
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 390.348 ; gain = 152.898
+---------------------------------------------------------------------------------
+INFO: [Synth 8-41] '+' operator could not be merged with '+' operator due to loss of accuracy [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_id.v:475]
+INFO: [Synth 8-5545] ROM "reg1_read_enable_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5587] ROM size for "reg1_read_enable_out" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "reg1_read_enable_out" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_write_enable_out" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5545] ROM "reg2_read_enable_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5587] ROM size for "reg2_read_enable_out" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "reg2_read_enable_out" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5545] ROM "alu_op_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5587] ROM size for "alu_op_out" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5545] ROM "immed" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "reg_write_enable_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5587] ROM size for "reg_write_enable_out" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "reg_write_enable_out" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5545] ROM "link_addr_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "branch_enable_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5546] ROM "branch_enable_out" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5545] ROM "branch_addr_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "abnormal_type_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5546] ROM "abnormal_type_out" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5545] ROM "abnormal_type_out" won't be mapped to RAM because address size (26) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "reg_write_addr_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "reg1_read_addr_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "reg2_read_addr_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+WARNING: [Synth 8-327] inferring latch for variable 'reg1_read_addr_out_reg' [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_id.v:126]
+WARNING: [Synth 8-327] inferring latch for variable 'reg2_read_addr_out_reg' [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_id.v:128]
+WARNING: [Synth 8-327] inferring latch for variable 'reg_write_addr_out_reg' [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_id.v:124]
+WARNING: [Synth 8-327] inferring latch for variable 'next_is_in_delayslot_out_reg' [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_id.v:108]
+WARNING: [Synth 8-327] inferring latch for variable 'branch_addr_out_reg' [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_id.v:110]
+WARNING: [Synth 8-327] inferring latch for variable 'link_addr_out_reg' [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_id.v:107]
+WARNING: [Synth 8-327] inferring latch for variable 'abnormal_type_out_reg' [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_id.v:112]
+WARNING: [Synth 8-327] inferring latch for variable 'current_id_pc_addr_out_reg' [D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_id.v:114]
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:06 . Memory (MB): peak = 435.762 ; gain = 198.312
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 1     
+	   3 Input     32 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 3     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 15    
+	   5 Input     32 Bit        Muxes := 1     
+	  26 Input     32 Bit        Muxes := 1     
+	  29 Input     32 Bit        Muxes := 1     
+	   8 Input     32 Bit        Muxes := 1     
+	  29 Input      6 Bit        Muxes := 2     
+	   5 Input      6 Bit        Muxes := 1     
+	   2 Input      6 Bit        Muxes := 5     
+	   3 Input      6 Bit        Muxes := 1     
+	  26 Input      6 Bit        Muxes := 2     
+	   4 Input      5 Bit        Muxes := 2     
+	  29 Input      4 Bit        Muxes := 1     
+	   5 Input      4 Bit        Muxes := 1     
+	  26 Input      4 Bit        Muxes := 1     
+	   2 Input      4 Bit        Muxes := 1     
+	  26 Input      3 Bit        Muxes := 2     
+	  26 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 33    
+	  29 Input      1 Bit        Muxes := 4     
+	  26 Input      1 Bit        Muxes := 5     
+	  25 Input      1 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module pc 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 1     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 2     
+	   2 Input      1 Bit        Muxes := 1     
+Module tran_if_id 
+Detailed RTL Component Info : 
++---Registers : 
+	               32 Bit    Registers := 2     
++---Muxes : 
+	   2 Input      1 Bit        Muxes := 1     
+Module stage_id 
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input     32 Bit       Adders := 1     
++---Muxes : 
+	   5 Input     32 Bit        Muxes := 1     
+	   2 Input     32 Bit        Muxes := 13    
+	  26 Input     32 Bit        Muxes := 1     
+	  29 Input     32 Bit        Muxes := 1     
+	   8 Input     32 Bit        Muxes := 1     
+	  29 Input      6 Bit        Muxes := 2     
+	   5 Input      6 Bit        Muxes := 1     
+	   2 Input      6 Bit        Muxes := 5     
+	   3 Input      6 Bit        Muxes := 1     
+	  26 Input      6 Bit        Muxes := 2     
+	   4 Input      5 Bit        Muxes := 2     
+	  29 Input      4 Bit        Muxes := 1     
+	   5 Input      4 Bit        Muxes := 1     
+	  26 Input      4 Bit        Muxes := 1     
+	   2 Input      4 Bit        Muxes := 1     
+	  26 Input      3 Bit        Muxes := 2     
+	  26 Input      2 Bit        Muxes := 1     
+	  29 Input      1 Bit        Muxes := 4     
+	   2 Input      1 Bit        Muxes := 31    
+	  26 Input      1 Bit        Muxes := 5     
+	  25 Input      1 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 240 (col length:80)
+BRAMs: 270 (col length: RAMB18 80 RAMB36 40)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5545] ROM "id_inst/reg1_read_enable_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "id_inst/reg2_read_enable_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5587] ROM size for "id_inst/alu_op_out" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5545] ROM "id_inst/alu_op_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "id_inst/immed" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "id_inst/reg_write_enable_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "id_inst/reg1_read_addr_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "id_inst/reg2_read_addr_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "id_inst/reg_write_addr_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "id_inst/branch_enable_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "id_inst/branch_addr_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "id_inst/link_addr_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "id_inst/abnormal_type_out" won't be mapped to RAM because address size (26) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "id_inst/abnormal_type_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\if_inst/pc_inst/pc_reg[0] )
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[31]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[30]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[29]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[28]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[27]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[26]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[25]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[24]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[23]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[22]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[21]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[20]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[19]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[18]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[17]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[16]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[15]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[14]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[13]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[12]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[11]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[10]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[9]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[8]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[7]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[6]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[5]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[4]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[3]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[2]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[1]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg1_read_addr_out_reg[0]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg2_read_addr_out_reg[4]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg2_read_addr_out_reg[3]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg2_read_addr_out_reg[2]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg2_read_addr_out_reg[1]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg2_read_addr_out_reg[0]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg_write_addr_out_reg[4]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg_write_addr_out_reg[3]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg_write_addr_out_reg[2]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg_write_addr_out_reg[1]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/reg_write_addr_out_reg[0]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/next_is_in_delayslot_out_reg) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[31]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[30]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[29]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[28]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[27]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[26]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[25]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[24]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[23]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[22]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[21]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[20]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[19]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[18]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[17]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[16]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[15]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[14]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[13]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[12]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[11]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[10]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[9]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[8]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[7]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[6]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[5]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[4]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[3]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[2]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[1]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/branch_addr_out_reg[0]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[31]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[30]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[29]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[28]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[27]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[26]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[25]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[24]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[23]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[22]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[21]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[20]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[19]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[18]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[17]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[16]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[15]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[14]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[13]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[12]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[11]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[10]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[9]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[8]) is unused and will be removed from module cpu.
+WARNING: [Synth 8-3332] Sequential element (id_inst/link_addr_out_reg[7]) is unused and will be removed from module cpu.
+INFO: [Common 17-14] Message 'Synth 8-3332' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 544.082 ; gain = 306.633
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 544.082 ; gain = 306.633
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 553.484 ; gain = 316.035
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:11 ; elapsed = 00:00:10 . Memory (MB): peak = 553.484 ; gain = 316.035
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:11 ; elapsed = 00:00:10 . Memory (MB): peak = 553.484 ; gain = 316.035
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:11 ; elapsed = 00:00:10 . Memory (MB): peak = 553.484 ; gain = 316.035
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:11 ; elapsed = 00:00:10 . Memory (MB): peak = 553.484 ; gain = 316.035
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:11 ; elapsed = 00:00:10 . Memory (MB): peak = 553.484 ; gain = 316.035
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:11 ; elapsed = 00:00:10 . Memory (MB): peak = 553.484 ; gain = 316.035
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-------+------+
+|      |Cell   |Count |
++------+-------+------+
+|1     |BUFG   |     1|
+|2     |CARRY4 |     8|
+|3     |LUT1   |     1|
+|4     |FDRE   |    31|
+|5     |IBUF   |     2|
+|6     |OBUF   |    32|
+|7     |OBUFT  |    70|
++------+-------+------+
+
+Report Instance Areas: 
++------+------------+---------+------+
+|      |Instance    |Module   |Cells |
++------+------------+---------+------+
+|1     |top         |         |   145|
+|2     |  if_inst   |stage_if |    40|
+|3     |    pc_inst |pc       |    40|
++------+------------+---------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:11 ; elapsed = 00:00:10 . Memory (MB): peak = 553.484 ; gain = 316.035
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 453 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 553.484 ; gain = 316.035
+Synthesis Optimization Complete : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 553.484 ; gain = 316.035
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 10 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+61 Infos, 231 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 649.754 ; gain = 423.832
+INFO: [Common 17-1381] The checkpoint 'D:/Repo/reborn/cpu/m1aours/m1aours.runs/synth_1/cpu.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file cpu_utilization_synth.rpt -pb cpu_utilization_synth.pb
+report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.040 . Memory (MB): peak = 649.754 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 23 16:00:20 2022...
