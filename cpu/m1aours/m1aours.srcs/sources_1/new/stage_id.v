@@ -21,7 +21,7 @@
 
 module stage_id(
     input wire rst,
-    input wire pc_in,
+    input wire [`WordRange] pc_in,
     input wire [`WordRange] ins_in,
     
     // Register IO:

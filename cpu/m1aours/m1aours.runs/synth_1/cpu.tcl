@@ -25,6 +25,7 @@ set_property webtalk.parent_dir D:/Repo/reborn/cpu/m1aours/m1aours.cache/wt [cur
 set_property parent.project_path D:/Repo/reborn/cpu/m1aours/m1aours.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
+set_property ip_repo_paths d:/Repo/reborn/cpu/provided/SEU_CSE_507_user_uart_bmpg_1.3 [current_project]
 set_property ip_output_repo d:/Repo/reborn/cpu/m1aours/m1aours.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 read_verilog -library xil_defaultlib {
@@ -32,6 +33,7 @@ read_verilog -library xil_defaultlib {
   D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/pc.v
   D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_id.v
   D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/stage_if.v
+  D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/tran_id_ex.v
   D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/tran_if_id.v
   D:/Repo/reborn/cpu/m1aours/m1aours.srcs/sources_1/new/cpu.v
 }

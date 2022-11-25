@@ -43,8 +43,6 @@ module cpu(
   // NOTE: Branch: e.g. j, jr, jal, bne, ....
   wire branch_enable;
   wire[`WordRange] branch_addr;
-  // NOTE: Interrupt: Jump to the interp solver entry.
-  wire interrupt_enable;
   wire[`WordRange] interrupt_addr;
   ///< Stage IF **************************************************
   
@@ -70,17 +68,38 @@ module cpu(
   wire [`WordRange] id_data1_out, id_data2_out; // => ALU
   wire id_reg_write_enable;
   wire [`RegRangeLog2] id_reg_write_addr;
-  wire id_pause;
+
   wire id_is_in_delayslot_out, id_next_is_in_delayslot;
   wire [`WordRange] id_instr_out;
   wire [`WordRange] id_link_addr;
-  wire [`WordRange] id_branch_enable;
+  wire id_branch_enable;
   wire [`WordRange] id_branch_addr;
   wire [`WordRange] id_abnormal_type_out, id_current_id_pc_addr_out;
   ///< Stage ID **************************************************
   
+  ///> Stage EX **************************************************
+  wire [`ALUOpRange] ex_aluop_in;
+  wire [`WordRange]  ex_data1_in, ex_data2_in;
+  wire ex_reg_write_enable_in;
+  wire [`WordRange] ex_instr_in;
+  wire [`RegRangeLog2] ex_reg_write_addr_in;
+  wire [`WordRange] ex_link_addr_in;
+  wire ex_is_in_delayslot_in, ex_next_is_in_delayslot_in;
+  wire [`WordRange] ex_current_pc_addr_in, ex_abnormal_type_in;
+  ///< Stage EX **************************************************
   ///> Pipeline Controll signals
-  wire pause; // pipleine pause
+  wire pause_pc;
+  wire pause_if;
+  wire pause_id;
+  wire pause_ex;
+  wire pause_mem;
+  wire pause_wb;
+  wire id_pause_req;
+  wire ex_pause_req;
+  wire mem_abnormal_type_out;
+  wire mem_cp0_epc_in;
+  wire interrupt_pc_out;
+  wire interrupt_enable;
   
   // Instr from IMem should be corr. to if_pc.
   assign instr_addr_out = if_pc_out;
@@ -90,7 +109,7 @@ module cpu(
     .if_pc(if_pc_out),
     .if_instr(if_instr),
     .instr_memory_in(instr_memory_in),
-    .pause(pause),
+    .pause(pause_pc),
     .branch_enable_in(branch_enable),
     .branch_addr_in(branch_addr),
     .interrupt_enable_in(interrupt_enable),
@@ -103,7 +122,9 @@ module cpu(
     .if_pc(if_pc_out),
     .if_instr(if_instr),
     .id_pc(id_pc),
-    .id_instr(id_instr)
+    .id_instr(id_instr),
+    .pause(pause_if),
+    .interrupt_enable_in(interrupt_enable)
   );
 
   stage_id id_inst(
@@ -127,7 +148,7 @@ module cpu(
     .mem_write_reg_enable_in(mem_write_reg_enable),
     .mem_write_reg_data_in(mem_write_reg_data),
     .mem_write_reg_addr_in(mem_write_reg_addr),
-    .pause_out(id_pause),
+    .pause_out(id_pause_req),
     .is_in_delayslot_in(id_is_in_delayslot_in),
     .is_in_delayslot_out(id_is_in_delayslot_out),
     .next_is_in_delayslot_out(id_next_is_in_delayslot),
@@ -138,6 +159,44 @@ module cpu(
     .abnormal_type_out(id_abnormal_type_out),
     .current_id_pc_addr_out(id_current_id_pc_addr_out)
   );
+
+  tran_id_ex id_ex_inst (
+    .clk                      (clk),
+    .rst                      (rst),
+    // Instruction:
+    .id_instr                   (id_instr_out),
+    .ex_instr                   (ex_instr_in),
+  
+    // ALU, data, wreg
+    .id_aluop                 (id_aluop_out),
+    .id_data1                 (id_data1_out),
+    .id_data2                 (id_data2_out),
+    .id_write_reg_addr        (id_reg_write_addr),
+    .id_write_reg_enable      (id_reg_write_enable),
+    .ex_aluop                 (ex_aluop_in),
+    .ex_data1                 (ex_data1_in),
+    .ex_data2                 (ex_data2_in),
+    .ex_write_reg_addr        (ex_reg_write_addr_in),
+    .ex_write_reg_enable      (ex_reg_write_enable_in),
+    // linkaddr
+    .id_link_addr             (id_link_addr),
+    .ex_link_addr             (ex_link_addr_in),
+    // DelaySlot
+    .id_is_in_delayslot       (id_is_in_delayslot_out),
+    .id_next_is_in_delayslot  (id_next_is_in_delayslot_out),
+    .ex_is_in_delayslot          (ex_is_in_delayslot_in),
+    .ex_next_is_in_delayslot  (ex_next_is_in_delayslot_in),
+    // Pipeline
+    .pause                 (pause_ex),
+    .interrupt_enable         (interrupt_enable),
+    .id_current_pc_addr       (id_current_id_pc_addr_out),
+    .id_abnormal_type         (id_abnormal_type_out),
+    .ex_current_pc_addr       (ex_current_pc_addr_in),
+    .ex_abnormal_type         (ex_abnormal_type_in)
+  );
+  
+  
+
 
 endmodule
 
