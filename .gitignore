@@ -23,13 +23,13 @@
 *.lo
 
 # Shared objects (inc. Windows DLLs)
-*.dll
+cpu/*.dll
 *.so
 *.so.*
 *.dylib
 
 # Executables
-*.exe
+cpu/*.exe
 *.out
 *.app
 *.i*86
