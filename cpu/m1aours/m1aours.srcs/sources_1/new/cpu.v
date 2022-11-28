@@ -78,14 +78,43 @@ module cpu(
   ///< Stage ID **************************************************
   
   ///> Stage EX **************************************************
-  wire [`ALUOpRange] ex_aluop_in;
+  wire [`ALUOpRange] ex_aluop_in, ex_aluop_out;
   wire [`WordRange]  ex_data1_in, ex_data2_in;
-  wire ex_reg_write_enable_in;
-  wire [`WordRange] ex_instr_in;
+  wire ex_reg_write_enable_in, ex_reg_write_enable_out;
   wire [`RegRangeLog2] ex_reg_write_addr_in;
+  wire [`RegRangeLog2] ex_reg_write_addr_out;
+  wire [`WordRange] ex_reg_write_data_out;
+  wire [`WordRange] ex_instr_in, ex_instr_out;
   wire [`WordRange] ex_link_addr_in;
   wire ex_is_in_delayslot_in, ex_next_is_in_delayslot_in;
   wire [`WordRange] ex_current_pc_addr_in, ex_abnormal_type_in;
+  
+  wire [`WordRange] ex_hi_data_in, ex_lo_data_in;
+  wire ex_hilo_write_enable_out;
+  wire [`WordRange] ex_hi_data_out, ex_lo_data_out;
+  wire [`WordRange] ex_mem_addr_out, ex_mem_data_out;
+
+  wire [4:0] ex_cp0_raddr_out;
+  wire [`WordRange] ex_cp0_data_in;
+  wire mem_cp0_write_enable, wb_cp0_write_enable;
+  wire [`WordRange] mem_cp0_write_data, wb_cp0_write_data;
+  wire [4:0] mem_cp0_write_addr, wb_cp0_write_addr;
+  wire ex_cp0_write_enable_out;
+  wire [4:0] ex_cp0_write_addr_out;
+  wire [`WordRange] ex_cp0_write_data_out;
+  
+  wire [`WordRange] ex_current_ex_pc_addr_out;
+  wire [`WordRange] ex_abnormal_type_out;
+  
+  ///>///> Multiplication and division
+  wire [`WordRange] ex_div_data1_signed, ex_div_data2_signed,
+                    ex_div_data1_unsigned, ex_div_data2_unsigned,
+                    ex_mul_data1, ex_mul_data2;
+  wire ex_is_div_data_signed_valid,   ex_is_div_result_signed_valid,
+       ex_is_div_data_unsigned_valid, ex_is_div_result_unsigned_valid,
+       ex_is_mul_valid, ex_is_mul_signed, ex_is_mul_result_valid;
+  wire [`DivMulResultRange] mul_result, signed_div_result, unsigned_div_result;
+  ///>///< Multiplication and division
   ///< Stage EX **************************************************
   ///> Pipeline Controll signals
   wire pause_pc;
@@ -100,6 +129,11 @@ module cpu(
   wire mem_cp0_epc_in;
   wire interrupt_pc_out;
   wire interrupt_enable;
+  // Pipeline backwarding.
+  wire mem_hilo_write_enable;
+  wire [`WordRange] mem_hi_data, mem_lo_data;
+  wire wb_hilo_write_enable;
+  wire [`WordRange] wb_hi_data, wb_lo_data;
   
   // Instr from IMem should be corr. to if_pc.
   assign instr_addr_out = if_pc_out;
@@ -116,7 +150,7 @@ module cpu(
     .interrupt_addr_in(interrupt_addr)
   );
   
-  tran_if_id tran_if_id_inst(
+  tran_if_id if_id_inst(
     .clk(clk),
     .rst(rst),
     .if_pc(if_pc_out),
@@ -183,7 +217,7 @@ module cpu(
     .ex_link_addr             (ex_link_addr_in),
     // DelaySlot
     .id_is_in_delayslot       (id_is_in_delayslot_out),
-    .id_next_is_in_delayslot  (id_next_is_in_delayslot_out),
+    .id_next_is_in_delayslot  (id_next_is_in_delayslot),
     .ex_is_in_delayslot          (ex_is_in_delayslot_in),
     .ex_next_is_in_delayslot  (ex_next_is_in_delayslot_in),
     // Pipeline
@@ -195,8 +229,108 @@ module cpu(
     .ex_abnormal_type         (ex_abnormal_type_in)
   );
   
+  stage_ex ex_inst(
+    .rst(rst),
+    .aluop_in(ex_aluop_in),
+    .data1_in(ex_data1_in),
+    .data2_in(ex_data2_in),
+    // Reg Write:
+    .reg_write_addr_in(ex_reg_write_addr_in),
+    .reg_write_enable_in(ex_reg_write_enable_in),
+    .reg_write_addr_out(ex_reg_write_addr_out),
+    .reg_write_enable_out(ex_reg_write_enable_out),
+    .reg_write_data_out(ex_reg_write_data_out),
+    // HI LO:
+    .hi_data_in(ex_hi_data_in),
+    .lo_data_in(ex_lo_data_in),
+    // Pipeline backward of HI LO.
+    .mem_hilo_write_enable_in(mem_hilo_write_enable),
+    .mem_hi_data_in(mem_hi_data),
+    .mem_lo_data_in(mem_lo_data),
+    .wb_hilo_write_enable_in(wb_hilo_write_enable),
+    .wb_hi_data_in(wb_hi_data),
+    .wb_lo_data_in(wb_lo_data),
+    .hilo_write_enable_out(ex_hilo_write_enable_out),
+    .hi_data_out(ex_hi_data_out),
+    .lo_data_out(ex_lo_data_out),
+    // Pause Request:
+    .pause_req(ex_pause_req),
+    // Branching:
+    .link_addr_in(ex_link_addr_in),
+    // TODO: Here is an obvious defect
+    // Dividing Operation:
+    .div_data1_signed(ex_div_data1_signed),
+    .div_data2_signed(ex_div_data2_signed),
+    .is_div_data_signed_valid(ex_is_div_data_signed_valid),
+    .div_result_signed(signed_div_result),
+    .is_div_result_signed_valid(ex_is_div_result_signed_valid),
+    // Unsigned Division.
+    .div_data1_unsigned(ex_div_data1_unsigned),
+    .div_data2_unsigned(ex_div_data2_unsigned),
+    .div_result_unsigned(unsigned_div_result),
+    .is_div_result_unsigned_valid(ex_is_div_result_unsigned_valid),
+    .is_div_data_unsigned_valid(ex_is_div_data_unsigned_valid),
+    // Multiplication Operation
+    .mul_data1(ex_mul_data1),
+    .mul_data2(ex_mul_data2),
+    .mul_valid(ex_is_mul_valid),
+    .is_mul_signed(ex_is_mul_signed),
+    .mul_result(mul_result),
+    .mul_result_valid(ex_is_mul_result_valid),
+    .is_in_delayslot(ex_is_in_delayslot_in),
+    .ins_in(ex_instr_in),
+    .ins_out(ex_instr_out),
+    .aluop_out(ex_aluop_out),
+    .mem_addr_out(ex_mem_addr_out),
+    .mem_data_out(ex_mem_data_out),
+    .cp0_data_in(ex_cp0_data_in),
+    .cp0_raddr_out(ex_cp0_raddr_out),
+    // backwarding from MEM and WB:
+    .mem_cp0_write_enable_in(mem_cp0_write_enable),
+    .mem_cp0_w_addr_in(mem_cp0_write_addr),
+    .mem_cp0_w_data_in(mem_cp0_write_data),
+    .wb_cp0_write_enable_in(wb_cp0_write_enable),
+    .wb_cp0_w_addr_in(wb_cp0_write_addr),
+    .wb_cp0_w_data_in(wb_cp0_write_data),
+    // ex cp0 output
+    .cp0_write_enable_out(ex_cp0_write_enable_out),
+    .cp0_waddr_out(ex_cp0_write_addr_out),
+    .cp0_w_data_out(ex_cp0_write_data_out),
+    // interruption.
+    .current_ex_pc_addr_in(ex_current_pc_addr_in),
+        .current_ex_pc_addr_out(ex_current_ex_pc_addr_out),
+    .abnormal_type_in(ex_abnormal_type_in),
+    .abnormal_type_out(ex_abnormal_type_out)
+  );
   
-
+  // These modules can be moved into `stage_ex`:
+  signed_div signed_div_inst(
+    .clk(clk),
+    .s_axis_divisor_tdata(ex_div_data2_signed),
+    .s_axis_divisor_tvalid(ex_is_div_data_sigend_valid),
+    .s_axis_dividend_tdata(ex_div_data1_signed),
+    .s_axis_dividend_tvalid(ex_is_div_data_sigend_valid),
+    .m_axis_dout_tdata(signed_div_result),
+    .m_axis_dout_tvalid(ex_is_div_result_signed_valid)
+  );
+  unsigned_div unsigned_div_inst(
+    .clk(clk),
+    .s_axis_divisor_tdata(ex_div_data2_unsigned),
+    .s_axis_divisor_tvalid(ex_is_div_data_unsigend_valid),
+    .s_axis_dividend_tdata(ex_div_data1_unsigned),
+    .s_axis_dividend_tvalid(ex_is_div_data_unsigend_valid),
+    .m_axis_dout_tdata(unsigned_div_result),
+    .m_axis_dout_tvalid(ex_is_div_result_unsigned_valid)
+  );
+  mult mult_inst(
+    .clk(clk),
+    .data1(ex_mul_data1),
+    .data2(ex_mul_data2),
+    .en(ex_is_mul_valid),
+    .is_valid(ex_is_mul_result_valid),
+    .is_signed(ex_is_mul_signed),
+    .result(mul_result)
+  );
 
 endmodule
 

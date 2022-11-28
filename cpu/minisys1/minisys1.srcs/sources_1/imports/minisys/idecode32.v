@@ -41,13 +41,13 @@ module Idecode32(read_data_1,read_data_2,Instruction,read_data,ALU_result,
   wire sign;
 
   assign sign = (opcode == 6'b001000   /* addi */
-                || opcode == 6'b100011 /* lui */
+                || opcode == 6'b001111 /* lui */
                 || opcode == 6'b100011 /* lw */ 
                 || opcode == 6'b101011 /* sw */
                 || opcode == 6'b000100 /* beq */
                 || opcode == 6'b000101 /* bne */
                 || opcode == 6'b001010 /* slti */);
-  assign Sign_extend = sign ? (opcode != 6'b100011 ? /* sign-ext */ {{16{Instruction[15]}}, Instruction[15:0]} 
+  assign Sign_extend = sign ? (opcode != 6'b001111 ? /* sign-ext */ {{16{Instruction[15]}}, Instruction[15:0]} 
                                                    : /* lui*/{Instruction[15:0], 16'h0}) 
                             : /* zero-ext */{16'h0, Instruction[15:0]};
 

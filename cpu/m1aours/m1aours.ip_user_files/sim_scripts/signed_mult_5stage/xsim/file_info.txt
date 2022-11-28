@@ -1,0 +1,2 @@
+signed_mult_5stage.vhd,vhdl,xil_defaultlib,../../../../m1aours.srcs/sources_1/ip/signed_mult_5stage/sim/signed_mult_5stage.vhd,
+glbl.v,Verilog,xil_defaultlib,glbl.v
