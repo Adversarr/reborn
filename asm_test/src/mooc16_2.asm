@@ -1,4 +1,3 @@
-.DATA
 
 # Minisys汇编程序设计2
 # 按如下要求设计一个有24个发光二极管的彩灯程序
@@ -11,28 +10,40 @@
 # LED: 0xFFFFFC60 - 0xFFFFFC62 (3 byte, 24bit)
 # 小端地址: 0xFC63 | 0xFC62 | 0xFC61 | 0xFC60
 # x[i] = 00000000_11100...00111 (左右各i个1) 
-#      = (0xFFFFFFFF << (32 - i) >> 8) | (0xFFFFFFFF >> (32 - i))
-#      (0 <= 0 <= 12)
+#      = (0x00FFFFFF << (24 - i)) | (0x00FFFFFF >> (24 - i))
+#      (0 <= i <= 12)
 # 此处用load word, save word (32bit) 足够拷贝所有数据
 
 
+.DATA
 .TEXT   0x0000
 start:
-    addi    $s0, $0, 0x02FA
-    sll     $s0, $s0, 16
-    ori     $s0, $0, 0xF080     # $s0 <- 0x02FAF080
-    addi    $s1, $0, 0          # $s1 <- 0 (i)
+
+    addi    $s1, $0, 0
 loop0:
-    nop
-loop1:          
-    addi    $s0, $s0, -1       # $s0 <- $s0 - 1
-    bne     $s0, $0, loop1      # if $s0 != 0 goto loop1
-    addi    $s2, $0, 0xFFFF     # $s2 <- 0xFFFFFFFF
-    addi    $s3, $0, 32
-    sub     $s3, $s3, $s1       # $s3 <- 32 - $s1 (32 - i)
-    sllv    $s4, $s2, $s3       # $s4 <- $s2 << $s3 (0xFFFFFFFF << (32 - i))
-    srav    $s5, $s2, $s3       # $s5 <- $s2 >> $s3 (0xFFFFFFFF >> (32 - i))
-    xor     $s6, $s4, $s5       # $s6 <- $s4 xor $s5
+    # addi    $s0, $0, 0x02FA
+    # sll     $s0, $s0, 16
+    # ori     $s0, $0, 0xF080
+    addi    $s0, $0, 0x0000
+    sll     $s0, $s0, 16
+    ori     $s0, $0, 0x0020
+loop_sleep0:
+    addi    $s0, $s0, -1
+    bne     $s0, $0, loop_sleep0
+
+    addi    $s2, $0, 0x0FFF
+    addi    $t0, $0, 3
+    sllv    $s3, $s2, $t0
+    addi    $t1, $0, 12
+    subu    $t1, $t1, $s1
+    srlv    $s4, $s2, $t1   
+    sllv    $s5, $s2, $t1
+    xor     $s6, $s4, $s5
+    xor     $s6, $s6, $0
     sw      $s6, 0xFC60 ($0)    # LED_addr
-    bne     $s3, $s0, loop0      # if (32 - i) != 0 goto loop0
+
+    addi    $s1, $s1, 1
+    addi    $t0, $0, 12
+    bne     $s1, $t0, loop0
+    
     j       start

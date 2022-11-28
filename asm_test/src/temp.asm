@@ -1,12 +1,6 @@
-.DATA
+.DATA   0x0000
 .TEXT   0x0000
-start:
-	addi  $t0, $0, 123
-	addi  $t0, $t0, -1
-	addi  $t0, $t0, -1
-	addi  $t0, $t0, -1
-	addiu  $t0, $0, 456
-	addiu  $t0, $t0, -1
-	addiu  $t0, $t0, -1
-	addiu  $t0, $t0, -1
+start:  
+    lw      $s0, 0xFC70 ($0) 
+    sw      $s0, 0xFC60 ($0) 
     j       start
