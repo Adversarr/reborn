@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="2633820000fs"></ZoomStartTime>
-      <ZoomEndTime time="2987320001fs"></ZoomEndTime>
-      <Cursor1Time time="2711320000fs"></Cursor1Time>
+      <ZoomStartTime time="699558475fs"></ZoomStartTime>
+      <ZoomEndTime time="1060088306fs"></ZoomEndTime>
+      <Cursor1Time time="1000000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="219"></NameColumnWidth>
-      <ValueColumnWidth column_width="93"></ValueColumnWidth>
+      <ValueColumnWidth column_width="89"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="46" />
+   <WVObjectSize size="49" />
    <wvobject fp_name="/minisys_sim/prst" type="logic">
       <obj_property name="ElementShortName">prst</obj_property>
       <obj_property name="ObjectShortName">prst</obj_property>
@@ -40,6 +40,116 @@
       <obj_property name="ElementShortName">instruction[31:0]</obj_property>
       <obj_property name="ObjectShortName">instruction[31:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="group88" type="group">
+      <obj_property name="label">$t0 - $t7</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/minisys_sim/U/idecode/register[8]" type="array">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[8][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[8][31:0]</obj_property>
+         <obj_property name="label">$t0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/minisys_sim/U/idecode/register[9]" type="array">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[9][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[9][31:0]</obj_property>
+         <obj_property name="label">$t1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/minisys_sim/U/idecode/register[10]" type="array">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[10][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[10][31:0]</obj_property>
+         <obj_property name="label">$t2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/minisys_sim/U/idecode/register[11]" type="array">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[11][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[11][31:0]</obj_property>
+         <obj_property name="label">$t3</obj_property>
+      </wvobject>
+      <wvobject fp_name="/minisys_sim/U/idecode/register[12]" type="array">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[12][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[12][31:0]</obj_property>
+         <obj_property name="label">$t4</obj_property>
+      </wvobject>
+      <wvobject fp_name="/minisys_sim/U/idecode/register[13]" type="array">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[13][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[13][31:0]</obj_property>
+         <obj_property name="label">$t5</obj_property>
+      </wvobject>
+      <wvobject fp_name="/minisys_sim/U/idecode/register[14]" type="array">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[14][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[14][31:0]</obj_property>
+         <obj_property name="label">$t6</obj_property>
+      </wvobject>
+      <wvobject fp_name="/minisys_sim/U/idecode/register[15]" type="array">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[15][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[15][31:0]</obj_property>
+         <obj_property name="label">$t7</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group97" type="group">
+      <obj_property name="label">$s0 - $s7</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/minisys_sim/U/idecode/register[16]" type="array">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[16][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[16][31:0]</obj_property>
+         <obj_property name="label">$s0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/minisys_sim/U/idecode/register[17]" type="array">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[17][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[17][31:0]</obj_property>
+         <obj_property name="label">$s1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/minisys_sim/U/idecode/register[18]" type="array">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[18][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[18][31:0]</obj_property>
+         <obj_property name="label">$s2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/minisys_sim/U/idecode/register[19]" type="array">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[19][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[19][31:0]</obj_property>
+         <obj_property name="label">$s3</obj_property>
+      </wvobject>
+      <wvobject fp_name="/minisys_sim/U/idecode/register[20]" type="array">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[20][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[20][31:0]</obj_property>
+         <obj_property name="label">$s4</obj_property>
+      </wvobject>
+      <wvobject fp_name="/minisys_sim/U/idecode/register[21]" type="array">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[21][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[21][31:0]</obj_property>
+         <obj_property name="label">$s5</obj_property>
+      </wvobject>
+      <wvobject fp_name="/minisys_sim/U/idecode/register[22]" type="array">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[22][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[22][31:0]</obj_property>
+         <obj_property name="label">$s6</obj_property>
+      </wvobject>
+      <wvobject fp_name="/minisys_sim/U/idecode/register[23]" type="array">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[23][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[23][31:0]</obj_property>
+         <obj_property name="label">$s7</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/minisys_sim/U/idecode/register" type="array">
+      <obj_property name="ElementShortName">register[0:31][31:0]</obj_property>
+      <obj_property name="ObjectShortName">register[0:31][31:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/minisys_sim/U/idecode/Sign_extend" type="array">
       <obj_property name="ElementShortName">Sign_extend[31:0]</obj_property>
