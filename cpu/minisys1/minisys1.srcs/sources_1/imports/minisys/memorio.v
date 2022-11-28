@@ -22,8 +22,8 @@ module memorio(caddress,address,memread,memwrite,ioread,iowrite,mread_data,iorea
     assign  address = caddress;
     assign  rdata = (memread==1) ? mread_data : {16'h0000,ioread_data[15:0]};
     assign  iorw = (iowrite||ioread);
-    assign  LEDCtrl = ((iorw==1) && (caddress[31:0] == 32'hFFFFFC60)) ? 1'b1:1'b0;
-    assign  SwitchCtrl = ((iorw==1) && (caddress[31:0] == 32'hFFFFFC70)) ? 1'b1:1'b0;
+    assign  LEDCtrl = ((iorw==1) && (caddress[31:0] == 32'hFFFFFC60 || caddress[31:0] == 32'hFFFFFC64)) ? 1'b1:1'b0;
+    assign  SwitchCtrl = ((iorw==1) && (caddress[31:0] == 32'hFFFFFC70 || caddress[31:0] == 32'hFFFFFC74)) ? 1'b1:1'b0;
     
     always @* begin
         if((memwrite==1)||(iowrite==1)) begin
