@@ -1,0 +1,4 @@
+vhdl xil_defaultlib  \
+"../../../../m1aours.srcs/sources_1/ip/signed_div/sim/signed_div.vhd" \
+
+nosort
