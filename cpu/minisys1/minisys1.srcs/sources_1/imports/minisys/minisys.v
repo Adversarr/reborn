@@ -53,7 +53,7 @@ module minisys(prst,pclk,led2N4,switch2N4);
       .Jrn(jrn),
       .Zero(zero),
       .clock(clock),
-      .reset(~prst),
+      .reset(prst),
       .opcplus4(opcplus4)
     );
     
@@ -69,7 +69,7 @@ module minisys(prst,pclk,led2N4,switch2N4);
       .RegDst(regdst),
       .Sign_extend(sign_extend),
       .clock(clock),
-      .reset(~prst),
+      .reset(prst),
       .opcplus4(opcplus4)
     );
     
@@ -137,7 +137,7 @@ module minisys(prst,pclk,led2N4,switch2N4);
     );
 
     ioread multiioread(
-      .reset(~prst),
+      .reset(prst),
       .clk(clock),
       .ior(ioread),
       .switchctrl(switchctrl),
@@ -147,7 +147,7 @@ module minisys(prst,pclk,led2N4,switch2N4);
 
     leds led16(
       .led_clk(clock),
-      .ledrst(~prst),
+      .ledrst(prst),
       .ledwrite(iowrite),
       .ledaddrcs(ledctrl),
       .ledwdata(write_data),
@@ -157,7 +157,7 @@ module minisys(prst,pclk,led2N4,switch2N4);
     
     switchs switch16(
       .switclk(clock),
-      .switrst(~prst),
+      .switrst(prst),
       .switchaddrcs(switchctrl),
       .switchaddr(address[2:1]),
       .switchread(ioread),

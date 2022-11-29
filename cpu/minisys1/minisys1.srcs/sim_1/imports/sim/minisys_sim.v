@@ -24,7 +24,7 @@ module minisys_sim(
 
     );
     // input
-    reg prst = 1'b0;
+    reg prst = 1'b1;
     reg pclk = 1'b0;
     reg[23:0] switch2N4;
     
@@ -33,7 +33,7 @@ module minisys_sim(
     minisys U(prst,pclk,led2N4,switch2N4);
     
     initial begin
-        #1500  prst = 1'b1;
+        #1500  prst = 1'b0;
         switch2N4 = 24'hABCDEF;
     end
 
