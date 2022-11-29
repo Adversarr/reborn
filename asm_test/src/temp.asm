@@ -1,8 +1,7 @@
-.DATA   0x0000
+.DATA
 .TEXT   0x0000
-start:  
-    lw      $s0, 0xFC70 ($0) 
-    lw      $s1, 0xFC74 ($0) 
-    sw      $s0, 0xFC60 ($0) 
-    sw      $s1, 0xFC64 ($0) 
+start:
+    addi    $s1, $0, 0
+    lui     $s1, 0x1234
+    ori     $s1, $s1, 0x5678
     j       start

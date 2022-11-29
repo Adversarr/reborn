@@ -6,27 +6,22 @@
 # - 每次灯的变换如下，1表示亮，0表示灭
 # - 灯从两边向中间依次点亮，再从中间向两边依次熄灭。
 
-# 指令间隔: 10ns, 0.5s => 循环周期 0x02FAF080
-# LED: 0xFFFFFC60 - 0xFFFFFC62 (3 byte, 24bit)
-# 小端地址: 0xFC63 | 0xFC62 | 0xFC61 | 0xFC60
-# x[i] = 00000000_11100...00111 (左右各i个1) 
-#      = (0x00FFFFFF << (24 - i)) | (0x00FFFFFF >> (24 - i))
-#      (0 <= i <= 12)
-# 此处用load word, save word (32bit) 足够拷贝所有数据
+# 指令间隔: 10ns, 
+# 0.5s / 10ns = 0x02FAF080
+# 考虑 每个循环执行2个指令, 则再折半为 0x017D7840
+# 独特的 minisys1A I/O编址方式: 
+# 0xFC70 -> LED[15:0], 0xFC74 -> LED[23:16]
+# 0xFC60 <- DIP[15:0], 0xFC64 <- DIP[23:16]
 
 
 .DATA
 .TEXT   0x0000
 start:
-
     addi    $s1, $0, 0
 loop0:
-    # addi    $s0, $0, 0x02FA
-    # sll     $s0, $s0, 16
-    # ori     $s0, $0, 0xF080
-    addi    $s0, $0, 0x0000
-    sll     $s0, $s0, 16
-    ori     $s0, $0, 0x0020
+    lui     $s0, 0x017D
+    ori     $s0, $s0, 0x7840
+    # addi     $s0, $0, 0x0020
 loop_sleep0:
     addi    $s0, $s0, -1
     bne     $s0, $0, loop_sleep0
@@ -40,9 +35,10 @@ loop_sleep0:
     sllv    $s5, $s2, $t1
     xor     $s6, $s4, $s5
     xor     $s6, $s6, $0
-    # LED_addr
+
+    # LED
     sw      $s6, 0xFC60 ($0) 
-    sll     $t0, $s6, 16
+    srl     $t0, $s6, 16
     sw      $t0, 0xFC64 ($0) 
 
     addi    $s1, $s1, 1

@@ -20,7 +20,7 @@ int main() {
 	uint32_t s0, s1, s2, s3, s4, s5, s6, s7;
 
 	s1 = 0; loop0: // for s1 = 0, ..., 11
-		s0 = 0x02FAF080; loop_sleep0: // for s0 = 0x02FAF080, ..., 1
+		s0 = 0x017D7840; loop_sleep0: // for s0 = 0x02FAF080, ..., 1
 			// pass
 			s0 = s0 - 1;
 			if (s0 != 0) goto loop_sleep0;
