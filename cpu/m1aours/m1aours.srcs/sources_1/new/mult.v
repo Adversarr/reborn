@@ -35,7 +35,7 @@ module mult(
   reg [`WordRange] dataB_temp;
   wire[`DivMulResultRange] signed_result_wire;
   wire[`DivMulResultRange] unsigned_result_wire;
-  always@(posedge clk, en)begin
+  always@(posedge clk)begin
       if(en == `Disable)begin
           count = 5'd0;
           dataA_temp = `ZeroWord;

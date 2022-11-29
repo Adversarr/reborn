@@ -108,6 +108,11 @@ module stage_ex(
   .data2      (data2_in),
   .op         (aluop_in),
   .res        (alu_res)
+  
+  // NOTE: Branch Signals should be determined here
+  // Instead of ID.
+  // 
+  // TODO: setup branch in ID is not optimal.
   );
 
 
