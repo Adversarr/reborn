@@ -34,7 +34,7 @@ module minisys_sim(
     
     initial begin
         #1500  prst = 1'b1;
-        switch2N4 = 24'h00ABCD;
+        switch2N4 = 24'hABCDEF;
     end
 
     always #5 pclk = ~pclk;

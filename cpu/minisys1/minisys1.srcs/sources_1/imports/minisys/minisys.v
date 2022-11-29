@@ -151,7 +151,7 @@ module minisys(prst,pclk,led2N4,switch2N4);
       .ledwrite(iowrite),
       .ledaddrcs(ledctrl),
       .ledwdata(write_data),
-      .ledaddr(address[1:0]),
+      .ledaddr(address[2:1]),
       .ledout(led2N4)
     );
     
@@ -159,7 +159,7 @@ module minisys(prst,pclk,led2N4,switch2N4);
       .switclk(clock),
       .switrst(~prst),
       .switchaddrcs(switchctrl),
-      .switchaddr(address[1:0]),
+      .switchaddr(address[2:1]),
       .switchread(ioread),
       .switchrdata(ioread_data_switch),
       .switch_i(switch2N4)
