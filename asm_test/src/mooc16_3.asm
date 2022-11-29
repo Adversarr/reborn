@@ -9,18 +9,15 @@
 # LED: 0xFFFFFC60 - 0xFFFFFC62 (3 byte, 24bit)
 # DIP switch:  0xFFFFFC70 - 0xFFFFFC72 (3 byte)
 # GLD7~GLD0: LED[7:0]
-# 小端地址: 0xFC63 | 0xFC62 | 0xFC61 | 0xFC60
-# x[i] = 00000000_11100...00111 (左右各i个1) 
-#      = (0x00FFFFFF << (24 - i)) | (0x00FFFFFF >> (24 - i))
-#      (0 <= i <= 12)
-# 此处用load word, save word (32bit) 足够拷贝所有数据
-
 
 .DATA
 .TEXT   0x0000
 start:
     # load
     lw      $t0, 0xFC70 ($0) 
+    lw      $t1, 0xFC74 ($0) 
+    srl     $t1, $t1, 16
+    or      $t0, $t0, $t1
     andi    $s1, $t0, 0x000F
     srl     $s2, $t0, 12
     andi    $s2, $s2, 0x000F
@@ -53,4 +50,5 @@ skip3:
 skip4:
     # write
     sw      $s0, 0xFC60 ($0) 
+
     j       start

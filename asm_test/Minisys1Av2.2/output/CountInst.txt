@@ -43,8 +43,8 @@ lbu	0
 lhu	0
 sb	0
 sh	0
-lw	4
-sw	4
+lw	2
+sw	2
 beq	0
 bne	0
 bgez	0

@@ -40,7 +40,10 @@ loop_sleep0:
     sllv    $s5, $s2, $t1
     xor     $s6, $s4, $s5
     xor     $s6, $s6, $0
-    sw      $s6, 0xFC60 ($0)    # LED_addr
+    # LED_addr
+    sw      $s6, 0xFC60 ($0) 
+    sll     $t0, $s6, 16
+    sw      $t0, 0xFC64 ($0) 
 
     addi    $s1, $s1, 1
     addi    $t0, $0, 12
