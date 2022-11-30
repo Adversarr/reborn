@@ -4,7 +4,7 @@
 # - 不断从拨码开关中读入数据，其中SW3-SW0为乘数，SW15~SW12为被乘数
 # - 乘法结果输出到GLD7~GLD0
 # - 要求程序中必须出现SRL,SLL指令。
-
+# tested
 
 # LED: 0xFFFFFC60 - 0xFFFFFC62 (3 byte, 24bit)
 # DIP switch:  0xFFFFFC70 - 0xFFFFFC72 (3 byte)
@@ -15,9 +15,6 @@
 start:
     # load
     lw      $t0, 0xFC70 ($0) 
-    lw      $t1, 0xFC74 ($0) 
-    srl     $t1, $t1, 16
-    or      $t0, $t0, $t1
     andi    $s1, $t0, 0x000F
     srl     $s2, $t0, 12
     andi    $s2, $s2, 0x000F
@@ -49,6 +46,7 @@ skip3:
     add     $s0, $s0, $s2
 skip4:
     # write
+    andi    $s0, $s0, 0x00FF
     sw      $s0, 0xFC60 ($0) 
 
     j       start
