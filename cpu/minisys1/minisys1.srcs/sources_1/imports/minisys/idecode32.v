@@ -7,20 +7,20 @@ module Idecode32(read_data_1,read_data_2,Instruction,read_data,ALU_result,
   output[31:0] read_data_1;
   output[31:0] read_data_2;
   input[31:0]  Instruction;
-  input[31:0]  read_data;   				//  ´ÓDATA RAM or I/O portÈ¡³öµÄÊı¾İ
-  input[31:0]  ALU_result;   				//  ĞèÒªÀ©Õ¹Á¢¼´Êıµ½32Î»
+  input[31:0]  read_data;   				//  ä»DATA RAM or I/O portå–å‡ºçš„æ•°æ®
+  input[31:0]  ALU_result;   				//  éœ€è¦æ‰©å±•ç«‹å³æ•°åˆ°32ä½
   input        Jal; 
   input        RegWrite;
   input        MemtoReg;
   input        RegDst;
   output[31:0] Sign_extend;
   input		 clock,reset;
-  input[31:0]  opcplus4;                 // À´×ÔÈ¡Ö¸µ¥Ôª£¬JALÖĞÓÃ
+  input[31:0]  opcplus4;                 // æ¥è‡ªå–æŒ‡å•å…ƒï¼ŒJALä¸­ç”¨
   output[4:0] read_register_1_address;
   
   wire[31:0] read_data_1;
   wire[31:0] read_data_2;
-  reg[31:0] register[0:31];			   //¼Ä´æÆ÷×é¹²32¸ö32Î»¼Ä´æÆ÷
+  reg[31:0] register[0:31];			   //å¯„å­˜å™¨ç»„å…±32ä¸ª32ä½å¯„å­˜å™¨
   reg[4:0] write_register_address;
   reg[31:0] write_data;
   wire[4:0] read_register_2_address;
@@ -52,7 +52,7 @@ module Idecode32(read_data_1,read_data_2,Instruction,read_data,ALU_result,
                             : /* zero-ext */{16'h0, Instruction[15:0]};
 
   
-  always @* begin  //Õâ¸ö½ø³ÌÖ¸¶¨²»Í¬Ö¸ÁîÏÂµÄÄ¿±ê¼Ä´æÆ÷
+  always @* begin  //è¿™ä¸ªè¿›ç¨‹æŒ‡å®šä¸åŒæŒ‡ä»¤ä¸‹çš„ç›®æ ‡å¯„å­˜å™¨
     if (Jal) begin
       write_register_address = 5'b11111; // 31
     end else if (RegDst) begin
@@ -62,11 +62,13 @@ module Idecode32(read_data_1,read_data_2,Instruction,read_data,ALU_result,
     end
   end
 
-  always @* begin  //Õâ¸ö½ø³Ì»ù±¾ÉÏÊÇÊµÏÖ½á¹¹Í¼ÖĞÓÒÏÂµÄ¶àÂ·Ñ¡ÔñÆ÷,×¼±¸ÒªĞ´µÄÊı¾İ
+  always @* begin  //è¿™ä¸ªè¿›ç¨‹åŸºæœ¬ä¸Šæ˜¯å®ç°ç»“æ„å›¾ä¸­å³ä¸‹çš„å¤šè·¯é€‰æ‹©å™¨,å‡†å¤‡è¦å†™çš„æ•°æ®
     if (Jal) begin
       write_data = opcplus4;
     end else if (MemtoReg) begin
       write_data = read_data;
+    end else if (opcode == 6'b001111) begin
+      write_data = Sign_extend;
     end else begin
       write_data = ALU_result;
     end
@@ -74,12 +76,12 @@ module Idecode32(read_data_1,read_data_2,Instruction,read_data,ALU_result,
   end
 
   integer i;
-  always @(posedge clock) begin       // ±¾½ø³ÌĞ´Ä¿±ê¼Ä´æÆ÷
-    if(reset==1) begin              // ³õÊ¼»¯¼Ä´æÆ÷×é
+  always @(posedge clock) begin       // æœ¬è¿›ç¨‹å†™ç›®æ ‡å¯„å­˜å™¨
+    if(reset==1) begin              // åˆå§‹åŒ–å¯„å­˜å™¨ç»„
       for(i=0;i<32;i=i+1) begin 
         register[i] <= i;
       end
-    end else if(RegWrite==1) begin  // ×¢Òâ¼Ä´æÆ÷0ºãµÈÓÚ0
+    end else if(RegWrite==1) begin  // æ³¨æ„å¯„å­˜å™¨0æ’ç­‰äº0
       if (write_register_address != 0) begin
         register[write_register_address] = write_data;
       end
