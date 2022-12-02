@@ -35,4 +35,32 @@ module beep(
   //发送给外设的信号
   output reg signal_out // 声信号输出
   );
+  
+  reg[15:0] count;
+  
+  always @(posedge clk) begin  //写是上升沿
+    if(rst == `Enable) begin
+      signal_out <= 1'b0;
+      count <= 16'd0;
+    end else begin
+      if(en == `Enable && addr == 32'hfffffd10 && we == `Enable) begin //使能有效  地址正确  并且是写操作
+        if(data_in != 32'd0)begin
+          signal_out <= 1'b1;
+        end else begin
+          signal_out <= 1'b0;
+        end
+      end
+    end
+  end
+  
+  always @(*) begin //读是随时读
+    if(rst == `Enable)begin
+      data_out <= `ZeroWord;
+    end else if(en == `Enable && addr == 32'hfffffd10 && we == `Disable) begin
+      data_out <= {28'h0000000,3'b000,signal_out};
+    end else begin
+      data_out <= `ZeroWord;
+    end
+  end
+
 endmodule

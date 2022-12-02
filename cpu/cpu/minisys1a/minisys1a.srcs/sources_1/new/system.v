@@ -55,7 +55,7 @@ module system(
   
   // Between CPU and Bus:
   wire [`WordRange] cpu_bus_addr, cpu_bus_data, bus_cpu_data;
-  wire cpu_bus_enable, cpu_bus_is_write;
+  wire cpu_bus_enable, cpu_bus_is_write, watchdog_rst;
   wire [3:0] cpu_bus_byte_sel;
   
   // Between CPU and IMEM
@@ -71,7 +71,7 @@ module system(
   wire [5:0] interrupts;
   assign interrupts = 6'b000000;
   // Reset CPU
-  assign cpu_rst = board_rst | !upg_rst;
+  assign cpu_rst = board_rst | !upg_rst | watchdog_rst;
   cpu cpu_inst(
     .rst                      (cpu_rst),
     .clk                      (cpu_clk),
@@ -122,8 +122,8 @@ module system(
     .upg_wen                (upg_wen_o),
     .upg_adr                (upg_adr_o),
     .upg_dat                (upg_dat_o),
-    .upg_done               (upg_done_o)
-
+    .upg_done               (upg_done_o),
+    .watchdog_cpu_rst(watchdog_rst)
   );
   uart uart_inst(
     .board_clk  (board_clk),

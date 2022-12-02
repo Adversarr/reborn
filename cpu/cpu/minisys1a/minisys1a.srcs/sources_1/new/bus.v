@@ -54,7 +54,8 @@ module bus(
   input wire upg_wen,
   input wire[14:0] upg_adr,
   input wire[`WordRange] upg_dat,
-  input wire upg_done
+  input wire upg_done,
+  output wire watchdog_cpu_rst
   );
   wire [`WordRange] led_data_out, dmem_data, digit7_data, buzzer_data,
     pwm_data, led_light_data, switch_data, uart_data, watch_dog_data, 
@@ -93,13 +94,69 @@ module bus(
   );
   
   // TODO: Impl for switch, beep, keyboard, etc.
-  switches switch_inst();
-  beep beep_inst();
-  keyboard keys_inst();
-  pwm pwm_inst();
-  digit7 digit7_inst();
-  timer timer_inst();
-  watchdog watchdog_inst();
+  switches switch_inst(
+    .rst(rst),
+    .clk(clk),
+    .addr(addr),
+    .en(enable),
+    .data_in(write_data),
+    .we(is_write),
+    .data_out(switch_data),
+    .switch_in(switches_in)
+  );
+  beep beep_inst(
+    .rst(rst),
+    .clk(clk),
+    .addr(addr),
+    .en(enable),
+    .data_in(write_data),
+    .we(is_write),
+    .data_out(keyboard_data),
+    .signal_out(beep_out)
+  );
+  keyboard keys_inst(
+      .rst(rst),
+      .clk(clk),
+      .addr(addr),
+      .en(enable),
+      .data_in(write_data),
+      .we(is_write),
+      .data_out(keyboard_data),
+      .cols(keyboard_cols_in),
+      .rows(keyboard_rows_out)
+  );
+  pwm pwm_inst(
+     .rst(rst),
+     .clk(clk),
+     .addr(addr),
+     .en(enable),
+     .data_in(write_data),
+     .we(is_write),
+     .data_out(keyboard_data)
+  );
+  digit7 digit7_inst(
+    .rst(rst),
+    .clk(clk),
+    .addr(addr),
+    .en(enable),
+    .data_in(write_data),
+    .we(is_write),
+    .data_out(digit7_data),
+    .sel_out(digits_sel_out),
+    .digital_out(digits_data_out)
+  );
+  timer timer_inst(
+    // TODO: Impl
+  );
+  watchdog watchdog_inst(
+   .rst(rst),
+   .clk(clk),
+   .addr(addr),
+   .en(enable),
+   .data_in(write_data),
+   .we(is_write),
+   .cpu_rst(watchdog_cpu_rst)
+  );
 
   // uart, unused:
   assign uart_data = 32'h00000000;
