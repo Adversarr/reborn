@@ -79,7 +79,9 @@ module id (
   wire[25:0] address = ins_in[`AddressRange];
 
   reg[`WordRange] immed; // 指令中的立即数的扩展结果
- 
+  initial begin
+    pause_req = `Disable;
+  end
 
   // 指令译码
   always @(*) begin

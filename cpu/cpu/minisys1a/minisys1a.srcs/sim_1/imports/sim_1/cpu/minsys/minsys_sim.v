@@ -53,7 +53,7 @@ initial begin
     assign tx = 0;
     rst <= 1'b1;
     board_clk <= 1'b0;
-    #100
+    #1000
     rst <= 1'b0;
 end 
 

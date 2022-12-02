@@ -26,53 +26,59 @@ module gpr(
 );
 
   // 定义32个寄存器，字长为32位
-  reg[`RegRange] regs[`WordRange];
-
+  reg [`RegRange] regs[`WordRange];
+  integer i;
+  initial begin
+    for (i = 0; i < 32; i = i + 1) begin
+      regs[i] <= i;    
+    end 
+  end
+  
   // 处理写入逻辑（上升沿写入）
   always @(posedge clk) begin
     if (rst == `Disable) begin
       // 注意禁止写入0号寄存器
       if (we == `Enable && waddr != `RegCountLog2'h0) begin
         regs[waddr] <= wdata;
+      end else if (we == `Enable) begin
+        // Write to 0
+        regs[0] <= `ZeroWord;
       end
+    end else begin
+      for (i = 0; i < 32; i = i + 1) begin
+        regs[i] <= i;    
+      end 
     end
   end
   
-  integer i;
-  always @(rst) begin
-    for (i = 0; i < 32; i = i + 1) begin
-      regs[i] <= i;    
-    end
-  end
-
   // 处理读出逻辑1（随时读出）
   always @(re1 or raddr1) begin
     // rst或读$0时固定出0
     if (rst == `Enable || raddr1 == `RegCountLog2'd0) begin
-      rdata1 = `ZeroWord;
+      rdata1 <= `ZeroWord;
     // 考虑相隔两条指令（即ID、WB阶段）存在RAW相关时，ID取得$i的值，同时WB写入$i
     // 规定WB写的值直接穿透到ID，则解决了流水的数据冲突之一
     end else if (raddr1 == waddr && we == `Enable && re1 == `Enable) begin
-      rdata1 = wdata;
+      rdata1 <= wdata;
     // 读不使能时固定出0
     end else if (re1 == `Disable) begin
-      rdata1 = `ZeroWord;
+      rdata1 <= `ZeroWord;
     // 普通情况
     end else if (re1 == `Enable) begin
-      rdata1 = regs[raddr1];
+      rdata1 <= regs[raddr1];
     end
   end
 
   // 处理读出逻辑2，和上面相同
   always @(re2 or raddr2) begin
     if (rst == `Enable || raddr2 == `RegCountLog2'd0) begin
-      rdata2 = `ZeroWord;
+      rdata2 <= `ZeroWord;
     end else if (raddr2 == waddr && we == `Enable && re2 == `Enable) begin
-      rdata2 = wdata;
+      rdata2 <= wdata;
     end else if (re2 == `Disable) begin
-      rdata2 = `ZeroWord;
+      rdata2 <= `ZeroWord;
     end else if (re2 == `Enable) begin
-      rdata2 = regs[raddr2];
+      rdata2 <= regs[raddr2];
     end
   end
 

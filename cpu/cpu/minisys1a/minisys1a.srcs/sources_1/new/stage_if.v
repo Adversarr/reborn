@@ -11,7 +11,8 @@ module stage_if(
   input wire [`WordRange] interrupt_pc,
   input wire [`WordRange] imem_data,
   output wire [`WordRange] imem_addr,
-  output wire [`WordRange] if_ins
+  output wire [`WordRange] if_ins,
+  output wire imem_en
   );
  // IF
  pc  u_pc (
@@ -28,4 +29,5 @@ module stage_if(
  // TODO: add imem cache.
  assign imem_addr = pc;
  assign if_ins = imem_data;
+ assign imem_en = 1'b1;
 endmodule 

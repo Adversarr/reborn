@@ -96,13 +96,7 @@ module cp0 (
           end
         endcase
       end
-    end
-  end
-
-  always @(*) begin //ËæÊ±¶Á
-    if(rst == `Enable)begin
-      data_out = `ZeroWord;
-    end else begin
+      // DataOut
       case (raddr_in)
         `CP0_REG_COUNT: begin
           data_out = count_out;
@@ -119,9 +113,34 @@ module cp0 (
         `CP0_REG_CAUSE:begin
           data_out = cause_out;
         end
-        default: begin
-        end
+        default: begin end
       endcase
     end
   end
+
+//  always @(*) begin //ËæÊ±¶Á
+//    if(rst == `Enable)begin
+//      data_out = `ZeroWord;
+//    end else begin
+//      case (raddr_in)
+//        `CP0_REG_COUNT: begin
+//          data_out = count_out;
+//        end  
+//        `CP0_REG_COMPARE: begin
+//          data_out = compare_out;
+//        end
+//        `CP0_REG_STATUE:begin
+//          data_out = status_out;
+//        end
+//        `CP0_REG_EPC:begin
+//          data_out = epc_out;
+//        end
+//        `CP0_REG_CAUSE:begin
+//          data_out = cause_out;
+//        end
+//        default: begin
+//        end
+//      endcase
+//    end
+//  end
 endmodule

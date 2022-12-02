@@ -190,6 +190,16 @@ module cpu(
   // 流水处理器异常相关
   wire flush;
   wire[`WordRange] interrupt_pc_out;
+  
+  
+  
+  assign ex_f_mem_cp0_we_in = mem_cp0_we_out;
+  assign ex_f_mem_cp0_w_addr = mem_cp0_waddr_out;
+  assign ex_f_mem_cp0_w_data = mem_cp0_wdata_out;
+  assign ex_f_wb_cp0_we_in   = wb_cp0_we_in;
+  assign ex_f_wb_cp0_w_addr = wb_cp0_waddr_in;
+  assign ex_f_wb_cp0_w_data = wb_cp0_wdata_in;
+  
 
   // HILO
   hilo  u_hilo (  
@@ -229,7 +239,8 @@ module cpu(
     .interrupt_pc             (interrupt_pc_out),
     .imem_addr                (imem_addr_out),
     .imem_data                (imem_data_in),
-    .if_ins                   (if_ins)
+    .if_ins                   (if_ins),
+    .imem_en                  (imem_e_out)
   );
 
   // IF-ID
