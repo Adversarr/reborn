@@ -79,7 +79,7 @@ always @* begin  // 6÷÷“∆Œª÷∏¡Ó
            3'b010:ALU_output_mux = $signed(Ainput) + $signed(Binput); // add, addi, lw, sw
            3'b011:ALU_output_mux = $unsigned(Ainput) + $unsigned(Binput); // addu
            3'b100:ALU_output_mux = Ainput ^ Binput; // xor, xori
-           3'b101:ALU_output_mux = ~Ainput ^ Binput; // nor, lui
+           3'b101:ALU_output_mux = ~(Ainput | Binput); // nor, lui
            3'b110:ALU_output_mux = $signed(Ainput) - $signed(Binput); // sub, slti
            3'b111:ALU_output_mux = $unsigned(Ainput) - $unsigned(Binput); // subu
             default:ALU_output_mux = 32'h00000000;

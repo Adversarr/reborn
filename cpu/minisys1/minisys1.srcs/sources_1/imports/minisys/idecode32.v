@@ -67,6 +67,8 @@ module Idecode32(read_data_1,read_data_2,Instruction,read_data,ALU_result,
       write_data = opcplus4;
     end else if (MemtoReg) begin
       write_data = read_data;
+    end else if (opcode == 6'b001111) begin
+      write_data = Sign_extend;
     end else begin
       write_data = ALU_result;
     end
