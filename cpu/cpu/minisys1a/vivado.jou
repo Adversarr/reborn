@@ -1,0 +1,17 @@
+#-----------------------------------------------------------
+# Vivado v2017.4 (64-bit)
+# SW Build 2086221 on Fri Dec 15 20:55:39 MST 2017
+# IP Build 2085800 on Fri Dec 15 22:25:07 MST 2017
+# Start of session at: Mon Dec  5 15:19:36 2022
+# Process ID: 3940
+# Current directory: F:/Repo/reborn/cpu/cpu/minisys1a
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent19580 F:\Repo\reborn\cpu\cpu\minisys1a\minisys1a.xpr
+# Log file: F:/Repo/reborn/cpu/cpu/minisys1a/vivado.log
+# Journal file: F:/Repo/reborn/cpu/cpu/minisys1a\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project F:/Repo/reborn/cpu/cpu/minisys1a/minisys1a.xpr
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1

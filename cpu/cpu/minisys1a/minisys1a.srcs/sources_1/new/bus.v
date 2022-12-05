@@ -145,8 +145,14 @@ module bus(
     .sel_out(digits_sel_out),
     .digital_out(digits_data_out)
   );
-  timer timer_inst(
-    // TODO: Impl
+  timer_interface timer_inst(
+    .rst(rst),
+    .clk(clk),
+    .addr(addr),
+    .en(enable),
+    .data_in(write_data),
+    .we(is_write),
+    .data_out(counter_data)
   );
   watchdog watchdog_inst(
    .rst(rst),
