@@ -3,13 +3,13 @@
 
 `include "public.v"
 
-// Ö¸ÁîÖ´ĞĞÄ£¿é
+// æŒ‡ä»¤æ‰§è¡Œæ¨¡å—
 module ex (
 
   input rst,
   input wire[`ALUOpRange] aluop_in,
-  input wire[`WordRange] data1_in,  // Ò»°ãÊÇrs
-  input wire[`WordRange] data2_in,  // Ò»°ãÊÇrt
+  input wire[`WordRange] data1_in,  // ä¸€èˆ¬æ˜¯rs
+  input wire[`WordRange] data2_in,  // ä¸€èˆ¬æ˜¯rt
   input wire[`RegRangeLog2] wreg_addr_in,
   input wire wreg_e_in,
 
@@ -17,33 +17,33 @@ module ex (
   output reg wreg_e_out,
   output reg[`WordRange] wreg_data_out,
 
-  input wire[`WordRange] hi_data_in,  // ´ËÌõÖ¸Áî£¨ÒëÂë½×¶Î£©hi¸ø³öµÄ½á¹û
-  input wire[`WordRange] lo_data_in,  // lo¸ø³öµÄ½á¹û
-  input wire mem_hilo_we_in, // Ä¿Ç°´¦ÓÚ·Ã´æ½×¶ÎµÄhi,loµÄĞ´Ê¹ÄÜ£¨¼´´ËÌõÖ¸ÁîµÄÉÏÒ»ÌõÖ¸Áî£©
-  input wire[`WordRange] mem_hi_data_in,  // ·Ã´æ½×¶ÎĞ´ÈëhiµÄÖµ
-  input wire[`WordRange] mem_lo_data_in,  // ·Ã´æ½×¶ÎĞ´ÈëloµÄÖµ
-  input wire wb_hilo_we_in,  // Ä¿Ç°´¦ÓÚĞ´»Ø½×¶ÎµÄhiloĞ´Ê¹ÄÜ£¨¼´´ÊÌõÖ¸ÁîµÄÉÏÁ½ÌõÖ¸Áî£©
-  input wire[`WordRange] wb_hi_data_in,  // Ğ´»Ø½×¶ÎĞ´ÈëhiµÄÖµ
-  input wire[`WordRange] wb_lo_data_in,  // Ğ´»Ø½×¶ÎĞ´ÈëloµÄÖµ
+  input wire[`WordRange] hi_data_in,  // æ­¤æ¡æŒ‡ä»¤ï¼ˆè¯‘ç é˜¶æ®µï¼‰hiç»™å‡ºçš„ç»“æœ
+  input wire[`WordRange] lo_data_in,  // loç»™å‡ºçš„ç»“æœ
+  input wire mem_hilo_we_in, // ç›®å‰å¤„äºè®¿å­˜é˜¶æ®µçš„hi,loçš„å†™ä½¿èƒ½ï¼ˆå³æ­¤æ¡æŒ‡ä»¤çš„ä¸Šä¸€æ¡æŒ‡ä»¤ï¼‰
+  input wire[`WordRange] mem_hi_data_in,  // è®¿å­˜é˜¶æ®µå†™å…¥hiçš„å€¼
+  input wire[`WordRange] mem_lo_data_in,  // è®¿å­˜é˜¶æ®µå†™å…¥loçš„å€¼
+  input wire wb_hilo_we_in,  // ç›®å‰å¤„äºå†™å›é˜¶æ®µçš„hiloå†™ä½¿èƒ½ï¼ˆå³è¯æ¡æŒ‡ä»¤çš„ä¸Šä¸¤æ¡æŒ‡ä»¤ï¼‰
+  input wire[`WordRange] wb_hi_data_in,  // å†™å›é˜¶æ®µå†™å…¥hiçš„å€¼
+  input wire[`WordRange] wb_lo_data_in,  // å†™å›é˜¶æ®µå†™å…¥loçš„å€¼
   
-  output reg hilo_we_out,  // ´ËÌõÖ¸ÁîÊÇ·ñÒªĞ´hilo
-  output reg[`WordRange] hi_data_out,  // Ğ´ÈëµÄhiÊı¾İ
-  output reg[`WordRange] lo_data_out,  // Ğ´ÈëµÄloÊı¾İ
+  output reg hilo_we_out,  // æ­¤æ¡æŒ‡ä»¤æ˜¯å¦è¦å†™hilo
+  output reg[`WordRange] hi_data_out,  // å†™å…¥çš„hiæ•°æ®
+  output reg[`WordRange] lo_data_out,  // å†™å…¥çš„loæ•°æ®
 
   output reg pause_req,
 
-  input wire[`WordRange] link_addr_in, // ±£´æµÄ·µ»ØµØÖ·
+  input wire[`WordRange] link_addr_in, // ä¿å­˜çš„è¿”å›åœ°å€
 
-  output reg[`WordRange] div_data1_signed,  // ÓĞ·ûºÅ³ı·¨µÄ±»³ıÊı
-  output reg[`WordRange] div_data2_signed, // ÓĞ·ûºÅ³ı·¨µÄ³ıÊı
-  output reg[`WordRange] div_data1_unsigned, // ÎŞ·ûºÅ³ı·¨µÄ±»³ıÊı
-  output reg[`WordRange] div_data2_unsigned, // ÎŞ·ûºÅ³ı·¨µÄ³ıÊı
-  output reg div_data_valid_signed, // ÓĞ·ûºÅ³ı·¨Êı¾İÊÇ·ñÓĞĞ§£¨ÊÇ·ñ¿ªÊ¼³ı·¨£©
-  output reg div_data_valid_unsigned, // ÎŞ·ûºÅ³ı·¨Êı¾İÊÇ·ñÓĞĞ§
-  input wire[`DivMulResultRange] div_result_signed,  // ½á¹û64Î»
-  input wire div_result_valid_signed,  // ÓĞ·ûºÅ³ı·¨½á¹ûÊÇ·ñÓĞĞ§£¨ÓĞĞ§ËµÃ÷³ı·¨½áÊø£¬Ó¦¸Ã»ñÈ¡½á¹û£©
-  input wire[`DivMulResultRange] div_result_unsigned, // ½á¹û64Î»
-  input wire div_result_valid_unsigned, // ÎŞ·ûºÅ³ı·¨½á¹ûÊÇ·ñÓĞĞ§£¨ÓĞĞ§ËµÃ÷³ı·¨½áÊø£¬Ó¦¸Ã»ñÈ¡½á¹û£©
+  output reg[`WordRange] div_data1_signed,  // æœ‰ç¬¦å·é™¤æ³•çš„è¢«é™¤æ•°
+  output reg[`WordRange] div_data2_signed, // æœ‰ç¬¦å·é™¤æ³•çš„é™¤æ•°
+  output reg[`WordRange] div_data1_unsigned, // æ— ç¬¦å·é™¤æ³•çš„è¢«é™¤æ•°
+  output reg[`WordRange] div_data2_unsigned, // æ— ç¬¦å·é™¤æ³•çš„é™¤æ•°
+  output reg div_data_valid_signed, // æœ‰ç¬¦å·é™¤æ³•æ•°æ®æ˜¯å¦æœ‰æ•ˆï¼ˆæ˜¯å¦å¼€å§‹é™¤æ³•ï¼‰
+  output reg div_data_valid_unsigned, // æ— ç¬¦å·é™¤æ³•æ•°æ®æ˜¯å¦æœ‰æ•ˆ
+  input wire[`DivMulResultRange] div_result_signed,  // ç»“æœ64ä½
+  input wire div_result_valid_signed,  // æœ‰ç¬¦å·é™¤æ³•ç»“æœæ˜¯å¦æœ‰æ•ˆï¼ˆæœ‰æ•ˆè¯´æ˜é™¤æ³•ç»“æŸï¼Œåº”è¯¥è·å–ç»“æœï¼‰
+  input wire[`DivMulResultRange] div_result_unsigned, // ç»“æœ64ä½
+  input wire div_result_valid_unsigned, // æ— ç¬¦å·é™¤æ³•ç»“æœæ˜¯å¦æœ‰æ•ˆï¼ˆæœ‰æ•ˆè¯´æ˜é™¤æ³•ç»“æŸï¼Œåº”è¯¥è·å–ç»“æœï¼‰
 
   output reg[`WordRange] mul_data1,
   output reg[`WordRange] mul_data2,
@@ -55,44 +55,44 @@ module ex (
 
 
 
-  input is_in_delayslot, // ĞÂÔöµÄÑÓ³Ù²ÛĞÅºÅ£¬´ú±í´¦ÓÚÖ´ĞĞ½×¶ÎµÄÖ¸ÁîÊÇ·ñÊÇÑÓ³Ù²ÛÖ¸Áî
+  input is_in_delayslot, // æ–°å¢çš„å»¶è¿Ÿæ§½ä¿¡å·ï¼Œä»£è¡¨å¤„äºæ‰§è¡Œé˜¶æ®µçš„æŒ‡ä»¤æ˜¯å¦æ˜¯å»¶è¿Ÿæ§½æŒ‡ä»¤
 
-  input wire[`WordRange] ins_in, // ĞÂÔöµÄÖ¸ÁîĞÅºÅ£¬´Óid½×¶ÎÒ»Ö±´«µİ¹ıÀ´
-  output reg[`ALUOpRange] aluop_out, // ÒªÏò·Ã´æ²¿·Ö´«µİaluop
-  output reg[`WordRange] mem_addr_out, // ÒªÏò·Ã´æ²¿·Ö´«µİ¼ÆËã³öµÄÄÚ´æµØÖ·£¨ËùÓĞ´æ´¢Ïà¹ØÖ¸Áî¾ù»áÓÃµ½£©
-  output reg[`WordRange] mem_data_out, // ÒªÏò·Ã´æ²¿·Ö´«µİĞ´ÈëÄÚ´æµÄÊı¾İ£¨storeÖ¸Áî²Å»áÓÃµ½£©
+  input wire[`WordRange] ins_in, // æ–°å¢çš„æŒ‡ä»¤ä¿¡å·ï¼Œä»idé˜¶æ®µä¸€ç›´ä¼ é€’è¿‡æ¥
+  output reg[`ALUOpRange] aluop_out, // è¦å‘è®¿å­˜éƒ¨åˆ†ä¼ é€’aluop
+  output reg[`WordRange] mem_addr_out, // è¦å‘è®¿å­˜éƒ¨åˆ†ä¼ é€’è®¡ç®—å‡ºçš„å†…å­˜åœ°å€ï¼ˆæ‰€æœ‰å­˜å‚¨ç›¸å…³æŒ‡ä»¤å‡ä¼šç”¨åˆ°ï¼‰
+  output reg[`WordRange] mem_data_out, // è¦å‘è®¿å­˜éƒ¨åˆ†ä¼ é€’å†™å…¥å†…å­˜çš„æ•°æ®ï¼ˆstoreæŒ‡ä»¤æ‰ä¼šç”¨åˆ°ï¼‰
 
-  //cp0Ïà¹Ø
-  input wire[`WordRange] cp0_data_in,//´Ócp0¶ÁÈ¡µÄÊı¾İ  Ö»ÊÇÓÃÀ´¸øÍ¨ÓÃ¼Ä´æÆ÷µÄ
-  output reg[4:0] cp0_raddr_out, //Ö±½Ó´«¸øcp0µÄµØÖ·
+  //cp0ç›¸å…³
+  input wire[`WordRange] cp0_data_in,//ä»cp0è¯»å–çš„æ•°æ®  åªæ˜¯ç”¨æ¥ç»™é€šç”¨å¯„å­˜å™¨çš„
+  output reg[4:0] cp0_raddr_out, //ç›´æ¥ä¼ ç»™cp0çš„åœ°å€
 
-  input wire f_mem_cp0_we_in, //µ±Ç°´¦ÔÚ·Ã´æ½×¶ÎµÄÖ¸ÁîÊÇ·ñÒªĞ´cp0
-  input wire[4:0] f_mem_cp0_w_addr, //ÒªĞ´µÄµØÖ·
-  input wire[`WordRange] f_mem_cp0_w_data, //ÒªĞ´ÈëµÄÊı¾İ
-  input wire f_wb_cp0_we_in,   //Í¬Àí  µ±Ç°´¦ÔÚĞ´»Ø½×¶ÎµÄÖ¸ÁîÊÇ·ñÒªĞ´cp0
-  input wire[4:0] f_wb_cp0_w_addr, //Ğ´ÈëµÄµØÖ·
-  input wire[`WordRange] f_wb_cp0_w_data,  //Ğ´ÈëµÄÊı¾İ
+  input wire f_mem_cp0_we_in, //å½“å‰å¤„åœ¨è®¿å­˜é˜¶æ®µçš„æŒ‡ä»¤æ˜¯å¦è¦å†™cp0
+  input wire[4:0] f_mem_cp0_w_addr, //è¦å†™çš„åœ°å€
+  input wire[`WordRange] f_mem_cp0_w_data, //è¦å†™å…¥çš„æ•°æ®
+  input wire f_wb_cp0_we_in,   //åŒç†  å½“å‰å¤„åœ¨å†™å›é˜¶æ®µçš„æŒ‡ä»¤æ˜¯å¦è¦å†™cp0
+  input wire[4:0] f_wb_cp0_w_addr, //å†™å…¥çš„åœ°å€
+  input wire[`WordRange] f_wb_cp0_w_data,  //å†™å…¥çš„æ•°æ®
 
-  output reg cp0_we_out,    //cp0ÊÇ·ñÒª±»Ğ´£¨µ±Ç°Ö¸Áî ÏòÏÂ´«ÈëÁ÷Ë®
-  output reg[4:0] cp0_waddr_out,  //cp0Ğ´µØÖ·   ÏòÏÂ´«ÈëÁ÷Ë®
-  output reg[`WordRange] cp0_w_data_out,   //ÒªĞ´Èëcp0µÄÊı¾İ ÏòÏÂ´«ÈëÁ÷Ë®
+  output reg cp0_we_out,    //cp0æ˜¯å¦è¦è¢«å†™ï¼ˆå½“å‰æŒ‡ä»¤ å‘ä¸‹ä¼ å…¥æµæ°´
+  output reg[4:0] cp0_waddr_out,  //cp0å†™åœ°å€   å‘ä¸‹ä¼ å…¥æµæ°´
+  output reg[`WordRange] cp0_w_data_out,   //è¦å†™å…¥cp0çš„æ•°æ® å‘ä¸‹ä¼ å…¥æµæ°´
 
 
-  //ĞÂÔö¼ÓµÄÒªÏòÏÂ¼¶Á÷Ë®´«µÄÊı¾İ
+  //æ–°å¢åŠ çš„è¦å‘ä¸‹çº§æµæ°´ä¼ çš„æ•°æ®
   output reg[`WordRange] ins_out,
 
-  //Òì³£Ïà¹Ø
+  //å¼‚å¸¸ç›¸å…³
   input wire[`WordRange] current_ex_pc_addr_in,
   input wire[`WordRange] abnormal_type_in,
   output reg[`WordRange] abnormal_type_out,
   output reg[`WordRange] current_ex_pc_addr_out
 );
 
-  wire[`WordRange] alu_res;  // aluµÄ½á¹û
-  reg[`WordRange] mov_res;  // ×ªÒÆÖ¸Áî£¨Èç¶ÁhiºÍlo£©µÄ½á¹û
+  wire[`WordRange] alu_res;  // aluçš„ç»“æœ
+  reg[`WordRange] mov_res;  // è½¬ç§»æŒ‡ä»¤ï¼ˆå¦‚è¯»hiå’Œloï¼‰çš„ç»“æœ
   
-  reg[`WordRange] hi_temp;  // Ôİ´æhi
-  reg[`WordRange] lo_temp;  // Ôİ´ælo
+  reg[`WordRange] hi_temp;  // æš‚å­˜hi
+  reg[`WordRange] lo_temp;  // æš‚å­˜lo
 
 
   wire signed [`WordRange] mul_signed_data1;
@@ -138,24 +138,24 @@ module ex (
       mul_data1 = `ZeroWord;
       mul_data2 = `ZeroWord;
       mul_valid = `Disable;
-      mem_addr_out = data1_in + {{16{ins_in[15]}}, ins_in[15:0]};  // ÔÚÕâÀï¼ÆËãÊÇÎªÁËÈÃ´«µİµÄĞÅºÅÉÙ£¬²¢ÇÒÊ±ĞòÂß¼­ÇåÎú£¬Ôö¼ÓÔÚex²¿·ÖµÄ¹¤×÷
+      mem_addr_out = data1_in + {{16{ins_in[15]}}, ins_in[15:0]};  // åœ¨è¿™é‡Œè®¡ç®—æ˜¯ä¸ºäº†è®©ä¼ é€’çš„ä¿¡å·å°‘ï¼Œå¹¶ä¸”æ—¶åºé€»è¾‘æ¸…æ™°ï¼Œå¢åŠ åœ¨exéƒ¨åˆ†çš„å·¥ä½œ
       aluop_out = aluop_in;
-      mem_data_out = data2_in; // ÎŞÂÛÊÇÊ²Ã´´æ´¢²Ù×÷£¬¶¼»áÈ¥Ê¹ÓÃrtµÄÊı¾İ
+      mem_data_out = data2_in; // æ— è®ºæ˜¯ä»€ä¹ˆå­˜å‚¨æ“ä½œï¼Œéƒ½ä¼šå»ä½¿ç”¨rtçš„æ•°æ®
       wreg_data_out = alu_res;
       abnormal_type_out = abnormal_type_in;
       current_ex_pc_addr_out = current_ex_pc_addr_in;
       case (aluop_in)
         `ALUOP_DIV: begin
-          if (div_result_valid_signed == `Disable) begin  // ³ı·¨ÉĞÎ´½áÊø
+          if (div_result_valid_signed == `Disable) begin  // é™¤æ³•å°šæœªç»“æŸ
             div_data1_signed = data1_in;
             div_data2_signed = data2_in;
-            div_data_valid_signed = `Enable;  // Êı¾İÓĞĞ§
-            pause_req = `Enable;  // ÔİÍ£Á÷Ë®
-          end else if (div_result_valid_signed == `Enable) begin  // ³ı·¨½áÊø
+            div_data_valid_signed = `Enable;  // æ•°æ®æœ‰æ•ˆ
+            pause_req = `Enable;  // æš‚åœæµæ°´
+          end else if (div_result_valid_signed == `Enable) begin  // é™¤æ³•ç»“æŸ
             div_data1_signed = data1_in;
             div_data2_signed = data2_in;
-            div_data_valid_signed = `Disable;  // Êı¾İÎŞĞ§
-            pause_req = `Disable;  // Æô¶¯Á÷Ë®
+            div_data_valid_signed = `Disable;  // æ•°æ®æ— æ•ˆ
+            pause_req = `Disable;  // å¯åŠ¨æµæ°´
           end
         end
         `ALUOP_DIVU: begin
@@ -226,12 +226,12 @@ module ex (
     if (rst == `Enable) begin
       hi_temp = `ZeroWord;
       lo_temp = `ZeroWord;
-    // ½â¾öMEM-EXÁ÷Ë®³åÍ»
-    end else if (mem_hilo_we_in == `Enable) begin  // Èç¹ûÉÏÒ»ÌõÖ¸ÁîÒ²ÔÚĞ´hilo
+    // è§£å†³MEM-EXæµæ°´å†²çª
+    end else if (mem_hilo_we_in == `Enable) begin  // å¦‚æœä¸Šä¸€æ¡æŒ‡ä»¤ä¹Ÿåœ¨å†™hilo
       hi_temp = mem_hi_data_in;
       lo_temp = mem_lo_data_in;
-    // ½â¾öWB-EXÁ÷Ë®³åÍ»
-    end else if (wb_hilo_we_in == `Enable) begin  // Èç¹ûÉÏÁ½ÌõÖ¸ÁîÒ²ÔÚĞ´hilo
+    // è§£å†³WB-EXæµæ°´å†²çª
+    end else if (wb_hilo_we_in == `Enable) begin  // å¦‚æœä¸Šä¸¤æ¡æŒ‡ä»¤ä¹Ÿåœ¨å†™hilo
       hi_temp = wb_hi_data_in;
       lo_temp = wb_lo_data_in;  
     end else begin
@@ -251,7 +251,7 @@ module ex (
         `EXOP_MFLO: begin
           mov_res = lo_temp;
         end
-        `EXOP_MFC0: begin //ÒªĞ´Èëcp0¼Ä´æÆ÷£¬µÃ¿´Ò»ÏÂÊı¾İÊÇ²»ÊÇ×îĞÂµÄ
+        `EXOP_MFC0: begin //è¦å†™å…¥cp0å¯„å­˜å™¨ï¼Œå¾—çœ‹ä¸€ä¸‹æ•°æ®æ˜¯ä¸æ˜¯æœ€æ–°çš„
           cp0_raddr_out = ins_in[15:11];
           mov_res = cp0_data_in;
           if(f_mem_cp0_we_in == `Enable && f_mem_cp0_w_addr == ins_in[15:11])begin
@@ -273,7 +273,7 @@ module ex (
       case (aluop_in)
        `ALUOP_DIV: begin
          hilo_we_out = `Enable;
-         hi_data_out = div_result_signed[31:0];  // HI´æÓàÊı£¬LO´æÉÌ
+         hi_data_out = div_result_signed[31:0];  // HIå­˜ä½™æ•°ï¼ŒLOå­˜å•†
          lo_data_out = div_result_signed[63:32];
        end
        `ALUOP_DIVU: begin

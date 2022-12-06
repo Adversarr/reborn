@@ -24,19 +24,19 @@
 module bus(
   // <- board
   input wire clk, input wire rst,
-  // ²¦Âë¿ª¹Ø
+  // æ‹¨ç å¼€å…³
   input wire[23:0] switches_in,
-  // °´Å¥
+  // æŒ‰é’®
   input wire[4:0] buttons_in,
-  // ¾ØÕó¼üÅÌ
+  // çŸ©é˜µé”®ç›˜
   input wire[3:0] keyboard_cols_in,
   output wire[3:0] keyboard_rows_out,
-  // ÊýÂë¹Ü
+  // æ•°ç ç®¡
   output wire[7:0] digits_sel_out,
   output wire[7:0] digits_data_out,
-  // ·äÃùÆ÷
+  // èœ‚é¸£å™¨
   output wire beep_out,
-  // LEDµÆ
+  // LEDç¯
   output wire[7:0] led_RLD_out,
   output wire[7:0] led_YLD_out,
   output wire[7:0] led_GLD_out,
@@ -167,7 +167,7 @@ module bus(
   // uart, unused:
   assign uart_data = 32'h00000000;
   
-  // ×ÜÏßÖÙ²Ã£¬½öÊä³ö
+  // æ€»çº¿ä»²è£ï¼Œä»…è¾“å‡º
   always @(*)begin
       if(addr[31:16] == 16'h0000)begin
           data_out = dmem_data;

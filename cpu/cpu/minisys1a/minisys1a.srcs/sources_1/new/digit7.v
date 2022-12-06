@@ -20,29 +20,29 @@
 `include "public.v"
 
 module digit7(
-  input rst, // ¸´Î»
-  input clk, // Ê±ÖÓ
+  input rst, // å¤ä½
+  input clk, // æ—¶é’Ÿ
 
-  //´Ó×ÜÏßÀ´µÄÊı¾İ ËùÓĞÍâÉèÇı¶¯¶¼Ó¦ÓĞÒÔÏÂĞÅºÅ
+  //ä»æ€»çº¿æ¥çš„æ•°æ® æ‰€æœ‰å¤–è®¾é©±åŠ¨éƒ½åº”æœ‰ä»¥ä¸‹ä¿¡å·
   input wire[`WordRange] addr,
-  input wire en, // Ê¹ÄÜ
+  input wire en, // ä½¿èƒ½
   input wire[3:0] byte_sel,
-  input wire[`WordRange] data_in, // Êı¾İÊäÈë£¨À´×Ôcpu£©
-  input wire we, //Ğ´Ê¹ÄÜ
+  input wire[`WordRange] data_in, // æ•°æ®è¾“å…¥ï¼ˆæ¥è‡ªcpuï¼‰
+  input wire we, //å†™ä½¿èƒ½
 
-  //·¢ËÍ¸øÖÙ²ÃÆ÷ ËùÓĞÍâÉè¶¼Ó¦ÓĞ´ËÊä³ö
+  //å‘é€ç»™ä»²è£å™¨ æ‰€æœ‰å¤–è®¾éƒ½åº”æœ‰æ­¤è¾“å‡º
   output reg[`WordRange] data_out,
 
-  //·¢ËÍ¸øÍâÉè
-  output reg[7:0] sel_out, // Î»Ê¹ÄÜ
-  output reg[7:0] digital_out // ¶ÎÊ¹ÄÜ£¨DP, G-A£©
+  //å‘é€ç»™å¤–è®¾
+  output reg[7:0] sel_out, // ä½ä½¿èƒ½
+  output reg[7:0] digital_out // æ®µä½¿èƒ½ï¼ˆDP, G-Aï¼‰
   );
 
-  always @(posedge clk) begin  //Ğ´ÊÇÉÏÉıÑØ
+  always @(posedge clk) begin  //å†™æ˜¯ä¸Šå‡æ²¿
     if (rst == `Enable) begin
       sel_out <= 8'hff;
       digital_out <= 8'hff;
-    end else if(addr == 32'hfffffc00 && en == `Enable && we == `Enable) begin //Ğ´µÄÊÇÏÔÊ¾Êı¾İ¼Ä´æÆ÷ ÇÒÊ¹ÄÜÓĞĞ§
+    end else if(addr == 32'hfffffc00 && en == `Enable && we == `Enable) begin //å†™çš„æ˜¯æ˜¾ç¤ºæ•°æ®å¯„å­˜å™¨ ä¸”ä½¿èƒ½æœ‰æ•ˆ
       case (data_in[7:0])
         //                GFE_DCBA
         8'd0: begin
@@ -100,8 +100,8 @@ module digit7(
           digital_out <= 8'b1001_0001; // BCDFG --(y)
         end
       endcase
-    end else if(addr == 32'hfffffc04 && en == `Enable && we == `Enable)begin //Ğ´µÄÊÇÎ»ÊıÊ¹ÄÜ¼Ä´æÆ÷
-        sel_out <= ~(1'b1 << data_in[7:0]); //ÕâÀï´æÒÉ ÊµÏÖ·½Ê½¿ÉÒÔ¸ü¸Ä
+    end else if(addr == 32'hfffffc04 && en == `Enable && we == `Enable)begin //å†™çš„æ˜¯ä½æ•°ä½¿èƒ½å¯„å­˜å™¨
+        sel_out <= ~(1'b1 << data_in[7:0]); //è¿™é‡Œå­˜ç–‘ å®ç°æ–¹å¼å¯ä»¥æ›´æ”¹
     end
   end
 

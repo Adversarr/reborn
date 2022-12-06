@@ -3,20 +3,20 @@
 
 `include "public.v"
 
-// Á÷Ë®¼¶MEM-WBÖ®¼äµÄ¼Ä´æÆ÷
-// TODO: Ä¿Ç°ÏÈĞ´³ÉÖ±Í¨µÄ
+// æµæ°´çº§MEM-WBä¹‹é—´çš„å¯„å­˜å™¨
+// TODO: ç›®å‰å…ˆå†™æˆç›´é€šçš„
 module mem_wb (
 
-  input rst, // ÖØÖÃ
-  input clk, // Ê±ÖÓ
+  input rst, // é‡ç½®
+  input clk, // æ—¶é’Ÿ
 
-  input wire mem_wreg_e, // ¼Ä´æÆ÷×éĞ´Ê¹ÄÜ
-  input wire[`RegRangeLog2] mem_wreg_addr, // ¼Ä´æÆ÷×éĞ´µØÖ·
-  input wire[`WordRange] mem_wreg_data, // ¼Ä´æÆ÷×éĞ´Êı¾İ
+  input wire mem_wreg_e, // å¯„å­˜å™¨ç»„å†™ä½¿èƒ½
+  input wire[`RegRangeLog2] mem_wreg_addr, // å¯„å­˜å™¨ç»„å†™åœ°å€
+  input wire[`WordRange] mem_wreg_data, // å¯„å­˜å™¨ç»„å†™æ•°æ®
 
-  output reg wb_wreg_e, // ¼Ä´æÆ÷×éĞ´Ê¹ÄÜ
-  output reg[`RegRangeLog2] wb_wreg_addr, // ¼Ä´æÆ÷×éĞ´µØÖ·
-  output reg[`WordRange] wb_wreg_data, // ¼Ä´æÆ÷×éĞ´Êı¾İ
+  output reg wb_wreg_e, // å¯„å­˜å™¨ç»„å†™ä½¿èƒ½
+  output reg[`RegRangeLog2] wb_wreg_addr, // å¯„å­˜å™¨ç»„å†™åœ°å€
+  output reg[`WordRange] wb_wreg_data, // å¯„å­˜å™¨ç»„å†™æ•°æ®
 
   input wire mem_hilo_we,
   input wire[`WordRange] mem_hi_data,
@@ -28,7 +28,7 @@ module mem_wb (
 
   input wire pause,
 
-  //cp0Ïà¹Ø
+  //cp0ç›¸å…³
   input wire f_mem_cp0_we,
   input wire[4:0] f_mem_cp0_waddr,
   input wire[`WordRange] f_mem_cp0_wdata,
@@ -36,13 +36,13 @@ module mem_wb (
   output reg[4:0] t_wb_cp0_waddr,
   output reg[`WordRange] t_wb_cp0_wdata,
 
-  //Òì³£Ïà¹Ø
+  //å¼‚å¸¸ç›¸å…³
   input wire flush
 );
 
   
   always @(posedge clk) begin
-    // ÖØÖÃÊ±ËÍdisbale¡¢0x0
+    // é‡ç½®æ—¶é€disbaleã€0x0
     if (rst == `Enable) begin
       wb_wreg_e = `Disable;
       wb_wreg_data = `ZeroWord;

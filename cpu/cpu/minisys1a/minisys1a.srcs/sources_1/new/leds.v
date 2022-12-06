@@ -21,32 +21,32 @@
 `include "public.v"
 
 module leds(
-  input rst, // ÖØÖÃ£¬È«²¿ÃğµÆ
-  input clk, // Ê±ÖÓ
+  input rst, // é‡ç½®ï¼Œå…¨éƒ¨ç­ç¯
+  input clk, // æ—¶é’Ÿ
   
-  //´Ó×ÜÏßÀ´µÄÊı¾İ ËùÓĞÍâÉèÇı¶¯¶¼Ó¦ÓĞÒÔÏÂĞÅºÅ
+  //ä»æ€»çº¿æ¥çš„æ•°æ® æ‰€æœ‰å¤–è®¾é©±åŠ¨éƒ½åº”æœ‰ä»¥ä¸‹ä¿¡å·
   input wire[`WordRange] addr,
-  input wire en, // Ê¹ÄÜ
+  input wire en, // ä½¿èƒ½
   input wire[3:0] byte_sel,
-  input wire[`WordRange] data_in, // Êı¾İÊäÈë£¨À´×Ôcpu£©
-  input wire we, //Ğ´Ê¹ÄÜ
+  input wire[`WordRange] data_in, // æ•°æ®è¾“å…¥ï¼ˆæ¥è‡ªcpuï¼‰
+  input wire we, //å†™ä½¿èƒ½
   
-  //·¢ËÍ¸øÖÙ²ÃÆ÷ ËùÓĞÍâÉè¶¼Ó¦ÓĞ´ËÊä³ö
+  //å‘é€ç»™ä»²è£å™¨ æ‰€æœ‰å¤–è®¾éƒ½åº”æœ‰æ­¤è¾“å‡º
   output reg[`WordRange] data_out,
   
   
-  //·¢ËÍ¸øÍâÉè
-  output reg[7:0] RLD, // ºìµÆ
-  output reg[7:0] YLD, // »ÆµÆ
-  output reg[7:0] GLD  // ÂÌµÆ
+  //å‘é€ç»™å¤–è®¾
+  output reg[7:0] RLD, // çº¢ç¯
+  output reg[7:0] YLD, // é»„ç¯
+  output reg[7:0] GLD  // ç»¿ç¯
   );
 
-  always @(posedge clk) begin  //Ğ´ĞèÒªÉÏÉıÑØ(minisys: ~cpuclk)
+  always @(posedge clk) begin  //å†™éœ€è¦ä¸Šå‡æ²¿(minisys: ~cpuclk)
     if (rst == `Enable) begin
       RLD <= 8'h00;
       YLD <= 8'hff;
       GLD <= 8'hff;
-    end else if(addr == 32'hfffffc60 && en == `Enable && we == `Enable) begin //µØÖ·ÕıÈ· Ğ´Ê¹ÄÜÓĞĞ§ ×ÜÊ¹ÄÜÓĞĞ§
+    end else if(addr == 32'hfffffc60 && en == `Enable && we == `Enable) begin //åœ°å€æ­£ç¡® å†™ä½¿èƒ½æœ‰æ•ˆ æ€»ä½¿èƒ½æœ‰æ•ˆ
       RLD <= data_in[23:16];
       YLD <= data_in[15:8];
       GLD <= data_in[7:0];

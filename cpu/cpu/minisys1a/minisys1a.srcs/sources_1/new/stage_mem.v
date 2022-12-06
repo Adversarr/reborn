@@ -3,7 +3,7 @@
 
 `include "public.v"
 
-// ·Ã´æ¿ØÖÆÄ£¿é
+// è®¿å­˜æ§åˆ¶æ¨¡å—
 module mem (
 
   input rst,
@@ -23,19 +23,19 @@ module mem (
   output reg[`WordRange] hi_data_out,
   output reg[`WordRange] lo_data_out,
 
-  input wire[`ALUOpRange] aluop_in, //´ÓÉÏ¼¶Á÷Ë®À´µÄaluop
-  input wire[`WordRange] mem_addr_in,  //´ÓÉÏ¼¶Á÷Ë®À´µÄ´æ´¢Æ÷µØÖ·
-  input wire[`WordRange] mem_store_data_in,  //´ÓÉÏ¼¶Á÷Ë®À´µÄÒª´æÈë´æ´¢Æ÷µÄÊı¾İ
+  input wire[`ALUOpRange] aluop_in, //ä»ä¸Šçº§æµæ°´æ¥çš„aluop
+  input wire[`WordRange] mem_addr_in,  //ä»ä¸Šçº§æµæ°´æ¥çš„å­˜å‚¨å™¨åœ°å€
+  input wire[`WordRange] mem_store_data_in,  //ä»ä¸Šçº§æµæ°´æ¥çš„è¦å­˜å…¥å­˜å‚¨å™¨çš„æ•°æ®
 
-  input wire[`WordRange] mem_read_data_in,   //´Ó´æ´¢Æ÷À´µÄ¶Á³öµÄÊı¾İ
+  input wire[`WordRange] mem_read_data_in,   //ä»å­˜å‚¨å™¨æ¥çš„è¯»å‡ºçš„æ•°æ®
  
-  output reg[`WordRange] mem_addr_out,  //·¢¸øµØÖ·×ÜÏßµÄµØÖ·
-  output reg mem_we_out,   //·¢¸ø¿ØÖÆ×ÜÏßµÄĞ´Ê¹ÄÜ
-  output reg[3:0] mem_byte_sel_out,   //·¢¸ø¿ØÖÆ×ÜÏßµÄ±ÈÌØÊ¹ÄÜ
-  output wire[`WordRange] mem_store_data_out,   //·¢¸øĞ´Êı¾İ×ÜÏßµÄÊı¾İ
-  output reg mem_e_out,  //·¢¸ø¿ØÖÆ×ÜÏßµÄ×ÜÊ¹ÄÜ £¨ºÃÏñÃ»Ê²Ã´ÓÃ£¿£¿ÏÈÁô×ÅÁË
+  output reg[`WordRange] mem_addr_out,  //å‘ç»™åœ°å€æ€»çº¿çš„åœ°å€
+  output reg mem_we_out,   //å‘ç»™æ§åˆ¶æ€»çº¿çš„å†™ä½¿èƒ½
+  output reg[3:0] mem_byte_sel_out,   //å‘ç»™æ§åˆ¶æ€»çº¿çš„æ¯”ç‰¹ä½¿èƒ½
+  output wire[`WordRange] mem_store_data_out,   //å‘ç»™å†™æ•°æ®æ€»çº¿çš„æ•°æ®
+  output reg mem_e_out,  //å‘ç»™æ§åˆ¶æ€»çº¿çš„æ€»ä½¿èƒ½ ï¼ˆå¥½åƒæ²¡ä»€ä¹ˆç”¨ï¼Ÿï¼Ÿå…ˆç•™ç€äº†
 
-  //cp0Ïà¹Ø
+  //cp0ç›¸å…³
   input wire cp0_we_in,
   input wire[4:0] cp0_waddr_in,
   input wire[`WordRange] cp0_wdata_in,
@@ -43,31 +43,31 @@ module mem (
   output reg[4:0] cp0_waddr_out,
   output reg[`WordRange] cp0_wdata_out,
 
-  //Òì³£´¦ÀíÏà¹Ø
+  //å¼‚å¸¸å¤„ç†ç›¸å…³
   input wire[`WordRange] current_mem_pc_addr_in,
   input wire[`WordRange] abnormal_type_in,
   input wire[`WordRange] cp0_status_in,
   input wire[`WordRange] cp0_cause_in,
   input wire[`WordRange] cp0_epc_in,
-  //´Ë´¦Òª²»Òª½â¾öĞ´cp0¼Ä´æÆ÷Ôì³ÉµÄÊı¾İÏà¹Ø£¿ ¸Ğ¾õ²»ĞèÒª ÒòÎªcp0¼¸ºõ²»»áÈ¥Ğ´ ¶øÇÒ¶Áµ½µÄÈı¸ö¼Ä´æÆ÷Ò²²»Ó¦¸ÃÈ¥Ğ´
+  //æ­¤å¤„è¦ä¸è¦è§£å†³å†™cp0å¯„å­˜å™¨é€ æˆçš„æ•°æ®ç›¸å…³ï¼Ÿ æ„Ÿè§‰ä¸éœ€è¦ å› ä¸ºcp0å‡ ä¹ä¸ä¼šå»å†™ è€Œä¸”è¯»åˆ°çš„ä¸‰ä¸ªå¯„å­˜å™¨ä¹Ÿä¸åº”è¯¥å»å†™
   output reg[`WordRange] abnormal_type_out,
   output reg[`WordRange] current_mem_pc_addr_out
 
 );
 
   assign mem_store_data_out = mem_store_data_in;
-  //ÏÈÅĞ¶ÏÒì³£
+  //å…ˆåˆ¤æ–­å¼‚å¸¸
   always @(*) begin
     if(rst == `Enable) begin
       abnormal_type_out = `ZeroWord;
     end else begin
-      if(current_mem_pc_addr_in != `ZeroWord) begin //Èç¹ûÊÇ0Ö¸Áî¾Í¸ù±¾²»±äÒì³£µÄÊä³ö
-        if(cp0_status_in[0] == `Enable)begin  //Èç¹ûÆÁ±ÎÁËÖĞ¶ÏºÍÒì³£ÔòÊä³öÃ»ÓĞÒì³£
-          //·ñÔòÖ±½Ó°ÑÉÏ¼¶´«ÏÂÀ´µÄÒì³£ÀàĞÍÊä³ö
+      if(current_mem_pc_addr_in != `ZeroWord) begin //å¦‚æœæ˜¯0æŒ‡ä»¤å°±æ ¹æœ¬ä¸å˜å¼‚å¸¸çš„è¾“å‡º
+        if(cp0_status_in[0] == `Enable)begin  //å¦‚æœå±è”½äº†ä¸­æ–­å’Œå¼‚å¸¸åˆ™è¾“å‡ºæ²¡æœ‰å¼‚å¸¸
+          //å¦åˆ™ç›´æ¥æŠŠä¸Šçº§ä¼ ä¸‹æ¥çš„å¼‚å¸¸ç±»å‹è¾“å‡º
           abnormal_type_out = {16'h0000, cp0_cause_in[13:8], 1'b0, abnormal_type_in[6:2], 2'b00};  
           current_mem_pc_addr_out = current_mem_pc_addr_in;
         end else begin
-          if(abnormal_type_in[6:2] == `ABN_ERET)begin //ÔÚÆÁ±ÎÖĞ¶ÏÊ±ºòÈç¹ûÓöµ½ÁËERET»¹ÊÇÒª·¢ËÍÒì³£¸øcp0ºÍppl
+          if(abnormal_type_in[6:2] == `ABN_ERET)begin //åœ¨å±è”½ä¸­æ–­æ—¶å€™å¦‚æœé‡åˆ°äº†ERETè¿˜æ˜¯è¦å‘é€å¼‚å¸¸ç»™cp0å’Œppl
             abnormal_type_out = {16'h0000, cp0_cause_in[13:8], 1'b0, abnormal_type_in[6:2], 2'b00};
           end else begin
             abnormal_type_out = `ZeroWord;
@@ -111,11 +111,11 @@ module mem (
         `EXOP_LB: begin
           mem_addr_out = mem_addr_in;
           mem_we_out = `Disable;
-          mem_e_out = `Enable;  //Fix me£º´Ë´¦ÒÔºó¿Ï¶¨ÒªĞŞ¸Ä£¬ÒòÎª°å×ÓÉÏµÄ´æ´¢Æ÷ÊÇ256*16bitsµÄ£¬ÎªÁËÂú×ã°´×Ö½Ú±àÖ·¡¢¶ÔÆëÓëĞ¡¶Ë´æ´¢
-          case (mem_addr_in[1:0])  // ´Ë´¦µÄÂß¼­¿ÉÄÜĞèÒª¸Ä±ä£¡
+          mem_e_out = `Enable;  //Fix meï¼šæ­¤å¤„ä»¥åè‚¯å®šè¦ä¿®æ”¹ï¼Œå› ä¸ºæ¿å­ä¸Šçš„å­˜å‚¨å™¨æ˜¯256*16bitsçš„ï¼Œä¸ºäº†æ»¡è¶³æŒ‰å­—èŠ‚ç¼–å€ã€å¯¹é½ä¸å°ç«¯å­˜å‚¨
+          case (mem_addr_in[1:0])  // æ­¤å¤„çš„é€»è¾‘å¯èƒ½éœ€è¦æ”¹å˜ï¼
             2'b00: begin
-              wreg_data_out = {{24{mem_read_data_in[7]}},mem_read_data_in[7:0]};  //·ûºÅÍØÕ¹
-              mem_byte_sel_out = 4'b0001; //Ğ¡¶Ë´æ´¢  È¡ËÄ¸ö×Ö½ÚµÄ×îµÍÎ»×÷ÎªµØÖ·×îµÍÎ»
+              wreg_data_out = {{24{mem_read_data_in[7]}},mem_read_data_in[7:0]};  //ç¬¦å·æ‹“å±•
+              mem_byte_sel_out = 4'b0001; //å°ç«¯å­˜å‚¨  å–å››ä¸ªå­—èŠ‚çš„æœ€ä½ä½ä½œä¸ºåœ°å€æœ€ä½ä½
             end
             2'b01: begin
               wreg_data_out = {{24{mem_read_data_in[15]}},mem_read_data_in[15:8]};
@@ -134,11 +134,11 @@ module mem (
         `EXOP_LBU:begin
           mem_addr_out = mem_addr_in;
           mem_we_out = `Disable;
-          mem_e_out = `Enable;  //Fix me£º´Ë´¦ÒÔºó¿Ï¶¨ÒªĞŞ¸Ä£¬ÒòÎª°å×ÓÉÏµÄ´æ´¢Æ÷ÊÇ256*16bitsµÄ£¬ÎªÁËÂú×ã°´×Ö½Ú±àÖ·¡¢¶ÔÆëÓëĞ¡¶Ë´æ´¢
-          case (mem_addr_in[1:0])  // ´Ë´¦µÄÂß¼­¿ÉÄÜĞèÒª¸Ä±ä£¡
+          mem_e_out = `Enable;  //Fix meï¼šæ­¤å¤„ä»¥åè‚¯å®šè¦ä¿®æ”¹ï¼Œå› ä¸ºæ¿å­ä¸Šçš„å­˜å‚¨å™¨æ˜¯256*16bitsçš„ï¼Œä¸ºäº†æ»¡è¶³æŒ‰å­—èŠ‚ç¼–å€ã€å¯¹é½ä¸å°ç«¯å­˜å‚¨
+          case (mem_addr_in[1:0])  // æ­¤å¤„çš„é€»è¾‘å¯èƒ½éœ€è¦æ”¹å˜ï¼
             2'b00: begin
-              wreg_data_out = {{24{1'b0}},mem_read_data_in[7:0]};  //ÁãÍØÕ¹
-              mem_byte_sel_out = 4'b0001; //Ğ¡¶Ë´æ´¢  È¡ËÄ¸ö×Ö½ÚµÄ×îµÍÎ»×÷ÎªµØÖ·×îµÍÎ»
+              wreg_data_out = {{24{1'b0}},mem_read_data_in[7:0]};  //é›¶æ‹“å±•
+              mem_byte_sel_out = 4'b0001; //å°ç«¯å­˜å‚¨  å–å››ä¸ªå­—èŠ‚çš„æœ€ä½ä½ä½œä¸ºåœ°å€æœ€ä½ä½
             end
             2'b01: begin
               wreg_data_out = {{24{1'b0}},mem_read_data_in[15:8]};
@@ -162,7 +162,7 @@ module mem (
             2'b00,
             2'b01:begin
               wreg_data_out = {{16{mem_read_data_in[15]}},mem_read_data_in[15:0]};
-              mem_byte_sel_out = 4'b0011;  //Ğ¡¶Ë´æ´¢ ÕâÑù×ö¶ÔÂğ£¿ ¸Ğ¾õÊéÉÏµÄ´ó¶Ë´æ´¢ÊÇ´íÎóµÄ
+              mem_byte_sel_out = 4'b0011;  //å°ç«¯å­˜å‚¨ è¿™æ ·åšå¯¹å—ï¼Ÿ æ„Ÿè§‰ä¹¦ä¸Šçš„å¤§ç«¯å­˜å‚¨æ˜¯é”™è¯¯çš„
             end
             2'b10,
             2'b11:begin
@@ -179,7 +179,7 @@ module mem (
             2'b00,
             2'b01:begin
               wreg_data_out = {{16{1'b0}},mem_read_data_in[15:0]};
-              mem_byte_sel_out = 4'b0011;  //Ğ¡¶Ë´æ´¢ ÕâÑù×ö¶ÔÂğ£¿ ¸Ğ¾õÊéÉÏµÄ´ó¶Ë´æ´¢ÊÇ´íÎóµÄ
+              mem_byte_sel_out = 4'b0011;  //å°ç«¯å­˜å‚¨ è¿™æ ·åšå¯¹å—ï¼Ÿ æ„Ÿè§‰ä¹¦ä¸Šçš„å¤§ç«¯å­˜å‚¨æ˜¯é”™è¯¯çš„
             end
             2'b10,
             2'b11:begin

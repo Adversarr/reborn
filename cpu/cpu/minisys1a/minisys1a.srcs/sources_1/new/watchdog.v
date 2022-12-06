@@ -21,23 +21,23 @@
 
 
 module watchdog(
-  input rst, // ÖØÖÃ£¬È«²¿ÃğµÆ
-  input clk, // Ê±ÖÓ
+  input rst, // é‡ç½®ï¼Œå…¨éƒ¨ç­ç¯
+  input clk, // æ—¶é’Ÿ
 
-  //´Ó×ÜÏßÀ´µÄÊı¾İ ËùÓĞÍâÉèÇı¶¯¶¼Ó¦ÓĞÒÔÏÂĞÅºÅ
+  //ä»æ€»çº¿æ¥çš„æ•°æ® æ‰€æœ‰å¤–è®¾é©±åŠ¨éƒ½åº”æœ‰ä»¥ä¸‹ä¿¡å·
   input wire[`WordRange] addr,
-  input wire en, // Ê¹ÄÜ
+  input wire en, // ä½¿èƒ½
   input wire[3:0] byte_sel,
-  input wire[`WordRange] data_in, // Êı¾İÊäÈë£¨À´×Ôcpu£©
-  input wire we, //Ğ´Ê¹ÄÜ
-  output reg cpu_rst // Í¨ÖªCPU¸´Î»
+  input wire[`WordRange] data_in, // æ•°æ®è¾“å…¥ï¼ˆæ¥è‡ªcpuï¼‰
+  input wire we, //å†™ä½¿èƒ½
+  output reg cpu_rst // é€šçŸ¥CPUå¤ä½
   );
     
-  reg[15:0] current; // µ±Ç°¼ÆÊıÖµ
-  reg[1:0] keeper; // ¸¨Öú±£³Ö4¸öÊ±ÖÓÖÜÆÚµÄcpu_rst
+  reg[15:0] current; // å½“å‰è®¡æ•°å€¼
+  reg[1:0] keeper; // è¾…åŠ©ä¿æŒ4ä¸ªæ—¶é’Ÿå‘¨æœŸçš„cpu_rst
 
   always @(*) begin
-    // ×ÔÉí±»rst£¬»òÕß±»·ÃÎÊÊ±£¬ÖØÖÃ
+    // è‡ªèº«è¢«rstï¼Œæˆ–è€…è¢«è®¿é—®æ—¶ï¼Œé‡ç½®
     if (rst == `Enable) begin
       current <= 16'hffff;
       cpu_rst <= `Disable;
@@ -45,16 +45,16 @@ module watchdog(
     end
   end
 
-  always @(posedge clk) begin  //Ğ´ÊÇÉÏÉıÑØĞ´
+  always @(posedge clk) begin  //å†™æ˜¯ä¸Šå‡æ²¿å†™
     current <= current - 16'd1;
-    // count-downÂú£¬·­»Ø£¬²¢¿ªÊ¼Í¨ÖªCPUÖØÖÃ
+    // count-downæ»¡ï¼Œç¿»å›ï¼Œå¹¶å¼€å§‹é€šçŸ¥CPUé‡ç½®
     if(addr == 32'hfffffc50 && en == `Enable && we == `Enable) begin
       current <= 16'hffff;
     end else if (current == 16'd0) begin
       current <= 16'hffff;
       keeper <= 2'b11;
     end
-    // ±£³Ö4¸öÊ±ÖÓÖÜÆÚµÄcpu_rst
+    // ä¿æŒ4ä¸ªæ—¶é’Ÿå‘¨æœŸçš„cpu_rst
     if (keeper == 0) begin
       cpu_rst <= `Disable;
     end

@@ -3,7 +3,7 @@
 
 `include "public.v"
 
-// 流水级EX-MEM之间的寄存器
+// 娴佹按绾X-MEM涔嬮棿鐨勫瘎瀛樺櫒
 module ex_mem (
   
   input rst,
@@ -35,11 +35,11 @@ module ex_mem (
   output reg[`WordRange] t_mem_data,
 
 
-  //新增加的接口
+  //鏂板鍔犵殑鎺ュ彛
   input wire[`WordRange] f_ex_ins,
   output reg[`WordRange] t_mem_ins,
 
-  //cp0相关
+  //cp0鐩稿叧
   input wire f_ex_cp0_we,
   input wire[4:0] f_ex_cp0_waddr,
   input wire[`WordRange] f_ex_cp0_wdata,
@@ -47,7 +47,7 @@ module ex_mem (
   output reg[4:0] t_mem_cp0_waddr,
   output reg[`WordRange] t_mem_cp0_wdata,
 
-  //异常相关
+  //寮傚父鐩稿叧
   input wire flush,
   input wire[`WordRange] f_ex_pc_addr_in,
   input wire[`WordRange] f_ex_abnormal_type,

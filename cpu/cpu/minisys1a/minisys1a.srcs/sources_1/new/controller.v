@@ -3,16 +3,16 @@
 
 `include "public.v"
 
-// Á÷Ë®Ïßµ÷¶ÈÆ÷
+// æµæ°´çº¿è°ƒåº¦å™¨
 module ppl_scheduler (
 
   input rst,
 
-  // ×èÈûÇëÇó
+  // é˜»å¡è¯·æ±‚
   input pause_req_id,
   input pause_req_ex,
 
-  // ×èÈûÏìÓ¦
+  // é˜»å¡å“åº”
   output reg pause_res_pc,
   output reg pause_res_if,
   output reg pause_res_id,
@@ -20,7 +20,7 @@ module ppl_scheduler (
   output reg pause_res_mem,
   output reg pause_res_wb, 
 
-  // Òì³£Ïà¹Ø
+  // å¼‚å¸¸ç›¸å…³
   input wire[`WordRange] abnormal_type,
   input wire[`WordRange] cp0_epc_in,
   output reg[`WordRange] interrupt_pc_out,
@@ -30,7 +30,7 @@ module ppl_scheduler (
 
   always @(*) begin
     if (rst == `Enable) begin
-      // rstÊ±³·ÏúËùÓĞÔİÍ£
+      // rstæ—¶æ’¤é”€æ‰€æœ‰æš‚åœ
       pause_res_pc = `Disable;
       pause_res_if = `Disable;
       pause_res_id = `Disable;
@@ -62,7 +62,7 @@ module ppl_scheduler (
         end
       endcase
     end else if (pause_req_id == `Enable || pause_req_ex == `Enable) begin
-      // µ±ÓĞÔİÍ£ÇëÇóÊ±£¬ÔİÍ£ËùÓĞÁ÷Ë®¼¶
+      // å½“æœ‰æš‚åœè¯·æ±‚æ—¶ï¼Œæš‚åœæ‰€æœ‰æµæ°´çº§
       flush = `Disable;
       pause_res_pc = `Enable;
       pause_res_if = `Enable;
@@ -71,7 +71,7 @@ module ppl_scheduler (
       pause_res_mem = `Enable;
       pause_res_wb = `Enable;
     end else begin
-      // Ä¬ÈÏ²»ÔİÍ£
+      // é»˜è®¤ä¸æš‚åœ
       flush = `Disable;
       pause_res_pc = `Disable;
       pause_res_if = `Disable;

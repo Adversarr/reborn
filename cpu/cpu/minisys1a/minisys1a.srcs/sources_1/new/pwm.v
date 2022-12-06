@@ -21,29 +21,29 @@
 
 
 module pwm(
-  input rst, // ÖØÖÃ£¬È«²¿ÃğµÆ
-  input clk, // Ê±ÖÓ
+  input rst, // é‡ç½®ï¼Œå…¨éƒ¨ç­ç¯
+  input clk, // æ—¶é’Ÿ
 
-  //´Ó×ÜÏßÀ´µÄÊı¾İ ËùÓĞÍâÉèÇı¶¯¶¼Ó¦ÓĞÒÔÏÂĞÅºÅ
+  //ä»æ€»çº¿æ¥çš„æ•°æ® æ‰€æœ‰å¤–è®¾é©±åŠ¨éƒ½åº”æœ‰ä»¥ä¸‹ä¿¡å·
   input wire[`WordRange] addr,
-  input wire en, // Ê¹ÄÜ
+  input wire en, // ä½¿èƒ½
   input wire[3:0] byte_sel,
-  input wire[`WordRange] data_in, // Êı¾İÊäÈë£¨À´×Ôcpu£©
-  input wire we, //Ğ´Ê¹ÄÜ
+  input wire[`WordRange] data_in, // æ•°æ®è¾“å…¥ï¼ˆæ¥è‡ªcpuï¼‰
+  input wire we, //å†™ä½¿èƒ½
 
-  //·¢ËÍ¸øÖÙ²ÃÆ÷ ËùÓĞÍâÉè¶¼Ó¦ÓĞ´ËÊä³ö
+  //å‘é€ç»™ä»²è£å™¨ æ‰€æœ‰å¤–è®¾éƒ½åº”æœ‰æ­¤è¾“å‡º
   output reg[`WordRange] data_out,
 
-  output reg result // PWMµ÷ÖÆ½á¹û
+  output reg result // PWMè°ƒåˆ¶ç»“æœ
 );
 
-  reg[15:0] threshold; // ×î´óÖµ¼Ä´æÆ÷
-  reg[15:0] compare; // ¶Ô±ÈÖµ¼Ä´æÆ÷
-  reg[7:0] ctrl; // ¿ØÖÆ¼Ä´æÆ÷
-  reg[15:0] current; // µ±Ç°Öµ
+  reg[15:0] threshold; // æœ€å¤§å€¼å¯„å­˜å™¨
+  reg[15:0] compare; // å¯¹æ¯”å€¼å¯„å­˜å™¨
+  reg[7:0] ctrl; // æ§åˆ¶å¯„å­˜å™¨
+  reg[15:0] current; // å½“å‰å€¼
 
 
-  always @(*)begin //¶ÁÊÇËæÊ±¶Á
+  always @(*)begin //è¯»æ˜¯éšæ—¶è¯»
     if(rst == `Enable)begin
       data_out = `ZeroWord;
     end else begin
@@ -61,7 +61,7 @@ module pwm(
     end
   end
 
-  always @(posedge clk) begin //Ğ´ÊÇÉÏÉıÑØĞ´
+  always @(posedge clk) begin //å†™æ˜¯ä¸Šå‡æ²¿å†™
     if(addr[31:4] == {28'hfffffc3} && en == `Enable && we == `Enable)begin
       if(addr[3:2] == 2'b00) begin
         if(byte_sel[0] == 1'b1)begin
@@ -85,7 +85,7 @@ module pwm(
   end
 
   always @(posedge clk) begin
-    // ÖØÉè
+    // é‡è®¾
     if (rst == `Enable) begin
       threshold <= 16'hffff;
       compare <= 16'h7fff;
@@ -97,10 +97,10 @@ module pwm(
         current <= 16'd0;
         result <= `Enable;
       end
-        // Ò»°ãÇé¿öÏÂ¼ÓÒ»¼´¿É
+        // ä¸€èˆ¬æƒ…å†µä¸‹åŠ ä¸€å³å¯
         current = current + 16'd1;
     end
-      // Ö»ÓĞÔÚÊ¹ÄÜ£¬ÇÒ¿ØÖÆ¼Ä´æÆ÷[0]Î»ÓĞĞ§Ê±£¬²Å±£Ö¤Êä³ö¿É¿¿
+      // åªæœ‰åœ¨ä½¿èƒ½ï¼Œä¸”æ§åˆ¶å¯„å­˜å™¨[0]ä½æœ‰æ•ˆæ—¶ï¼Œæ‰ä¿è¯è¾“å‡ºå¯é 
     if ( ctrl[0] ) begin
       if (current > compare) begin
         result <= `Disable;

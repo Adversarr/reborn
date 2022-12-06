@@ -23,7 +23,7 @@
 
 `include "public.v"
 
-// HI/LO¼Ä´æÆ÷
+// HI/LOå¯„å­˜å™¨
 module hilo (
 
   input rst,

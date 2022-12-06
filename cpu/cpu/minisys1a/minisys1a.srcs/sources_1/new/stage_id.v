@@ -3,71 +3,71 @@
 
 `include "public.v"
 
-// Ö¸ÁîÒëÂëÄ£¿é
-// ¶ÔÖ¸Áî½øÐÐÒëÂë£¬Êä³ö°üÀ¨£º
-// Ô´²Ù×÷Êý1¡¢Ô´²Ù×÷Êý2¡¢Ð´ÈëµÄÄ¿µÄ¼Ä´æÆ÷µÄÔËËãÀàÐÍ£¨Âß¼­¡¢ÒÆÎ»¡¢ËãÊõ£©
+// æŒ‡ä»¤è¯‘ç æ¨¡å—
+// å¯¹æŒ‡ä»¤è¿›è¡Œè¯‘ç ï¼Œè¾“å‡ºåŒ…æ‹¬ï¼š
+// æºæ“ä½œæ•°1ã€æºæ“ä½œæ•°2ã€å†™å…¥çš„ç›®çš„å¯„å­˜å™¨çš„è¿ç®—ç±»åž‹ï¼ˆé€»è¾‘ã€ç§»ä½ã€ç®—æœ¯ï¼‰
 module id (
 
-  input rst, // ¸´Î»
-  input wire[`WordRange] pc_in, // ÊäÈëµÄPCÖµ£¬ÒëÂë½×¶ÎÖ¸ÁîµØÖ·
-  input wire[`WordRange] ins_in, // ÊäÈëµÄÖ¸Áî£¬¼´È¡³öµÄÖ¸Áî
+  input rst, // å¤ä½
+  input wire[`WordRange] pc_in, // è¾“å…¥çš„PCå€¼ï¼Œè¯‘ç é˜¶æ®µæŒ‡ä»¤åœ°å€
+  input wire[`WordRange] ins_in, // è¾“å…¥çš„æŒ‡ä»¤ï¼Œå³å–å‡ºçš„æŒ‡ä»¤
 
-  // ¼Ä´æÆ÷À´ÏòÊý¾ÝÏà¹Ø½Ó¿Ú
-  input wire[`WordRange] reg1_data_in, // ÊäÈëµÄ¼Ä´æÆ÷Êý¾Ý1
-  input wire[`WordRange] reg2_data_in, // ÊäÈëµÄ¼Ä´æÆ÷Êý¾Ý2
-  output reg reg1_ren_out, // ¼Ä´æÆ÷¶ÁÊ¹ÄÜ1
-  output reg reg2_ren_out, // ¼Ä´æÆ÷¶ÁÊ¹ÄÜ2
-  output reg[`RegRangeLog2] reg1_addr_out, // ¼Ä´æÆ÷¶ÁµØÖ·1
-  output reg[`RegRangeLog2] reg2_addr_out, // ¼Ä´æÆ÷¶ÁµØÖ·2
+  // å¯„å­˜å™¨æ¥å‘æ•°æ®ç›¸å…³æŽ¥å£
+  input wire[`WordRange] reg1_data_in, // è¾“å…¥çš„å¯„å­˜å™¨æ•°æ®1
+  input wire[`WordRange] reg2_data_in, // è¾“å…¥çš„å¯„å­˜å™¨æ•°æ®2
+  output reg reg1_ren_out, // å¯„å­˜å™¨è¯»ä½¿èƒ½1
+  output reg reg2_ren_out, // å¯„å­˜å™¨è¯»ä½¿èƒ½2
+  output reg[`RegRangeLog2] reg1_addr_out, // å¯„å­˜å™¨è¯»åœ°å€1
+  output reg[`RegRangeLog2] reg2_addr_out, // å¯„å­˜å™¨è¯»åœ°å€2
 
-  // ¸æËßÖ´ÐÐµ¥ÔªÓ¦Ö´ÐÐºÎÖÖ²Ù×÷
-  output reg[`ALUOpRange] exop_out, // Êä³öµÄALUOp
+  // å‘Šè¯‰æ‰§è¡Œå•å…ƒåº”æ‰§è¡Œä½•ç§æ“ä½œ
+  output reg[`ALUOpRange] exop_out, // è¾“å‡ºçš„ALUOp
 
-  // ×îÖÕ¾ö¶¨µÄÊý¾Ý
-  output reg[`WordRange] data1_out, // Êä³öµÄÊý¾Ý1
-  output reg[`WordRange] data2_out, // Êä³öµÄÊý¾Ý2
+  // æœ€ç»ˆå†³å®šçš„æ•°æ®
+  output reg[`WordRange] data1_out, // è¾“å‡ºçš„æ•°æ®1
+  output reg[`WordRange] data2_out, // è¾“å‡ºçš„æ•°æ®2
   
-  // ¼Ä´æÆ÷È¥ÏòÏà¹Ø½Ó¿Ú
-  output reg wreg_wen_out, // Ð´¼Ä´æÆ÷Ê¹ÄÜÊä³ö
-  output reg[`RegRangeLog2] wreg_addr_out, // Ð´¼Ä´æÆ÷µØÖ·Êä³ö
+  // å¯„å­˜å™¨åŽ»å‘ç›¸å…³æŽ¥å£
+  output reg wreg_wen_out, // å†™å¯„å­˜å™¨ä½¿èƒ½è¾“å‡º
+  output reg[`RegRangeLog2] wreg_addr_out, // å†™å¯„å­˜å™¨åœ°å€è¾“å‡º
 
-  // ÏÂÃæ²¿·ÖÓÃÓÚ²ÉÓÃÊý¾ÝÇ°ÍÆ£¨×ªÒÆ£©·¨½â¾öÏà¸ô0Ìõ£¨ID-EX£©ºÍÏà¸ô1Ìõ£¨ID-MEM£©½×¶ÎµÄRAWÊý¾ÝÏà¹Ø
-  // EX½×¶ÎÔËËã½á¹û£¨¼´ÉÏÌõÖ¸Áî£©
+  // ä¸‹é¢éƒ¨åˆ†ç”¨äºŽé‡‡ç”¨æ•°æ®å‰æŽ¨ï¼ˆè½¬ç§»ï¼‰æ³•è§£å†³ç›¸éš”0æ¡ï¼ˆID-EXï¼‰å’Œç›¸éš”1æ¡ï¼ˆID-MEMï¼‰é˜¶æ®µçš„RAWæ•°æ®ç›¸å…³
+  // EXé˜¶æ®µè¿ç®—ç»“æžœï¼ˆå³ä¸Šæ¡æŒ‡ä»¤ï¼‰
   input wire ex_wreg_en_in,
   input wire[`WordRange] ex_wreg_data_in,
   input wire[`RegRangeLog2] ex_wreg_addr_in,
-  // MEM½×¶ÎÔËËã½á¹û£¨ÉÏÁ½ÌõÖ¸Áî£©
+  // MEMé˜¶æ®µè¿ç®—ç»“æžœï¼ˆä¸Šä¸¤æ¡æŒ‡ä»¤ï¼‰
   input wire mem_wreg_en_in,
   input wire[`WordRange] mem_wreg_data_in,
   input wire[`RegRangeLog2] mem_wreg_addr_in,
 
-  output reg pause_req, // ÒªÇó½øÐÐÁ÷Ë®ÔÝÍ£ÐÅºÅ
+  output reg pause_req, // è¦æ±‚è¿›è¡Œæµæ°´æš‚åœä¿¡å·
 
-  // ÑÓ³Ù²ÛÏà¹Ø
-  input wire in_delayslot_in, // µ±Ç°Òª½øÈë£¨ÒëÂë½×¶Î£©Ö¸ÁîÊÇ·ñÊÇÑÓ³Ù²ÛÄÚÖ¸Áî£¨±ØÐëÖ´ÐÐ£©
-  output reg in_delayslot_out,  // µ±Ç°Òª³ö£¨ÒëÂë½×¶Î£©Ö¸ÁîÊÇ·ñÊÇÑÓ³Ù²ÛÄÚÖ¸Áî£¨±ØÐëÖ´ÐÐ£©
-  output reg next_in_delayslot_out, // ÏÂÌõÖ¸ÁîÊÇ·ñ´¦ÊÇÑÓ³Ù²ÛÄÚÖ¸Áî£¨¼´µ±Ç°Ö¸ÁîÊÇ·ñÒªÌø×ª£©
+  // å»¶è¿Ÿæ§½ç›¸å…³
+  input wire in_delayslot_in, // å½“å‰è¦è¿›å…¥ï¼ˆè¯‘ç é˜¶æ®µï¼‰æŒ‡ä»¤æ˜¯å¦æ˜¯å»¶è¿Ÿæ§½å†…æŒ‡ä»¤ï¼ˆå¿…é¡»æ‰§è¡Œï¼‰
+  output reg in_delayslot_out,  // å½“å‰è¦å‡ºï¼ˆè¯‘ç é˜¶æ®µï¼‰æŒ‡ä»¤æ˜¯å¦æ˜¯å»¶è¿Ÿæ§½å†…æŒ‡ä»¤ï¼ˆå¿…é¡»æ‰§è¡Œï¼‰
+  output reg next_in_delayslot_out, // ä¸‹æ¡æŒ‡ä»¤æ˜¯å¦å¤„æ˜¯å»¶è¿Ÿæ§½å†…æŒ‡ä»¤ï¼ˆå³å½“å‰æŒ‡ä»¤æ˜¯å¦è¦è·³è½¬ï¼‰
   
-  // ·ÖÖ§Ïà¹Ø
-  output reg branch_en_out,  // ·ÖÖ§ÉúÐ§ÐÅºÅ
-  output reg[`WordRange] branch_addr_out, // ·ÖÖ§Ìø×ªµØÖ·
-  output reg[`WordRange] link_addr_out, // ×ªÒÆÖ¸ÁîÐèÒª±£´æµÄµØÖ·
+  // åˆ†æ”¯ç›¸å…³
+  output reg branch_en_out,  // åˆ†æ”¯ç”Ÿæ•ˆä¿¡å·
+  output reg[`WordRange] branch_addr_out, // åˆ†æ”¯è·³è½¬åœ°å€
+  output reg[`WordRange] link_addr_out, // è½¬ç§»æŒ‡ä»¤éœ€è¦ä¿å­˜çš„åœ°å€
   
-  output reg[`WordRange] ins_out,   // ÏòÁ÷Ë®ÏßºóÐø´«µÝµÄÖ¸Áî ÔÚÌí¼Ó´æ´¢Ö¸ÁîÊ±ÐèÒªÓÃµ½
+  output reg[`WordRange] ins_out,   // å‘æµæ°´çº¿åŽç»­ä¼ é€’çš„æŒ‡ä»¤ åœ¨æ·»åŠ å­˜å‚¨æŒ‡ä»¤æ—¶éœ€è¦ç”¨åˆ°
 
-  // Òì³£Ïà¹Ø
+  // å¼‚å¸¸ç›¸å…³
   // abnormal_type_out
-  // 31...12 Ô¤Áô
+  // 31...12 é¢„ç•™
   // 11 eret
   // 10 systemcall
   // 9...8 abnormal info
   // 7...0 interrupt info
-  output reg[`WordRange] abnormal_type_out,//Ö¸ÁîµÄÒì³£ÐÅÏ¢
-  output reg[`WordRange] current_id_pc_addr_out //µ±Ç°´¦ÔÚÒëÂë½×¶ÎÖ¸ÁîµÄµØÖ·
+  output reg[`WordRange] abnormal_type_out,//æŒ‡ä»¤çš„å¼‚å¸¸ä¿¡æ¯
+  output reg[`WordRange] current_id_pc_addr_out //å½“å‰å¤„åœ¨è¯‘ç é˜¶æ®µæŒ‡ä»¤çš„åœ°å€
 
 );
 
-  // Ö¸ÁîµÄ¸÷¸ö¿ÉÄÜ×é³É
+  // æŒ‡ä»¤çš„å„ä¸ªå¯èƒ½ç»„æˆ
   wire[5:0] op = ins_in[`OpRange];
   wire[4:0] rs = ins_in[`RsRange];
   wire[4:0] rt = ins_in[`RtRange];
@@ -78,14 +78,14 @@ module id (
   wire[15:0] offset = ins_in[`OffsetRange];
   wire[25:0] address = ins_in[`AddressRange];
 
-  reg[`WordRange] immed; // Ö¸ÁîÖÐµÄÁ¢¼´ÊýµÄÀ©Õ¹½á¹û
+  reg[`WordRange] immed; // æŒ‡ä»¤ä¸­çš„ç«‹å³æ•°çš„æ‰©å±•ç»“æžœ
   initial begin
     pause_req = `Disable;
   end
 
-  // Ö¸ÁîÒëÂë
+  // æŒ‡ä»¤è¯‘ç 
   always @(*) begin
-    // rstÊ±¹ØµôËùÓÐÊ¹ÄÜ£¬Çå¿ÕÁ¢¼´Êý
+    // rstæ—¶å…³æŽ‰æ‰€æœ‰ä½¿èƒ½ï¼Œæ¸…ç©ºç«‹å³æ•°
     if (rst == `Enable) begin
       exop_out = `ALUOP_NOP;
       wreg_wen_out = `Disable;
@@ -93,31 +93,31 @@ module id (
       reg2_ren_out = `Disable;
       immed = `ZeroWord;
       ins_out = `ZeroWord;
-    // ¾ßÌåÒëÂëÂß¼­
+    // å…·ä½“è¯‘ç é€»è¾‘
     end else begin
-      ins_out = ins_in; // Ö±½ÓÏòÏÂ´«µÝ
-      // ÏÈ¸³Ä¬ÈÏÖµ£¬ÒÔÃâÓÐÐ©Ö¸Áî²»ÐèÒªÐÞ¸ÄÆäÖÐÒ»Ð©ÖµÊ±³öÏÖ´íÎó
-      exop_out = `ALUOP_NOP; // ALU Ã»ÓÐ²Ù×÷
-      // ½ûÖ¹Ïà¹ØÊ¹ÄÜ
+      ins_out = ins_in; // ç›´æŽ¥å‘ä¸‹ä¼ é€’
+      // å…ˆèµ‹é»˜è®¤å€¼ï¼Œä»¥å…æœ‰äº›æŒ‡ä»¤ä¸éœ€è¦ä¿®æ”¹å…¶ä¸­ä¸€äº›å€¼æ—¶å‡ºçŽ°é”™è¯¯
+      exop_out = `ALUOP_NOP; // ALU æ²¡æœ‰æ“ä½œ
+      // ç¦æ­¢ç›¸å…³ä½¿èƒ½
       wreg_wen_out = `Disable;
       reg1_ren_out = `Disable;
       reg2_ren_out = `Disable;
-      // ËÍ0×Ö
+      // é€0å­—
       immed = `ZeroWord;
-      // Ã»ÓÐ·ÖÖ§
+      // æ²¡æœ‰åˆ†æ”¯
       link_addr_out = `ZeroWord;
       next_in_delayslot_out = `Disable;
       branch_en_out = `Disable;
       branch_addr_out = `ZeroWord;
-      // Ã»ÓÐÒì³£ÐÅÏ¢
+      // æ²¡æœ‰å¼‚å¸¸ä¿¡æ¯
       abnormal_type_out = `ZeroWord;
-      // °ÑÖ¸ÁîµØÖ·ÍùÏÂ´«
+      // æŠŠæŒ‡ä»¤åœ°å€å¾€ä¸‹ä¼ 
       current_id_pc_addr_out = pc_in;
-      // ¸ù¾Ýop·­Òë
+      // æ ¹æ®opç¿»è¯‘
       if (ins_in == 32'd0) begin
         // nop
       end else begin
-        // RÀàÖ¸Áî
+        // Rç±»æŒ‡ä»¤
       if (op == `OP_RTYPE) begin
         case (func)
           `FUNC_OR: begin
@@ -210,8 +210,8 @@ module id (
             immed = {27'h0, shamt};
             exop_out = `ALUOP_SRA;
           end
-          // HILOÏà¹Ø
-          // ×¢ÒâHI/LO²»ÔÚ32¸ö¼Ä´æÆ÷µÄGPRÖÐ£¬Ê¹ÄÜ²»Òª¸ø´í
+          // HILOç›¸å…³
+          // æ³¨æ„HI/LOä¸åœ¨32ä¸ªå¯„å­˜å™¨çš„GPRä¸­ï¼Œä½¿èƒ½ä¸è¦ç»™é”™
           `FUNC_MFHI: begin
             wreg_wen_out = `Enable;
             wreg_addr_out = rd;
@@ -326,7 +326,7 @@ module id (
             reg2_addr_out = rt;
             exop_out = `ALUOP_MULTU;
           end
-          // Ìø×ªÀà
+          // è·³è½¬ç±»
           `FUNC_JR: begin   // rs->pc
             wreg_wen_out = `Disable;
             reg1_ren_out = `Enable;
@@ -337,7 +337,7 @@ module id (
             next_in_delayslot_out = `Enable;
             exop_out = `EXOP_JR;
           end
-          `FUNC_JALR: begin  // rd<-PC+4£¬PC<-rs
+          `FUNC_JALR: begin  // rd<-PC+4ï¼ŒPC<-rs
             wreg_wen_out = `Enable;
             wreg_addr_out = rd;
             reg1_ren_out = `Enable;
@@ -345,12 +345,12 @@ module id (
             reg2_ren_out = `Disable;
             branch_en_out = `Enable;
             branch_addr_out = data1_out;
-            // Link²Ù×÷£¬±£´æ·µ»ØµØÖ·ÊÇPC+8
+            // Linkæ“ä½œï¼Œä¿å­˜è¿”å›žåœ°å€æ˜¯PC+8
             link_addr_out = pc_in + 32'd8;
             next_in_delayslot_out = `Enable;
             exop_out = `EXOP_JALR;
           end
-          //Òì³£Ïà¹Ø
+          //å¼‚å¸¸ç›¸å…³
           `FUNC_SYSCALL :begin
             wreg_wen_out = `Disable;
             reg1_ren_out = `Disable;
@@ -367,7 +367,7 @@ module id (
           end
         endcase
       end else begin
-        // IÀà»òJÀà
+        // Iç±»æˆ–Jç±»
         case (op)
           `OP_ORI: begin
             wreg_wen_out = `Enable;
@@ -397,7 +397,7 @@ module id (
             exop_out = `ALUOP_XOR;
           end
           `OP_LUI: begin
-            // ½èÖúrs=$0µÄÌØÐÔ£¬¿ÉµÈ¼ÛÈçÏÂÊµÏÖ
+            // å€ŸåŠ©rs=$0çš„ç‰¹æ€§ï¼Œå¯ç­‰ä»·å¦‚ä¸‹å®žçŽ°
             wreg_wen_out = `Enable;
             wreg_addr_out = rt;
             reg1_ren_out = `Enable;
@@ -453,12 +453,12 @@ module id (
           end
           `OP_JAL: begin
             wreg_wen_out = `Enable;
-            wreg_addr_out = `RegCountLog2'd31; // ¹Ì¶¨ÊÇ$ra
+            wreg_addr_out = `RegCountLog2'd31; // å›ºå®šæ˜¯$ra
             reg1_ren_out = `Disable;
             reg2_ren_out = `Disable;
             branch_en_out = `Enable;
             branch_addr_out = {4'b0000, address[25:0], 2'b00};
-            // Link²Ù×÷
+            // Linkæ“ä½œ
             link_addr_out = pc_in + 32'd8;
             next_in_delayslot_out = `Enable;
             exop_out = `EXOP_JAL;
@@ -484,7 +484,7 @@ module id (
             reg1_addr_out = rs;
             reg2_ren_out = `Disable;
             branch_en_out = `Disable;
-            // ÅÐ¶Ï±È0´ó
+            // åˆ¤æ–­æ¯”0å¤§
             if (data1_out[31] == 1'b0 && data1_out != `ZeroWord) begin
               branch_en_out = `Enable;
               branch_addr_out = pc_in + 32'd4 + {{14{offset[15]}}, offset[15:0], 2'b00};
@@ -498,7 +498,7 @@ module id (
             reg1_addr_out = rs;
             reg2_ren_out = `Disable;
             branch_en_out = `Disable;
-            // ÅÐ¶Ï±ÈÁãÐ¡»òÏàµÈ
+            // åˆ¤æ–­æ¯”é›¶å°æˆ–ç›¸ç­‰
             if (data1_out[31] == 1'b1 || data1_out == `ZeroWord) begin
               branch_en_out = `Enable;
               branch_addr_out = pc_in + 32'd4 + {{14{offset[15]}}, offset[15:0], 2'b00};
@@ -519,7 +519,7 @@ module id (
               next_in_delayslot_out = `Enable;
             end
           end
-          `OP_BGEZ: begin // bgez, bltz, bgezal, bltzal¶¼ÓÐ¿ÉÄÜ
+          `OP_BGEZ: begin // bgez, bltz, bgezal, bltzaléƒ½æœ‰å¯èƒ½
             if (rt == 5'b00001) begin // bgez
               wreg_wen_out = `Disable;
               exop_out = `EXOP_BGEZ;
@@ -574,7 +574,7 @@ module id (
               end
             end  
           end
-          // ·Ã´æÏà¹ØÖ¸Áî
+          // è®¿å­˜ç›¸å…³æŒ‡ä»¤
           `OP_LB: begin
             wreg_wen_out = `Enable;
             wreg_addr_out = rt;
@@ -640,21 +640,21 @@ module id (
             reg2_addr_out = rt;
           end
           `OP_CP0: begin
-            if (rs == 5'b00000) begin // ÊÇmfc0
+            if (rs == 5'b00000) begin // æ˜¯mfc0
               wreg_wen_out = `Enable;
               wreg_addr_out = rt;
               exop_out = `EXOP_MFC0;
               reg1_ren_out = `Disable;
               reg2_ren_out = `Disable;
             end
-            if (rs == 5'b00100) begin // ÊÇmtc0
+            if (rs == 5'b00100) begin // æ˜¯mtc0
               wreg_wen_out = `Disable;
               exop_out = `EXOP_MTC0;
               reg1_ren_out = `Enable;
               reg1_addr_out = rt;
               reg2_ren_out = `Disable;
             end
-            if(ins_in[25:0] == 26'b10000000000000000000011000) begin // ÊÇeretÖ¸Áî
+            if(ins_in[25:0] == 26'b10000000000000000000011000) begin // æ˜¯eretæŒ‡ä»¤
               wreg_wen_out = `Disable;
               exop_out = `EXOP_ERET;
               reg1_ren_out = `Disable;
@@ -678,33 +678,33 @@ module id (
     end
   end
 
-  // ÏÂÃæ¿ªÊ¼È·¶¨ËÍµ½EXµÄÊý¾Ý¾ßÌåÀ´×ÔÓÚÄÄÀï
-  // ÕâÈ¡¾öÓÚÀ´Ô´ÊÇ¼Ä´æÆ÷£¬»¹ÊÇÁ¢¼´Êý
+  // ä¸‹é¢å¼€å§‹ç¡®å®šé€åˆ°EXçš„æ•°æ®å…·ä½“æ¥è‡ªäºŽå“ªé‡Œ
+  // è¿™å–å†³äºŽæ¥æºæ˜¯å¯„å­˜å™¨ï¼Œè¿˜æ˜¯ç«‹å³æ•°
   always @(*) begin
-    // rstÊ±¹Ì¶¨³ö0x0
+    // rstæ—¶å›ºå®šå‡º0x0
     if (rst == `Enable) begin
       data1_out = `ZeroWord;
-    // ½â¾öÏà¸ô0Ìõ£¨ID-EX£©µÄÁ÷Ë®Êý¾ÝÏà¹Ø
-    // Èç¹ûÇ°ÃæµÄEXÒªÐ´µÄ¾ÍÊÇºóÃæµÄIDÒª¶ÁµÄ£¬Ôò´©Í¸£¨×ª·¢£©
+    // è§£å†³ç›¸éš”0æ¡ï¼ˆID-EXï¼‰çš„æµæ°´æ•°æ®ç›¸å…³
+    // å¦‚æžœå‰é¢çš„EXè¦å†™çš„å°±æ˜¯åŽé¢çš„IDè¦è¯»çš„ï¼Œåˆ™ç©¿é€ï¼ˆè½¬å‘ï¼‰
     end else if (ex_wreg_en_in == `Enable && reg1_ren_out == `Enable && reg1_addr_out == ex_wreg_addr_in) begin
       data1_out = ex_wreg_data_in;
-    // ½â¾öÏà¸ô1Ìõ£¨ID-MEM£©µÄÁ÷Ë®Êý¾ÝÏà¹Ø
-    // Èç¹ûÇ°ÃæµÄMEMÒªÐ´µÄ¾ÍÊÇºóÃæµÄIDÒª¶ÁµÄ£¬Ôò´©Í¸£¨×ª·¢£©
+    // è§£å†³ç›¸éš”1æ¡ï¼ˆID-MEMï¼‰çš„æµæ°´æ•°æ®ç›¸å…³
+    // å¦‚æžœå‰é¢çš„MEMè¦å†™çš„å°±æ˜¯åŽé¢çš„IDè¦è¯»çš„ï¼Œåˆ™ç©¿é€ï¼ˆè½¬å‘ï¼‰
     end else if (mem_wreg_en_in == `Enable && reg1_ren_out == `Enable && reg1_addr_out == mem_wreg_addr_in) begin
       data1_out = mem_wreg_data_in;  
-    // Èç¹ûÖ¸ÁîÒëÂëµÄ½á¹ûÐèÒª¶Áreg1£¬¾ÍËµÃ÷²Ù×÷Êý1À´×Ô¼Ä´æÆ÷£¨rs£©
+    // å¦‚æžœæŒ‡ä»¤è¯‘ç çš„ç»“æžœéœ€è¦è¯»reg1ï¼Œå°±è¯´æ˜Žæ“ä½œæ•°1æ¥è‡ªå¯„å­˜å™¨ï¼ˆrsï¼‰
     end else if (reg1_ren_out == `Enable) begin
       data1_out = reg1_data_in;
-    // Èç¹ûÖ¸ÁîÒëÂëµÄ½á¹û²»ÐèÒª¶Áreg1£¬¾ÍËµÃ÷²Ù×÷Êý1ÊÇÁ¢¼´Êý
+    // å¦‚æžœæŒ‡ä»¤è¯‘ç çš„ç»“æžœä¸éœ€è¦è¯»reg1ï¼Œå°±è¯´æ˜Žæ“ä½œæ•°1æ˜¯ç«‹å³æ•°
     end else if (reg1_ren_out == `Disable) begin
       data1_out = immed;
-    // ¶µµ×
+    // å…œåº•
     end else begin
       data1_out = `ZeroWord;
     end
   end
 
-  // Âß¼­Í¬ÉÏ
+  // é€»è¾‘åŒä¸Š
   always @(*) begin
     if (rst == `Enable) begin
       data2_out = `ZeroWord;
@@ -712,7 +712,7 @@ module id (
       data2_out = ex_wreg_data_in;
     end else if (mem_wreg_en_in == `Enable && reg2_ren_out == `Enable && reg2_addr_out == mem_wreg_addr_in) begin
       data2_out = mem_wreg_data_in;  
-    end else if (reg2_ren_out == `Enable) begin //£¨rt£©
+    end else if (reg2_ren_out == `Enable) begin //ï¼ˆrtï¼‰
       data2_out = reg2_data_in;
     end else if (reg2_ren_out == `Disable) begin
       data2_out = immed;

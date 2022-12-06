@@ -21,26 +21,26 @@
 
 
 module switches(
-  input rst, // ÖØÖÃ
-  input clk, // Ê±ÖÓ
+  input rst, // é‡ç½®
+  input clk, // æ—¶é’Ÿ
 
-  //´Ó×ÜÏßÀ´µÄÊı¾İ ËùÓĞÍâÉèÇı¶¯¶¼Ó¦ÓĞÒÔÏÂĞÅºÅ
+  //ä»æ€»çº¿æ¥çš„æ•°æ® æ‰€æœ‰å¤–è®¾é©±åŠ¨éƒ½åº”æœ‰ä»¥ä¸‹ä¿¡å·
   input wire[`WordRange] addr,
-  input wire en, // Ê¹ÄÜ
+  input wire en, // ä½¿èƒ½
   input wire[3:0] byte_sel,
-  input wire[`WordRange] data_in, // Êı¾İÊäÈë£¨À´×Ôcpu£©
-  input wire we, //Ğ´Ê¹ÄÜ
+  input wire[`WordRange] data_in, // æ•°æ®è¾“å…¥ï¼ˆæ¥è‡ªcpuï¼‰
+  input wire we, //å†™ä½¿èƒ½
 
 
-  //·¢ËÍ¸øÖÙ²ÃÆ÷ ËùÓĞÍâÉè¶¼Ó¦ÓĞ´ËÊä³ö
+  //å‘é€ç»™ä»²è£å™¨ æ‰€æœ‰å¤–è®¾éƒ½åº”æœ‰æ­¤è¾“å‡º
   output reg[`WordRange] data_out,
 
-  input[23:0] switch_in // 24Î»²¦Âë  À´×ÔÍâÉè
+  input[23:0] switch_in // 24ä½æ‹¨ç   æ¥è‡ªå¤–è®¾
   );
   
-  reg[23:0] switch_reg; //ÄÚ²¿¼Ä´æÆ÷
+  reg[23:0] switch_reg; //å†…éƒ¨å¯„å­˜å™¨
   
-  always @(posedge clk) begin  //´ÓÍâÉè¶Á²¢Ğ´Èë¼Ä´æÆ÷ ´Ë¼Ä´æÆ÷²»ÔÊĞí´ÓcpuĞ´Èë
+  always @(posedge clk) begin  //ä»å¤–è®¾è¯»å¹¶å†™å…¥å¯„å­˜å™¨ æ­¤å¯„å­˜å™¨ä¸å…è®¸ä»cpuå†™å…¥
     if (rst) begin
       switch_reg <= 24'd0;
     end else begin

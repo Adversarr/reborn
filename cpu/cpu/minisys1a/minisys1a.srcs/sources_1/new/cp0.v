@@ -3,28 +3,28 @@
 
 `include "public.v"
 
-// Ğ­´¦ÀíÆ÷CP0
-// ÄÚ²¿¼Ä´æÆ÷Çë²Î¿¼²¹³ä½²ÒåP93
+// åå¤„ç†å™¨CP0
+// å†…éƒ¨å¯„å­˜å™¨è¯·å‚è€ƒè¡¥å……è®²ä¹‰P93
 module cp0 (
   input clk,
   input rst,
-  input wire we_in,  //Ğ´Ê¹ÄÜ
-  input wire[4:0] waddr_in,  //Ğ´µÄ¼Ä´æÆ÷µØÖ·
-  input wire[`WordRange] data_in,   //Ğ´µÄÊı¾İ
-  input wire[4:0] raddr_in,  //¶ÁµÄµØÖ·
-  input wire[5:0] int_in, //ÍâÉèÖĞ¶Ï
+  input wire we_in,  //å†™ä½¿èƒ½
+  input wire[4:0] waddr_in,  //å†™çš„å¯„å­˜å™¨åœ°å€
+  input wire[`WordRange] data_in,   //å†™çš„æ•°æ®
+  input wire[4:0] raddr_in,  //è¯»çš„åœ°å€
+  input wire[5:0] int_in, //å¤–è®¾ä¸­æ–­
   output reg[`WordRange] data_out,
-  output reg[`WordRange] count_out, // Count¼Ä´æÆ÷£¬ÓÃÓÚ¶¨Ê±ÖĞ¶ÏµÄ²úÉú
-  output reg[`WordRange] compare_out, // Compare¼Ä´æÆ÷£¬ÅäºÏcountÊµÏÖ¶¨Ê±ÖĞ¶Ï
-  // Status¼Ä´æÆ÷£¬´æ·ÅÖĞ¶ÏÆÁ±ÎĞÅÏ¢µÈ
-  // ¿É¶Á   ¿ÉĞ´
+  output reg[`WordRange] count_out, // Countå¯„å­˜å™¨ï¼Œç”¨äºå®šæ—¶ä¸­æ–­çš„äº§ç”Ÿ
+  output reg[`WordRange] compare_out, // Compareå¯„å­˜å™¨ï¼Œé…åˆcountå®ç°å®šæ—¶ä¸­æ–­
+  // Statuså¯„å­˜å™¨ï¼Œå­˜æ”¾ä¸­æ–­å±è”½ä¿¡æ¯ç­‰
+  // å¯è¯»   å¯å†™
   // 31..16   15..8   7..1      0
   // Reserved IntMask Reserved  0
   // *** IntMask
   //     1..0: priority ctrl
   //     7..2: 6 mask bits
   output reg[`WordRange] status_out, 
-  // Cause¼Ä´æÆ÷£¬´æ´¢Òì³£»òÖĞ¶ÏÔ´µÄĞÅÏ¢£¬¼ÇÂ¼×î½üÒ»´ÎÒì³£Ô­Òò
+  // Causeå¯„å­˜å™¨ï¼Œå­˜å‚¨å¼‚å¸¸æˆ–ä¸­æ–­æºçš„ä¿¡æ¯ï¼Œè®°å½•æœ€è¿‘ä¸€æ¬¡å¼‚å¸¸åŸå› 
   // 31..14   13..8   7  6..2    1..0
   // Reserved IntPend 0  ExcCode 00
   // *** ExcCode
@@ -34,13 +34,13 @@ module cp0 (
   //     01010: not implemented
   //     01100: ovf
   output reg[`WordRange] cause_out,
-  // EPC¼Ä´æÆ÷£¬Òì³£»òÖĞ¶ÏµÄ·µ»ØµØÖ·¼Ä´æÆ÷
+  // EPCå¯„å­˜å™¨ï¼Œå¼‚å¸¸æˆ–ä¸­æ–­çš„è¿”å›åœ°å€å¯„å­˜å™¨
   // 31..0
   // IRetAddr
   output reg[`WordRange] epc_out,
   output reg[`WordRange] config_out,
   output reg timer_int_o,
-  //Òì³£´¦ÀíÊ±Ôö¼ÓµÄ½Ó¿Ú
+  //å¼‚å¸¸å¤„ç†æ—¶å¢åŠ çš„æ¥å£
   input wire[`WordRange] abnormal_type,
   input wire[`WordRange] current_pc_addr_in
 );
@@ -57,19 +57,19 @@ module cp0 (
       timer_int_o <= `Disable;
     end else begin
       count_out <= count_out + 32'd1;
-      cause_out[13:8] <= int_in; //causeµÄ8-13Î»±íÊ¾Íâ²¿ÖĞ¶ÏµÄÇé¿ö
+      cause_out[13:8] <= int_in; //causeçš„8-13ä½è¡¨ç¤ºå¤–éƒ¨ä¸­æ–­çš„æƒ…å†µ
       if(compare_out != `ZeroWord && count_out == compare_out) begin
         timer_int_o <= `Enable;
       end
   
-      //µ±ÓĞÒì³£
+      //å½“æœ‰å¼‚å¸¸
       if(abnormal_type != `ZeroWord)begin
         epc_out <= current_pc_addr_in;
-        status_out[0] <= `Disable; //¹Ø±ÕÖÕ¶Ë
+        status_out[0] <= `Disable; //å…³é—­ç»ˆç«¯
         cause_out[6:2] <= abnormal_type[6:2];
         if(abnormal_type[6:2] == `ABN_ERET)begin
           epc_out <= `ZeroWord;
-          status_out[0] <= `Enable; //¿ªÖĞ¶Ï
+          status_out[0] <= `Enable; //å¼€ä¸­æ–­
         end
       end
   
@@ -118,7 +118,7 @@ module cp0 (
     end
   end
 
-//  always @(*) begin //ËæÊ±¶Á
+//  always @(*) begin //éšæ—¶è¯»
 //    if(rst == `Enable)begin
 //      data_out = `ZeroWord;
 //    end else begin

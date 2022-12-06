@@ -3,35 +3,35 @@
 
 `include "public.v"
 
-// Ö¸Áî¼ÆÊıÆ÷PC
+// æŒ‡ä»¤è®¡æ•°å™¨PC
 module pc (
 
-  input clk, // Ê±ÖÓ
-  input rst, // Í¬²½¸´Î»ĞÅºÅ
-  output reg[`WordRange] pc, // µ±Ç°PC
+  input clk, // æ—¶é’Ÿ
+  input rst, // åŒæ­¥å¤ä½ä¿¡å·
+  output reg[`WordRange] pc, // å½“å‰PC
   
-  input wire pause, // Á÷Ë®ÔİÍ£ĞÅºÅ
+  input wire pause, // æµæ°´æš‚åœä¿¡å·
 
-  input wire branch_en_in, // ÊÇ·ñ×ªÒÆ
-  input wire[`WordRange] branch_addr_in, // ×ªÒÆµÄµØÖ·
+  input wire branch_en_in, // æ˜¯å¦è½¬ç§»
+  input wire[`WordRange] branch_addr_in, // è½¬ç§»çš„åœ°å€
 
-  //Òì³£Ïà¹Ø
+  //å¼‚å¸¸ç›¸å…³
   input wire flush,
   input wire[`WordRange] interrupt_pc
 
 );
 
-  // Èç¹ûrst£¬Ôò¸´Î»µ½0x0£¬·ñÔò+4
+  // å¦‚æœrstï¼Œåˆ™å¤ä½åˆ°0x0ï¼Œå¦åˆ™+4
   always @(posedge clk) begin
     if (rst == `Enable) begin
       pc = `ZeroWord;
     end else if(flush == `Enable) begin
-      //ÈôÓĞÒì³£ÔòÈÃpcÈ¡Èë¿ÚµØÖ·
+      //è‹¥æœ‰å¼‚å¸¸åˆ™è®©pcå–å…¥å£åœ°å€
       pc = interrupt_pc;
     end else if (pause == `Enable) begin
-      // Á÷Ë®ÔİÍ£Ê±±£³ÖPC²»±ä
+      // æµæ°´æš‚åœæ—¶ä¿æŒPCä¸å˜
       pc = pc;
-    end else if (branch_en_in == `Enable) begin  // Èç¹ûÒª×ªÒÆ£¬ÔòPCÖ±½Ó¸³ÖµÎª×ªÒÆµØÖ·
+    end else if (branch_en_in == `Enable) begin  // å¦‚æœè¦è½¬ç§»ï¼Œåˆ™PCç›´æ¥èµ‹å€¼ä¸ºè½¬ç§»åœ°å€
       pc = branch_addr_in;
     end else begin
       pc = pc + 32'd4;

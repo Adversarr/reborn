@@ -4,29 +4,29 @@
 `define Enable 1'b1
 `define Disable 1'b0
 
-// MinisysÌåÏµ½á¹¹Ïà¹Ø
-`define ZeroWord 32'h00000000 // 0x0×Ö
-`define RegCount 32 // ¼Ä´æÆ÷Êı
-`define RegCountLog2 5 // ¼Ä´æÆ÷ÊıLog2
-`define RegRange 31:0 // ¼Ä´æÆ÷Êı·¶Î§
-`define RegRangeLog2 4:0 // ¼Ä´æÆ÷ÊıLog2·¶Î§£¨µØÖ·£©
-`define WordLength 32 // ×Ö³¤
-`define WordRange 31:0 // ×Ö³¤·¶Î§
-`define OpRange 31:26 // Ö¸Áî×ÖÖĞopµÄ·¶Î§
-`define RsRange 25:21 // Ö¸Áî×ÖÖĞrsµÄ·¶Î§
-`define RtRange 20:16 // Ö¸Áî×ÖÖĞrtµÄ·¶Î§
-`define RdRange 15:11 // Ö¸Áî×ÖÖĞrdµÄ·¶Î§
-`define ShamtRange 10:6 // Ö¸Áî×ÖÖĞshamtµÄ·¶Î§
-`define FuncRange 5:0 // Ö¸Áî×ÖÖĞfuncµÄ·¶Î§
-`define ImmedRange 15:0 // Ö¸Áî×ÖÖĞimmediateµÄ·¶Î§
-`define OffsetRange 15:0 // Ö¸Áî×ÖÖĞoffsetµÄ·¶Î§
-`define AddressRange 25:0 // Ö¸Áî×ÖÖĞaddressµÄ·¶Î§
-`define DivMulResultRange 63:0 // ³Ë³ı·¨½á¹û·¶Î§ ¸ßµÍ32Î»Ğè·Ö¿ª
+// Minisysä½“ç³»ç»“æ„ç›¸å…³
+`define ZeroWord 32'h00000000 // 0x0å­—
+`define RegCount 32 // å¯„å­˜å™¨æ•°
+`define RegCountLog2 5 // å¯„å­˜å™¨æ•°Log2
+`define RegRange 31:0 // å¯„å­˜å™¨æ•°èŒƒå›´
+`define RegRangeLog2 4:0 // å¯„å­˜å™¨æ•°Log2èŒƒå›´ï¼ˆåœ°å€ï¼‰
+`define WordLength 32 // å­—é•¿
+`define WordRange 31:0 // å­—é•¿èŒƒå›´
+`define OpRange 31:26 // æŒ‡ä»¤å­—ä¸­opçš„èŒƒå›´
+`define RsRange 25:21 // æŒ‡ä»¤å­—ä¸­rsçš„èŒƒå›´
+`define RtRange 20:16 // æŒ‡ä»¤å­—ä¸­rtçš„èŒƒå›´
+`define RdRange 15:11 // æŒ‡ä»¤å­—ä¸­rdçš„èŒƒå›´
+`define ShamtRange 10:6 // æŒ‡ä»¤å­—ä¸­shamtçš„èŒƒå›´
+`define FuncRange 5:0 // æŒ‡ä»¤å­—ä¸­funcçš„èŒƒå›´
+`define ImmedRange 15:0 // æŒ‡ä»¤å­—ä¸­immediateçš„èŒƒå›´
+`define OffsetRange 15:0 // æŒ‡ä»¤å­—ä¸­offsetçš„èŒƒå›´
+`define AddressRange 25:0 // æŒ‡ä»¤å­—ä¸­addressçš„èŒƒå›´
+`define DivMulResultRange 63:0 // ä¹˜é™¤æ³•ç»“æœèŒƒå›´ é«˜ä½32ä½éœ€åˆ†å¼€
 
-// Éè¼ÆÏà¹Ø
-// ALUÏà¹Ø
-`define ALUOpRange 5:0 // ALUOp·¶Î§
-// ALUOP¶¨Òå
+// è®¾è®¡ç›¸å…³
+// ALUç›¸å…³
+`define ALUOpRange 5:0 // ALUOpèŒƒå›´
+// ALUOPå®šä¹‰
 `define ALUOP_NOP 6'd0
 `define ALUOP_ADDU 6'd1
 `define ALUOP_ADD 6'd2
@@ -40,9 +40,9 @@
 `define ALUOP_OR 6'd10
 `define ALUOP_XOR 6'd11
 `define ALUOP_NOR 6'd12
-`define ALUOP_SLL 6'd13 // Âß¼­×óÒÆ
-`define ALUOP_SRL 6'd14 // Âß¼­ÓÒÒÆ
-`define ALUOP_SRA 6'd15 // ËãÊõÓÒÒÆ
+`define ALUOP_SLL 6'd13 // é€»è¾‘å·¦ç§»
+`define ALUOP_SRL 6'd14 // é€»è¾‘å³ç§»
+`define ALUOP_SRA 6'd15 // ç®—æœ¯å³ç§»
 `define ALUOP_SLT 6'd16
 `define ALUOP_SLTU 6'd17
 // EXOP
@@ -75,8 +75,8 @@
 `define EXOP_SYSTEMCALL 6'd44
 `define EXOP_ERET 6'd45
 
-// MinisysÖ¸Áî¼¯
-// RĞÍÖ¸Áî
+// MinisysæŒ‡ä»¤é›†
+// Rå‹æŒ‡ä»¤
 `define OP_RTYPE 6'b000000
 `define FUNC_ADD 6'b100000
 `define FUNC_ADDU 6'b100001
@@ -109,7 +109,7 @@
 `define FUNC_BREAK 6'b001101
 `define FUNC_SYSCALL 6'b001100
 `define FUNC_ERET 6'b011000
-// IĞÍÖ¸Áî
+// Iå‹æŒ‡ä»¤
 `define OP_ADDI 6'b001000
 `define OP_ADDIU 6'b001001
 `define OP_ANDI 6'b001100
@@ -134,15 +134,15 @@
 `define OP_BLTZAL 6'b000001
 `define OP_SLTI 6'b001010
 `define OP_SLTIU 6'b001011
-// JĞÍÖ¸Áî
+// Jå‹æŒ‡ä»¤
 `define OP_J 6'b000010
 `define OP_JAL 6'b000011
-// cp0Ïà¹Ø
+// cp0ç›¸å…³
 `define OP_CP0 6'b010000
 // FIXME NOP
 `define OP_NOP 6'b000000
 
-// CP0ÖĞ¸÷¸ö¼Ä´æÆ÷µÄµØÖ·
+// CP0ä¸­å„ä¸ªå¯„å­˜å™¨çš„åœ°å€
 `define CP0_REG_COUNT 5'b01001
 `define CP0_REG_COMPARE 5'b01011
 `define CP0_REG_STATUE 5'b01100
@@ -154,18 +154,18 @@
 `define InterruptNotAssert 1'b0
 
 
-//ÍâÉèÉè±¸µÄµØÖ·£¨¸ßÁùÎ»£©
-`define IO_SEVEN_DISPLAY 6'b000000  //Æß¶ÎÊıÂë¹Ü
-`define IO_KEYBORAD 6'b000001  //4*4¼üÅÌ
-`define IO_COUNTER 6'b000010  //¼ÆÊıÆ÷
-`define IO_PWM 6'b000011  //PWM¿ØÖÆÆ÷
-`define IO_UART 6'b000100  //UART´®¿Ú
-`define IO_WATCH_DOG 6'b000101  //¿´ÃÅ¹·
-`define IO_LED_LIGHT 6'b000110  //ledµÆ
-`define IO_SWITCH 6'b000111  //²¦Âë¿ª¹Ø
-`define IO_BUZZER 6'b010001  //·äÃùÆ÷
+//å¤–è®¾è®¾å¤‡çš„åœ°å€ï¼ˆé«˜å…­ä½ï¼‰
+`define IO_SEVEN_DISPLAY 6'b000000  //ä¸ƒæ®µæ•°ç ç®¡
+`define IO_KEYBORAD 6'b000001  //4*4é”®ç›˜
+`define IO_COUNTER 6'b000010  //è®¡æ•°å™¨
+`define IO_PWM 6'b000011  //PWMæ§åˆ¶å™¨
+`define IO_UART 6'b000100  //UARTä¸²å£
+`define IO_WATCH_DOG 6'b000101  //çœ‹é—¨ç‹—
+`define IO_LED_LIGHT 6'b000110  //ledç¯
+`define IO_SWITCH 6'b000111  //æ‹¨ç å¼€å…³
+`define IO_BUZZER 6'b010001  //èœ‚é¸£å™¨
 
-//cause¼Ä´æÆ÷µÄ6-2Î»±íÊ¾µÄÒì³£ÀàĞÍ
+//causeå¯„å­˜å™¨çš„6-2ä½è¡¨ç¤ºçš„å¼‚å¸¸ç±»å‹
 `define ABN_INTERRUPT 5'b00000
 `define ABN_SYSTEMCALL 5'b01000
 `define ABN_BREAK 5'b01001

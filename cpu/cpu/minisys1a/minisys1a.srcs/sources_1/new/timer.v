@@ -20,45 +20,45 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module timer(
-  input rst, // ¸´Î»
-  input clk, // Ê±ÖÓ
+  input rst, // å¤ä½
+  input clk, // æ—¶é’Ÿ
   
-  //´Ó×ÜÏßÀ´µÄÊı¾İ ËùÓĞÍâÉèÇı¶¯¶¼Ó¦ÓĞÒÔÏÂĞÅºÅ
+  //ä»æ€»çº¿æ¥çš„æ•°æ® æ‰€æœ‰å¤–è®¾é©±åŠ¨éƒ½åº”æœ‰ä»¥ä¸‹ä¿¡å·
   input wire[`WordRange] addr,
-  input wire en, // Ê¹ÄÜ
+  input wire en, // ä½¿èƒ½
   input wire[3:0] byte_sel,
-  input wire[`WordRange] data_in, // Êı¾İÊäÈë£¨À´×Ôcpu£©
-  input wire we, //Ğ´Ê¹ÄÜ
+  input wire[`WordRange] data_in, // æ•°æ®è¾“å…¥ï¼ˆæ¥è‡ªcpuï¼‰
+  input wire we, //å†™ä½¿èƒ½
   
   // TODO: Replace interface.
-  input cs, // Æ¬Ñ¡
-  input rd, // ¶ÁÄ£Ê½
-  input wr, // Ğ´Ä£Ê½
-  input [2:0] port, // ÄÚ²¿¼Ä´æÆ÷¶Ë¿ÚÑ¡Ôñ£¬·½Ê½¼Ä´æÆ÷£º0/2£¬³õÊ¼Öµ¼Ä´æÆ÷£º4/
-  input [15:0] data, // ÊäÈëÊı¾İ
+  input cs, // ç‰‡é€‰
+  input rd, // è¯»æ¨¡å¼
+  input wr, // å†™æ¨¡å¼
+  input [2:0] port, // å†…éƒ¨å¯„å­˜å™¨ç«¯å£é€‰æ‹©ï¼Œæ–¹å¼å¯„å­˜å™¨ï¼š0/2ï¼Œåˆå§‹å€¼å¯„å­˜å™¨ï¼š4/
+  input [15:0] data, // è¾“å…¥æ•°æ®
   
-  output reg[15:0] out1, // CNT1Êä³ö
-  output reg[15:0] out2, // CNT2Êä³ö
+  output reg[15:0] out1, // CNT1è¾“å‡º
+  output reg[15:0] out2, // CNT2è¾“å‡º
   
-  output reg cout1, // COUT1£¬µÍµçÆ½ÓĞĞ§
-  output reg cout2 // COUT2£¬µÍµçÆ½ÓĞĞ§
+  output reg cout1, // COUT1ï¼Œä½ç”µå¹³æœ‰æ•ˆ
+  output reg cout2 // COUT2ï¼Œä½ç”µå¹³æœ‰æ•ˆ
 
   );
   
-  // ·½Ê½¼Ä´æÆ÷
+  // æ–¹å¼å¯„å­˜å™¨
   reg[15:0] config1;
   reg[15:0] config2;
-  // ×´Ì¬¼Ä´æÆ÷
+  // çŠ¶æ€å¯„å­˜å™¨
   reg[15:0] status1;
   reg[15:0] status2;
-  // ³õÊ¼Öµ¼Ä´æÆ÷
+  // åˆå§‹å€¼å¯„å­˜å™¨
   reg[15:0] init1;
   reg[15:0] init2;
-  // µ±Ç°Öµ¼Ä´æÆ÷
+  // å½“å‰å€¼å¯„å­˜å™¨
   reg[15:0] current1;
   reg[15:0] current2;
 
-  // ÖØÖÃÂß¼­ÒÔ¼°¶ÔÄÚ²¿¼Ä´æÆ÷µÄ·ÃÎÊ
+  // é‡ç½®é€»è¾‘ä»¥åŠå¯¹å†…éƒ¨å¯„å­˜å™¨çš„è®¿é—®
   always @(posedge clk) begin
     if (rst == `Enable) begin
       config1 <= 16'd0;   config2 <= 16'd0;
@@ -70,10 +70,10 @@ module timer(
     end else begin
       if (cs == `Enable) begin
         if (wr == `Enable) begin
-          // ´¦Àí¶ÔÖ»Ğ´¼Ä´æÆ÷µÄ·ÃÎÊ
+          // å¤„ç†å¯¹åªå†™å¯„å­˜å™¨çš„è®¿é—®
           if (port == 3'h0) begin
             config1 <= data;
-            // ·½Ê½¼Ä´æÆ÷ÉèÖÃºó»¹Ã»ÓĞĞ´¼ÆÊı³õÊ¼ÖµÊ±£¬×´Ì¬¼Ä´æÆ÷ÓĞĞ§Î»ÖÃ0
+            // æ–¹å¼å¯„å­˜å™¨è®¾ç½®åè¿˜æ²¡æœ‰å†™è®¡æ•°åˆå§‹å€¼æ—¶ï¼ŒçŠ¶æ€å¯„å­˜å™¨æœ‰æ•ˆä½ç½®0
             status1 <= status1 & 16'h7FFF;
           end
           if (port == 3'h2) begin
@@ -82,7 +82,7 @@ module timer(
           end
           if (port == 3'h4) begin
             init1 <= data;
-            // Ğ´ºÃ¼ÆÊı³õÊ¼Öµºó£¬×´Ì¬¼Ä´æÆ÷ÓĞĞ§Î»ÖÃ1
+            // å†™å¥½è®¡æ•°åˆå§‹å€¼åï¼ŒçŠ¶æ€å¯„å­˜å™¨æœ‰æ•ˆä½ç½®1
             status1 <= status1 | 16'h8000;
           end
           if (port == 3'h6) begin
@@ -90,7 +90,7 @@ module timer(
             status2 <= status2 | 16'h8000;
           end
         end else if (rd == `Enable) begin
-          // ´¦Àí¶ÔÖ»¶Á¼Ä´æÆ÷µÄ·ÃÎÊ
+          // å¤„ç†å¯¹åªè¯»å¯„å­˜å™¨çš„è®¿é—®
           if (port == 3'h0) begin
             out1 <= status1;
           end
@@ -108,55 +108,55 @@ module timer(
     end
   end
 
-  // °´ÕÕÊ±ÖÓ¶ÔCNT1½øĞĞ²½½ø
+  // æŒ‰ç…§æ—¶é’Ÿå¯¹CNT1è¿›è¡Œæ­¥è¿›
   always @(posedge clk) begin
     current1 <= current1 - 16'd1;
-    // ´¦Àí±ß½çÂß¼­
+    // å¤„ç†è¾¹ç•Œé€»è¾‘
     if (config1[0] == `Disable) begin
-      // ¶¨Ê±Ä£Ê½  
+      // å®šæ—¶æ¨¡å¼  
       if (current1 == 16'd1) begin
-        // ÉèÖÃ×´Ì¬¼Ä´æÆ÷ÓĞĞ§Î»Îª0£¬¶¨Ê±µ½Î»Îª1
+        // è®¾ç½®çŠ¶æ€å¯„å­˜å™¨æœ‰æ•ˆä½ä¸º0ï¼Œå®šæ—¶åˆ°ä½ä¸º1
         status1 <= status1 & 16'h7FFF | 16'h0001;
         cout1 <= `Disable;
       end
     end else begin
-      // ¼ÆÊıÄ£Ê½
+      // è®¡æ•°æ¨¡å¼
       if (current1 == 16'd0) begin
-        // ÉèÖÃ×´Ì¬¼Ä´æÆ÷ÓĞĞ§Î»Îª0£¬¼ÆÊıµ½Î»Îª1
+        // è®¾ç½®çŠ¶æ€å¯„å­˜å™¨æœ‰æ•ˆä½ä¸º0ï¼Œè®¡æ•°åˆ°ä½ä¸º1
         status1 <= status1 & 16'h7FFF | 16'h0002;
         cout1 <= `Disable;
       end
     end
   end
 
-  // °´ÕÕÊ±ÖÓ¶ÔCNT2½øĞĞ²½½ø
+  // æŒ‰ç…§æ—¶é’Ÿå¯¹CNT2è¿›è¡Œæ­¥è¿›
   always @(posedge clk) begin
     current2 <= current2 - 16'd1;
-    // ´¦Àí±ß½çÂß¼­
+    // å¤„ç†è¾¹ç•Œé€»è¾‘
     if (config2[0] == `Disable) begin
-      // ¶¨Ê±Ä£Ê½  
+      // å®šæ—¶æ¨¡å¼  
       if (current2 == 16'd1) begin
-        // ÉèÖÃ×´Ì¬¼Ä´æÆ÷ÓĞĞ§Î»Îª0£¬¶¨Ê±µ½Î»Îª1
+        // è®¾ç½®çŠ¶æ€å¯„å­˜å™¨æœ‰æ•ˆä½ä¸º0ï¼Œå®šæ—¶åˆ°ä½ä¸º1
         status2 <= status2 & 16'h7FFF | 16'h0001;
         cout1 <= `Disable;
       end
     end else begin
-      // ¼ÆÊıÄ£Ê½
+      // è®¡æ•°æ¨¡å¼
       if (current2 == 16'd0) begin
-        // ÉèÖÃ×´Ì¬¼Ä´æÆ÷ÓĞĞ§Î»Îª0£¬¼ÆÊıµ½Î»Îª1
+        // è®¾ç½®çŠ¶æ€å¯„å­˜å™¨æœ‰æ•ˆä½ä¸º0ï¼Œè®¡æ•°åˆ°ä½ä¸º1
         status2 <= status2 & 16'h7FFF | 16'h0002;
         cout1 <= `Disable;
       end
     end
   end
 
-  // ½øÒ»²½´¦Àí¼ÆÊıµ½ºóµÄÖØ¸´Âß¼­
+  // è¿›ä¸€æ­¥å¤„ç†è®¡æ•°åˆ°åçš„é‡å¤é€»è¾‘
   always @(cout1) begin
     if (cout1 == `Disable) begin
-      if (config1[1] == `Enable) begin // ÖØ¸´Ä£Ê½
+      if (config1[1] == `Enable) begin // é‡å¤æ¨¡å¼
         current1 <= init1;
         cout1 <= `Enable;
-      end else begin // ·ÇÖØ¸´Ä£Ê½
+      end else begin // éé‡å¤æ¨¡å¼
         // TODO
       end
     end
@@ -164,10 +164,10 @@ module timer(
 
   always @(cout2) begin
     if (cout2 == `Disable) begin
-      if (config2[1] == `Enable) begin // ÖØ¸´Ä£Ê½
+      if (config2[1] == `Enable) begin // é‡å¤æ¨¡å¼
         current2 <= init2;
         cout2 <= `Enable;
-      end else begin // ·ÇÖØ¸´Ä£Ê½
+      end else begin // éé‡å¤æ¨¡å¼
         // TODO
       end
     end

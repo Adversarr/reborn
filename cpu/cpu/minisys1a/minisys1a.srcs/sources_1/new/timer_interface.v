@@ -21,17 +21,17 @@
 
 
 module timer_interface(
-  input rst, // ÖØÖÃ
-  input clk, // Ê±ÖÓ
+  input rst, // é‡ç½®
+  input clk, // æ—¶é’Ÿ
 
-  //´Ó×ÜÏßÀ´µÄÊı¾İ ËùÓĞÍâÉèÇı¶¯¶¼Ó¦ÓĞÒÔÏÂĞÅºÅ
+  //ä»æ€»çº¿æ¥çš„æ•°æ® æ‰€æœ‰å¤–è®¾é©±åŠ¨éƒ½åº”æœ‰ä»¥ä¸‹ä¿¡å·
   input wire[`WordRange] addr,
-  input wire en, // Ê¹ÄÜ
+  input wire en, // ä½¿èƒ½
   input wire[3:0] byte_sel,
-  input wire[`WordRange] data_in, // Êı¾İÊäÈë£¨À´×Ôcpu£©
-  input wire we, //Ğ´Ê¹ÄÜ
+  input wire[`WordRange] data_in, // æ•°æ®è¾“å…¥ï¼ˆæ¥è‡ªcpuï¼‰
+  input wire we, //å†™ä½¿èƒ½
 
-  //·¢ËÍ¸øÖÙ²ÃÆ÷ ËùÓĞÍâÉè¶¼Ó¦ÓĞ´ËÊä³ö
+  //å‘é€ç»™ä»²è£å™¨ æ‰€æœ‰å¤–è®¾éƒ½åº”æœ‰æ­¤è¾“å‡º
   output reg[`WordRange] data_out
     );
   timer timer_instance(

@@ -24,26 +24,26 @@ module beep(
   input wire rst,
   input wire clk,
   input wire[`WordRange] addr,
-  input wire en, // Ê¹ÄÜ
+  input wire en, // ä½¿èƒ½
   input wire[3:0] byte_sel,
-  input wire[`WordRange] data_in, // ÉùĞÅºÅÊäÈë
-  input wire we, //Ğ´Ê¹ÄÜ
+  input wire[`WordRange] data_in, // å£°ä¿¡å·è¾“å…¥
+  input wire we, //å†™ä½¿èƒ½
   
-  //·¢ËÍ¸øÖÙ²ÃÆ÷ ËùÓĞÍâÉè¶¼Ó¦ÓĞ´ËÊä³ö
+  //å‘é€ç»™ä»²è£å™¨ æ‰€æœ‰å¤–è®¾éƒ½åº”æœ‰æ­¤è¾“å‡º
   output reg[`WordRange] data_out,
   
-  //·¢ËÍ¸øÍâÉèµÄĞÅºÅ
-  output reg signal_out // ÉùĞÅºÅÊä³ö
+  //å‘é€ç»™å¤–è®¾çš„ä¿¡å·
+  output reg signal_out // å£°ä¿¡å·è¾“å‡º
   );
   
   reg[15:0] count;
   
-  always @(posedge clk) begin  //Ğ´ÊÇÉÏÉıÑØ
+  always @(posedge clk) begin  //å†™æ˜¯ä¸Šå‡æ²¿
     if(rst == `Enable) begin
       signal_out <= 1'b0;
       count <= 16'd0;
     end else begin
-      if(en == `Enable && addr == 32'hfffffd10 && we == `Enable) begin //Ê¹ÄÜÓĞĞ§  µØÖ·ÕıÈ·  ²¢ÇÒÊÇĞ´²Ù×÷
+      if(en == `Enable && addr == 32'hfffffd10 && we == `Enable) begin //ä½¿èƒ½æœ‰æ•ˆ  åœ°å€æ­£ç¡®  å¹¶ä¸”æ˜¯å†™æ“ä½œ
         if(data_in != 32'd0)begin
           signal_out <= 1'b1;
         end else begin
@@ -53,7 +53,7 @@ module beep(
     end
   end
   
-  always @(*) begin //¶ÁÊÇËæÊ±¶Á
+  always @(*) begin //è¯»æ˜¯éšæ—¶è¯»
     if(rst == `Enable)begin
       data_out <= `ZeroWord;
     end else if(en == `Enable && addr == 32'hfffffd10 && we == `Disable) begin

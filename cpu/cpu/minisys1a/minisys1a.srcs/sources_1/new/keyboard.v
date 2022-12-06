@@ -21,45 +21,45 @@
 
 
 module keyboard(
-  input rst, // ¸´Î»
-  input clk, // Ê±ÖÓ
-  // ·À¶¶µÄÁéÃô¶ÈÈ¡¾öÓÚclkµÄÆµÂÊ£¨²ÉÑùÆµÂÊ£©£¬¿É¿¼ÂÇ¶Ôclk½øĞĞ±¶Æµ
+  input rst, // å¤ä½
+  input clk, // æ—¶é’Ÿ
+  // é˜²æŠ–çš„çµæ•åº¦å–å†³äºclkçš„é¢‘ç‡ï¼ˆé‡‡æ ·é¢‘ç‡ï¼‰ï¼Œå¯è€ƒè™‘å¯¹clkè¿›è¡Œå€é¢‘
 
-  //´Ó×ÜÏßÀ´µÄÊı¾İ ËùÓĞÍâÉèÇı¶¯¶¼Ó¦ÓĞÒÔÏÂĞÅºÅ
+  //ä»æ€»çº¿æ¥çš„æ•°æ® æ‰€æœ‰å¤–è®¾é©±åŠ¨éƒ½åº”æœ‰ä»¥ä¸‹ä¿¡å·
   input wire[`WordRange] addr,
-  input wire en, // Ê¹ÄÜ
+  input wire en, // ä½¿èƒ½
   input wire[3:0] byte_sel,
-  input wire[`WordRange] data_in, // Êı¾İÊäÈë£¨À´×Ôcpu£©
-  input wire we, //Ğ´Ê¹ÄÜ
+  input wire[`WordRange] data_in, // æ•°æ®è¾“å…¥ï¼ˆæ¥è‡ªcpuï¼‰
+  input wire we, //å†™ä½¿èƒ½
 
-  //·¢ËÍ¸øÖÙ²ÃÆ÷ ËùÓĞÍâÉè¶¼Ó¦ÓĞ´ËÊä³ö
-  output reg[`WordRange] data_out,// ÄÚ²¿¶Ë¿Ú¼Ä´æÆ÷ ´æ´¢°´ÏÂµÄÖµ ÈôÎŞ¼ü°´ÏÂÔòÈ«f
+  //å‘é€ç»™ä»²è£å™¨ æ‰€æœ‰å¤–è®¾éƒ½åº”æœ‰æ­¤è¾“å‡º
+  output reg[`WordRange] data_out,// å†…éƒ¨ç«¯å£å¯„å­˜å™¨ å­˜å‚¨æŒ‰ä¸‹çš„å€¼ è‹¥æ— é”®æŒ‰ä¸‹åˆ™å…¨f
 
 
-  input[3:0] cols, // ÁĞÏß£¨ÊäÈëÏß£©  ÍâÉèÊäÈë
-  output reg[3:0] rows // ĞĞÏß£¨Êä³öÏß£© ·¢¸øÍâÉè
+  input[3:0] cols, // åˆ—çº¿ï¼ˆè¾“å…¥çº¿ï¼‰  å¤–è®¾è¾“å…¥
+  output reg[3:0] rows // è¡Œçº¿ï¼ˆè¾“å‡ºçº¿ï¼‰ å‘ç»™å¤–è®¾
 
 );
 
-  // ×´Ì¬Óë²ÎÊı
-  parameter COUNT = 20000; //·À¶¶´¦Àí  ÔÚÁĞÏßÓĞ·´Ó¦µÄÇé¿öÏÂ ¼ÆÊı20000¸öÊ±ÖÓÖÜÆÚºóÔÙ¿´ÁĞÏßµÄ½á¹û
+  // çŠ¶æ€ä¸å‚æ•°
+  parameter COUNT = 20000; //é˜²æŠ–å¤„ç†  åœ¨åˆ—çº¿æœ‰ååº”çš„æƒ…å†µä¸‹ è®¡æ•°20000ä¸ªæ—¶é’Ÿå‘¨æœŸåå†çœ‹åˆ—çº¿çš„ç»“æœ
 
-  parameter NO_KEY = 4'd0; // ³õÌ¬£¬Ã»ÓĞ¼ü°´ÏÂ
-  parameter MIGHT_HAVE_KEY = 4'd1; //¿ÉÄÜÓĞ¼üÎ»°´ÏÂ£¬´ËÊ±Ó¦¸ÃµÈ´ı2000¸öÊ±ÖÓÖÜÆÚºó¿ªÊ¼É¨ÃèĞĞÏß£¬Ã¿À´Ò»¸öÊ±ÖÓÖÜÆÚ£¬¼ÆÊı¾Í¼Ó1
-  parameter SCAN_ROW0 = 4'd2; // É¨ÃèĞĞ0
-  parameter SCAN_ROW1 = 4'd3; // É¨ÃèĞĞ1
-  parameter SCAN_ROW2 = 4'd4; // É¨ÃèĞĞ2
-  parameter SCAN_ROW3 = 4'd5; // É¨ÃèĞĞ3
-  parameter YES_KEY = 4'd6; // ÓĞ°´¼ü°´ÏÂ
+  parameter NO_KEY = 4'd0; // åˆæ€ï¼Œæ²¡æœ‰é”®æŒ‰ä¸‹
+  parameter MIGHT_HAVE_KEY = 4'd1; //å¯èƒ½æœ‰é”®ä½æŒ‰ä¸‹ï¼Œæ­¤æ—¶åº”è¯¥ç­‰å¾…2000ä¸ªæ—¶é’Ÿå‘¨æœŸåå¼€å§‹æ‰«æè¡Œçº¿ï¼Œæ¯æ¥ä¸€ä¸ªæ—¶é’Ÿå‘¨æœŸï¼Œè®¡æ•°å°±åŠ 1
+  parameter SCAN_ROW0 = 4'd2; // æ‰«æè¡Œ0
+  parameter SCAN_ROW1 = 4'd3; // æ‰«æè¡Œ1
+  parameter SCAN_ROW2 = 4'd4; // æ‰«æè¡Œ2
+  parameter SCAN_ROW3 = 4'd5; // æ‰«æè¡Œ3
+  parameter YES_KEY = 4'd6; // æœ‰æŒ‰é”®æŒ‰ä¸‹
   
-  // ×´Ì¬»ú
+  // çŠ¶æ€æœº
   reg[3:0] state;
-  // ¼ÆÊıÆ÷
+  // è®¡æ•°å™¨
   reg[15:0] count;
-  // ÄÚ²¿¼Ä´æÆ÷
+  // å†…éƒ¨å¯„å­˜å™¨
   reg[31:0] data;
 
-  // Ã¿ÅÄ½øĞĞÒ»´Î×´Ì¬×ªÒÆ,×´Ì¬×ªÒÆÔòstate+1£¬Èô»Ø×ªµ½³õÌ¬ÔòÖ±½ÓÖÃ0
+  // æ¯æ‹è¿›è¡Œä¸€æ¬¡çŠ¶æ€è½¬ç§»,çŠ¶æ€è½¬ç§»åˆ™state+1ï¼Œè‹¥å›è½¬åˆ°åˆæ€åˆ™ç›´æ¥ç½®0
   always @(posedge clk) begin
     if (rst == `Enable) begin
       state <= NO_KEY;
@@ -69,28 +69,28 @@ module keyboard(
     end else begin
       case (state)
         NO_KEY:begin
-          rows <= 4'b0000; //ĞĞÏßÈ«²¿Êä³öµÍµçÆ½
+          rows <= 4'b0000; //è¡Œçº¿å…¨éƒ¨è¾“å‡ºä½ç”µå¹³
           count <= 16'd0;
-          if(cols != 4'b1111)begin  //ÕâÊ±ºòÈç¹ûĞĞÏß²»È«Îª1ËµÃ÷¿ÉÄÜÓĞ¼üÎ»ÊäÈë ×´Ì¬Ìø×ª
+          if(cols != 4'b1111)begin  //è¿™æ—¶å€™å¦‚æœè¡Œçº¿ä¸å…¨ä¸º1è¯´æ˜å¯èƒ½æœ‰é”®ä½è¾“å…¥ çŠ¶æ€è·³è½¬
             state <= MIGHT_HAVE_KEY;
           end
         end 
         MIGHT_HAVE_KEY:begin
-          if(count != COUNT)begin  //¼ÆÊı 
+          if(count != COUNT)begin  //è®¡æ•° 
             count <= count + 16'd1;  
-          end else if(cols == 4'b1111) begin  //Èç¹ûÕâÊ±ºòĞĞÏßÈ«Îª1 ËµÃ÷¶¶¶¯ÁË »Øµ½³õÊ¼×´Ì¬
+          end else if(cols == 4'b1111) begin  //å¦‚æœè¿™æ—¶å€™è¡Œçº¿å…¨ä¸º1 è¯´æ˜æŠ–åŠ¨äº† å›åˆ°åˆå§‹çŠ¶æ€
             state <= NO_KEY;
             count <= 16'd0;
-          end else begin  //Èç¹ûÈÔÈ»²»È«Îª1 ËµÃ÷ÕæµÄÓĞ¼üÎ»ÊäÈë ¿ªÊ¼É¨ÃèĞĞ
+          end else begin  //å¦‚æœä»ç„¶ä¸å…¨ä¸º1 è¯´æ˜çœŸçš„æœ‰é”®ä½è¾“å…¥ å¼€å§‹æ‰«æè¡Œ
             rows <= 4'b1110;
             state <= SCAN_ROW0;
           end
         end
         SCAN_ROW0:begin
-          if(cols == 4'b1111)begin //ËµÃ÷²»ÔÚÕâÒ»ĞĞ
+          if(cols == 4'b1111)begin //è¯´æ˜ä¸åœ¨è¿™ä¸€è¡Œ
             rows <= 4'b1101;
             state <= SCAN_ROW1;
-          end else begin //ËµÃ÷ÔÚÕâÒ»ĞĞ
+          end else begin //è¯´æ˜åœ¨è¿™ä¸€è¡Œ
             state <= NO_KEY;
             if(cols == 4'b1110)begin
               data <= 32'd13;
@@ -104,10 +104,10 @@ module keyboard(
           end   
         end
         SCAN_ROW1:begin
-          if(cols == 4'b1111)begin //ËµÃ÷²»ÔÚÕâÒ»ĞĞ
+          if(cols == 4'b1111)begin //è¯´æ˜ä¸åœ¨è¿™ä¸€è¡Œ
             rows <= 4'b1011;
             state <= SCAN_ROW2;
-          end else begin //ËµÃ÷ÔÚÕâÒ»ĞĞ
+          end else begin //è¯´æ˜åœ¨è¿™ä¸€è¡Œ
             state <= NO_KEY;
             if(cols == 4'b1110)begin
               data <= 32'd15;
@@ -121,10 +121,10 @@ module keyboard(
           end           
         end
         SCAN_ROW2:begin
-          if(cols == 4'b1111)begin //ËµÃ÷²»ÔÚÕâÒ»ĞĞ
+          if(cols == 4'b1111)begin //è¯´æ˜ä¸åœ¨è¿™ä¸€è¡Œ
             rows <= 4'b0111;
             state <= SCAN_ROW3;
-          end else begin //ËµÃ÷ÔÚÕâÒ»ĞĞ
+          end else begin //è¯´æ˜åœ¨è¿™ä¸€è¡Œ
             state <= NO_KEY;
             if(cols == 4'b1110)begin
               data <= 32'd0;
@@ -138,10 +138,10 @@ module keyboard(
           end          
         end
         SCAN_ROW3:begin
-          if(cols == 4'b1111)begin //ËµÃ÷²»ÔÚÕâÒ»ĞĞ
+          if(cols == 4'b1111)begin //è¯´æ˜ä¸åœ¨è¿™ä¸€è¡Œ
             rows <= 4'b0000;
             state <= NO_KEY;
-          end else begin //ËµÃ÷ÔÚÕâÒ»ĞĞ
+          end else begin //è¯´æ˜åœ¨è¿™ä¸€è¡Œ
             state <= NO_KEY;
             if(cols == 4'b1110)begin
               data <= 32'd14;

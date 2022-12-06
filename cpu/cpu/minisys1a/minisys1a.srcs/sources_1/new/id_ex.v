@@ -3,7 +3,7 @@
 
 `include "public.v"
 
-// 流水级ID-EX之间的寄存器
+// 娴佹按绾D-EX涔嬮棿鐨勫瘎瀛樺櫒
 module id_ex(
 
   input clk,
@@ -23,17 +23,17 @@ module id_ex(
   output reg[`RegRangeLog2] ex_wreg_addr,
   output reg[`WordRange] ex_link_addr,
 
-  input wire id_in_delayslot, // 当前处在译码阶段的指令是否是延迟槽内指令
-  input wire id_next_in_delayslot, // 新增加的与延迟槽相关，译码阶段的指令通知是否下一条指令在延迟槽内
-  output reg ex_in_delayslot, // 当前处在执行阶段的指令是否是延迟槽内指令
-  output reg ex_next_in_delayslot, // 下一条要进入执行阶段的指令是不是延迟槽内指令
+  input wire id_in_delayslot, // 褰撳墠澶勫湪璇戠爜闃舵鐨勬寚浠ゆ槸鍚︽槸寤惰繜妲藉唴鎸囦护
+  input wire id_next_in_delayslot, // 鏂板鍔犵殑涓庡欢杩熸Ы鐩稿叧锛岃瘧鐮侀樁娈电殑鎸囦护閫氱煡鏄惁涓嬩竴鏉℃寚浠ゅ湪寤惰繜妲藉唴
+  output reg ex_in_delayslot, // 褰撳墠澶勫湪鎵ц闃舵鐨勬寚浠ゆ槸鍚︽槸寤惰繜妲藉唴鎸囦护
+  output reg ex_next_in_delayslot, // 涓嬩竴鏉¤杩涘叆鎵ц闃舵鐨勬寚浠ゆ槸涓嶆槸寤惰繜妲藉唴鎸囦护
 
   input wire pause,
 
   input wire[`WordRange] id_ins,
   output reg[`WordRange] ex_ins,
 
-  // 中断异常相关
+  // 涓柇寮傚父鐩稿叧
   input wire flush,
   input wire[`WordRange] f_id_current_pc_addr_in,
   input wire[`WordRange] f_id_abnormal_type_in,

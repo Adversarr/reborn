@@ -20,30 +20,30 @@
 `include "public.v"
 
 module cpu(
-  input rst, // ÖØÖÃ
-  input clk, // Ê±ÖÓ
-  input [`WordRange] imem_data_in,        //Ö¸Áî´æ´¢Æ÷·¢¸øcpuµÄÖ¸Áî
-  output wire[`WordRange] imem_addr_out,  //cpu·¢¸øÖ¸Áî´æ´¢Æ÷µÄµØÖ·
-  output wire imem_e_out,                 //cpu·¢¸øÖ¸Áî´æ´¢Æ÷µÄÊ¹ÄÜĞÅºÅ
+  input rst, // é‡ç½®
+  input clk, // æ—¶é’Ÿ
+  input [`WordRange] imem_data_in,        //æŒ‡ä»¤å­˜å‚¨å™¨å‘ç»™cpuçš„æŒ‡ä»¤
+  output wire[`WordRange] imem_addr_out,  //cpuå‘ç»™æŒ‡ä»¤å­˜å‚¨å™¨çš„åœ°å€
+  output wire imem_e_out,                 //cpuå‘ç»™æŒ‡ä»¤å­˜å‚¨å™¨çš„ä½¿èƒ½ä¿¡å·
 
-  output wire[`WordRange] bus_addr_out,        //·¢¸øÊı¾İ×ÜÏßµÄµØÖ·
-  output wire[`WordRange] bus_write_data_out,  //·¢¸øĞ´Êı¾İ×ÜÏßµÄÊı¾İ
-  output wire bus_eable_out,                   //·¢¸ø¿ØÖÆ×ÜÏßµÄ¶ÁĞ´Ê¹ÄÜĞÅºÅ
-  output wire bus_we_out,                      //·¢¸ø¿ØÖÆ×ÜÏßµÄĞ´Ê¹ÄÜĞÅºÅ£¨0´ú±í¶Á£©
-  output wire[3:0] bus_byte_sel_out,           //·¢¸ø¿ØÖÆ×ÜÏßµÄ±ÈÌØÑ¡ÔñĞÅºÅ
-  input wire[`WordRange] bus_data_in,          //´Ó¶Á¿ØÖÆ×ÜÏß¶ÁÈëµÄÍâÉè/ramÊı¾İ
-  input wire[5:0] interrupt_in               //Íâ²¿ÖĞ¶ÏĞÅºÅ ¹²Áù¸ù
+  output wire[`WordRange] bus_addr_out,        //å‘ç»™æ•°æ®æ€»çº¿çš„åœ°å€
+  output wire[`WordRange] bus_write_data_out,  //å‘ç»™å†™æ•°æ®æ€»çº¿çš„æ•°æ®
+  output wire bus_eable_out,                   //å‘ç»™æ§åˆ¶æ€»çº¿çš„è¯»å†™ä½¿èƒ½ä¿¡å·
+  output wire bus_we_out,                      //å‘ç»™æ§åˆ¶æ€»çº¿çš„å†™ä½¿èƒ½ä¿¡å·ï¼ˆ0ä»£è¡¨è¯»ï¼‰
+  output wire[3:0] bus_byte_sel_out,           //å‘ç»™æ§åˆ¶æ€»çº¿çš„æ¯”ç‰¹é€‰æ‹©ä¿¡å·
+  input wire[`WordRange] bus_data_in,          //ä»è¯»æ§åˆ¶æ€»çº¿è¯»å…¥çš„å¤–è®¾/ramæ•°æ®
+  input wire[5:0] interrupt_in               //å¤–éƒ¨ä¸­æ–­ä¿¡å· å…±å…­æ ¹
   );
   // IF Output:
   wire [`WordRange] if_ins;
   
-    // IDÊäÈë
+    // IDè¾“å…¥
   wire[`WordRange] pc;
   wire[`WordRange] id_pc_in;
   wire[`WordRange] id_ins_in;
   wire is_in_delayslot_in;
 
-  // IDÊä³ö
+  // IDè¾“å‡º
   wire[`ALUOpRange] id_aluop_out;
   wire[`WordRange] id_data1_out;
   wire[`WordRange] id_data2_out;
@@ -58,7 +58,7 @@ module cpu(
   wire[`WordRange] id_abnormal_type_out;
   wire[`WordRange] id_current_pc_addr_out;
 
-  // EXÊäÈë
+  // EXè¾“å…¥
   wire[`ALUOpRange] ex_aluop_in;
   wire[`WordRange] ex_data1_in;
   wire[`WordRange] ex_data2_in;
@@ -87,7 +87,7 @@ module cpu(
   wire[`WordRange] ex_abnormal_type_in;
 
 
-  // EXÊä³ö
+  // EXè¾“å‡º
   wire ex_wreg_e_out;
   wire[`RegRangeLog2] ex_wreg_addr_out;
   wire[`WordRange] ex_wreg_data_out;
@@ -115,7 +115,7 @@ module cpu(
   wire[`WordRange] ex_current_pc_addr_out;
   wire[`WordRange] ex_abnormal_type_out;
 
-  // MEMÊäÈë
+  // MEMè¾“å…¥
   wire mem_wreg_e_in;
   wire[`RegRangeLog2] mem_wreg_addr_in;
   wire[`WordRange] mem_wreg_data_in;
@@ -138,7 +138,7 @@ module cpu(
   
 
 
-  // MEMÊä³ö
+  // MEMè¾“å‡º
   wire mem_wreg_e_out;
   wire[`RegRangeLog2] mem_wreg_addr_out;
   wire[`WordRange] mem_wreg_data_out;
@@ -156,20 +156,20 @@ module cpu(
   wire[`WordRange] mem_abnormal_type_out;
   wire[`WordRange] mem_current_pc_addr_out;
 
-  // WBÊäÈë
+  // WBè¾“å…¥
   wire wb_wreg_e_in;
   wire[`RegRangeLog2] wb_wreg_addr_in;
   wire[`WordRange] wb_wreg_data_in;
-  // ÏÂÃæÈı¸ùÏßÖ±½ÓÁ¬µ½HILO
+  // ä¸‹é¢ä¸‰æ ¹çº¿ç›´æ¥è¿åˆ°HILO
   wire wb_hilo_we_in;
   wire[`WordRange] wb_hi_data_in;
   wire[`WordRange] wb_lo_data_in;
-  //cp0µÄÊäÈë
+  //cp0çš„è¾“å…¥
   wire wb_cp0_we_in;
   wire[4:0] wb_cp0_waddr_in;
   wire[`WordRange] wb_cp0_wdata_in;
 
-  // ¼Ä´æÆ÷×éÏà¹Ø
+  // å¯„å­˜å™¨ç»„ç›¸å…³
   wire reg1_re;
   wire reg2_re;
   wire[`WordRange] reg1_data;
@@ -177,7 +177,7 @@ module cpu(
   wire[`RegRangeLog2] reg1_addr;
   wire[`RegRangeLog2] reg2_addr;
 
-  //Á÷Ë®ÏßÔİÍ£Ïà¹Ø
+  //æµæ°´çº¿æš‚åœç›¸å…³
   wire pause_req_id;
   wire pause_req_ex;
   wire pause_res_pc;
@@ -187,7 +187,7 @@ module cpu(
   wire pause_res_mem;
   wire pause_res_wb;
 
-  // Á÷Ë®´¦ÀíÆ÷Òì³£Ïà¹Ø
+  // æµæ°´å¤„ç†å™¨å¼‚å¸¸ç›¸å…³
   wire flush;
   wire[`WordRange] interrupt_pc_out;
   

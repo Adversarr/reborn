@@ -41,7 +41,7 @@ module dmem(
   
   wire ram_enable;
   wire weA,weB,weC,weD;
-  // µØÖ·¸ß16Î»È«0ÇÒenableÓĞĞ§ ²ÅÕæÕıÓĞĞ§
+  // åœ°å€é«˜16ä½å…¨0ä¸”enableæœ‰æ•ˆ æ‰çœŸæ­£æœ‰æ•ˆ
   assign ram_enable = (~|addr[31:16]) & enable;  
   
   assign weA = byte_sel[0] & we;
@@ -57,7 +57,7 @@ module dmem(
       .douta         (data_out[7:0]),
 //      .ena           (kickOff ?   ram_enable       :   1'b1),
       .wea           (kickOff ?   weA             :   upg_wen)
-  );  //×îµÍÎ»×Ö½Ú(00)
+  );  //æœ€ä½ä½å­—èŠ‚(00)
   dmem8 ramB(
       .addra         (kickOff ?   addr[15:2]      :   upg_adr),
       .clka          (kickOff ?   clk             :   upg_clk),
@@ -81,5 +81,5 @@ module dmem(
       .douta         (data_out[31:24]),
 //      .ena           (kickOff ?   ram_enable       :   1'b1),
       .wea           (kickOff ?   weA             :   upg_wen)
-  );  //×î¸ßÎ»×Ö½Ú(11)
+  );  //æœ€é«˜ä½å­—èŠ‚(11)
 endmodule
