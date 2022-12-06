@@ -1,5 +1,4 @@
 `timescale 1ns / 1ps
-`timescale 1ns / 1ps
 
 `define Enable 1'b1
 `define Disable 1'b0
