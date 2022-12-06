@@ -1,10 +1,10 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
-// Date        : Fri Dec  2 10:52:59 2022
-// Host        : JyDesktop running 64-bit major release  (build 9200)
+// Date        : Tue Dec  6 19:28:35 2022
+// Host        : DESKTOP-GH9H0GG running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim
-//               c:/Users/jerry/source/repos/cpu/minisys1a/minisys1a.srcs/sources_1/ip/uart_bmpg_0/uart_bmpg_0_sim_netlist.v
+//               C:/Users/JerryYang/Repo/reborn/cpu/minisys1a/minisys1a.srcs/sources_1/ip/uart_bmpg_0/uart_bmpg_0_sim_netlist.v
 // Design      : uart_bmpg_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.

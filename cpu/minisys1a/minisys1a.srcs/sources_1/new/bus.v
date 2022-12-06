@@ -24,19 +24,19 @@
 module bus(
   // <- board
   input wire clk, input wire rst,
-  // 拨码开关
+  // 拨码�?�?
   input wire[23:0] switches_in,
   // 按钮
   input wire[4:0] buttons_in,
   // 矩阵键盘
   input wire[3:0] keyboard_cols_in,
   output wire[3:0] keyboard_rows_out,
-  // 数码管
+  // 数码�?
   output wire[7:0] digits_sel_out,
   output wire[7:0] digits_data_out,
-  // 蜂鸣器
+  // 蜂鸣�?
   output wire beep_out,
-  // LED灯
+  // LED�?
   output wire[7:0] led_RLD_out,
   output wire[7:0] led_YLD_out,
   output wire[7:0] led_GLD_out,
@@ -61,7 +61,7 @@ module bus(
     pwm_data, led_light_data, switch_data, uart_data, watch_dog_data, 
     counter_data, keyboard_data;
   // Ram
-  dmem dmem_inst(
+  mem_for_test dmem_inst(
     .clk                    (clk),
     .enable                 (enable),
     .we                     (is_write),
