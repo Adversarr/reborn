@@ -3303,3 +3303,7 @@ run 3 us
 restart
 INFO: [Simtcl 6-17] Simulation restarted
 run 15 us
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+exit
+INFO: [Common 17-206] Exiting Vivado at Tue Dec  6 23:57:04 2022...

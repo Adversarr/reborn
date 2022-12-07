@@ -66,3 +66,4 @@ restart
 run 3 us
 restart
 run 15 us
+close_sim

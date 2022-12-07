@@ -22,17 +22,17 @@
 module cpu(
   input rst, // 重置
   input clk, // 时钟
-  input [`WordRange] imem_data_in,        //指令存储器发给cpu的指令
+  input [`WordRange] imem_data_in,        //指令存储器发给cpu的指�?
   output wire[`WordRange] imem_addr_out,  //cpu发给指令存储器的地址
   output wire imem_e_out,                 //cpu发给指令存储器的使能信号
 
-  output wire[`WordRange] bus_addr_out,        //发给数据总线的地址
-  output wire[`WordRange] bus_write_data_out,  //发给写数据总线的数据
-  output wire bus_eable_out,                   //发给控制总线的读写使能信号
-  output wire bus_we_out,                      //发给控制总线的写使能信号（0代表读）
-  output wire[3:0] bus_byte_sel_out,           //发给控制总线的比特选择信号
-  input wire[`WordRange] bus_data_in,          //从读控制总线读入的外设/ram数据
-  input wire[5:0] interrupt_in               //外部中断信号 共六根
+  output wire[`WordRange] bus_addr_out,        //发给数据总线的地�?
+  output wire[`WordRange] bus_write_data_out,  //发给写数据�?�线的数�?
+  output wire bus_eable_out,                   //发给控制总线的读写使能信�?
+  output wire bus_we_out,                      //发给控制总线的写使能信号�?0代表读）
+  output wire[3:0] bus_byte_sel_out,           //发给控制总线的比特�?�择信号
+  input wire[`WordRange] bus_data_in,          //从读控制总线读入的外�?/ram数据
+  input wire[5:0] interrupt_in               //外部中断信号 共六�?
   );
   // IF Output:
   wire [`WordRange] if_ins;
@@ -164,7 +164,7 @@ module cpu(
   wire wb_hilo_we_in;
   wire[`WordRange] wb_hi_data_in;
   wire[`WordRange] wb_lo_data_in;
-  //cp0的输入
+  //cp0的输�?
   wire wb_cp0_we_in;
   wire[4:0] wb_cp0_waddr_in;
   wire[`WordRange] wb_cp0_wdata_in;
@@ -177,7 +177,7 @@ module cpu(
   wire[`RegRangeLog2] reg1_addr;
   wire[`RegRangeLog2] reg2_addr;
 
-  //流水线暂停相关
+  //流水线暂停相�?
   wire pause_req_id;
   wire pause_req_ex;
   wire pause_res_pc;
@@ -187,7 +187,7 @@ module cpu(
   wire pause_res_mem;
   wire pause_res_wb;
 
-  // 流水处理器异常相关
+  // 流水处理器异常相�?
   wire flush;
   wire[`WordRange] interrupt_pc_out;
   
@@ -277,6 +277,9 @@ module cpu(
   .mem_wreg_en_in           (mem_wreg_e_out),
   .mem_wreg_data_in         (mem_wreg_data_out),
   .mem_wreg_addr_in         (mem_wreg_addr_out),
+  .wb_wreg_en_in            (wb_wreg_e_in),
+  .wb_wreg_data_in          (wb_wreg_data_in),
+  .wb_wreg_addr_in          (wb_wreg_addr_in),
   .pause_req                (pause_req_id),
   .branch_en_out            (branch_e_out),
   .branch_addr_out          (branch_addr_out),
@@ -325,7 +328,7 @@ module cpu(
   .aluop_in                 (ex_aluop_in),
   .data1_in                 (ex_data1_in),
   .data2_in                 (ex_data2_in),
-  .wreg_addr_in              (ex_wreg_addr_in),
+  .wreg_addr_in             (ex_wreg_addr_in),
   .wreg_e_in                (ex_wreg_e_in),
   .wreg_addr_out            (ex_wreg_addr_out),
   .wreg_e_out               (ex_wreg_e_out),

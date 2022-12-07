@@ -6,8 +6,8 @@ test_add:
     addi    $t1, $0, -5
     addi    $t2, $0, 4
     nop
-    add     $t3, $t0, $t1   # $t3 = -1
-    add     $t4, $t0, $t1   # $t4 = -1
+    add     $t3, $t0, $t1   # $t3 = -11
+    add     $t4, $t0, $t1   # $t4 = -11
     addu    $t5, $t2, $t1   # $t5 = -1
     addu    $t6, $t2, $t1   # $t6 = -1
     nop
