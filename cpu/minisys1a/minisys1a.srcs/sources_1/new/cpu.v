@@ -204,7 +204,8 @@ module cpu(
   // HILO
   hilo  u_hilo (  
   .rst                      (rst),
-  .clk                      (clk),
+  .clk                      (~
+  clk),
   .we_in                    (wb_hilo_we_in),
   .hi_in                    (wb_hi_data_in),
   .lo_in                    (wb_lo_data_in),

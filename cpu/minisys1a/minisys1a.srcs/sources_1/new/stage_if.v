@@ -16,7 +16,7 @@ module stage_if(
   );
  // IF
  pc  u_pc (
-   .clk                      (clk),
+   .clk                      (~clk),
    .rst                      (rst),
    .pc                       (pc),
    .pause                    (pause),

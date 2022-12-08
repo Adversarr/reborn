@@ -59,6 +59,7 @@ test_j:
     nop
 
 test_failed:
+    addi $t0, $0, 0x2468
     j test_failed   # failed
     nop
     nop
@@ -78,8 +79,8 @@ test_add_i:
     nop
     addi    $t3, $t0, 5         # $t3 = -1, overflow exception
     addiu   $t4, $t0, 5         # $t4 = -1
-    addi    $t3, $t0, 0x8000    # $t3 = -4198, overflow exception
-    addiu   $t4, $t0, 0x8000    # $t4 = -4198
+    addi    $t3, $t0, 0x8000    # $t3 = -ffff7fffa, overflow exception
+    addiu   $t4, $t0, 0x8000    # $t4 = -ffff7ffa
     nop
     nop
     nop
@@ -89,7 +90,7 @@ test_bitwise_i:
     addi    $t1, $0, 6
     addi    $t2, $0, 5
     nop
-    addi    $t3, $t0, 6     # $t3 = 2 (b'0010)
+    addi    $t3, $t0, 6     # $t3 = 9 (b'0010)
     ori     $t4, $t0, 6     # $t4 = 7 (b'0111)
     xori    $t5, $t0, 6     # $t5 = 5 (b'0101)
     nop
