@@ -1,10 +1,10 @@
 -- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
--- Date        : Tue Dec  6 23:35:50 2022
+-- Date        : Fri Dec  9 22:23:35 2022
 -- Host        : DESKTOP-GH9H0GG running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode synth_stub
---               c:/Users/JerryYang/Repo/reborn/cpu/minisys1a/minisys1a.srcs/sources_1/ip/dmem32/dmem32_stub.vhdl
+--               C:/Users/JerryYang/Repo/reborn/cpu/minisys1a/minisys1a.srcs/sources_1/ip/dmem32/dmem32_stub.vhdl
 -- Design      : dmem32
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7a12ticsg325-1L
