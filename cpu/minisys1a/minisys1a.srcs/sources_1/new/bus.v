@@ -24,19 +24,19 @@
 module bus(
   // <- board
   input wire clk, input wire rst,
-  // æ‹¨ç å¼?å…?
+  // æ‹¨ç ï¿??ï¿??
   input wire[23:0] switches_in,
   // æŒ‰é’®
   input wire[4:0] buttons_in,
   // çŸ©é˜µé”®ç›˜
   input wire[3:0] keyboard_cols_in,
   output wire[3:0] keyboard_rows_out,
-  // æ•°ç ç®?
+  // æ•°ç ï¿??
   output wire[7:0] digits_sel_out,
   output wire[7:0] digits_data_out,
-  // èœ‚é¸£å™?
+  // èœ‚é¸£ï¿??
   output wire beep_out,
-  // LEDç?
+  // LEDï¿??
   output wire[7:0] led_RLD_out,
   output wire[7:0] led_YLD_out,
   output wire[7:0] led_GLD_out,
@@ -92,8 +92,7 @@ module bus(
     .YLD(led_YLD_out),
     .GLD(led_GLD_out)
   );
-  
-  // TODO: Impl for switch, beep, keyboard, etc.
+
   switches switch_inst(
     .rst(rst),
     .clk(clk),
@@ -152,7 +151,8 @@ module bus(
     .en(enable),
     .data_in(write_data),
     .we(is_write),
-    .data_out(counter_data)
+    .data_out(counter_data),
+    .external_pulse(`Enable)
   );
   watchdog watchdog_inst(
    .rst(rst),

@@ -23,13 +23,6 @@ module timer(
   input rst, // 复位
   input clk, // 时钟
   
-  //从总线来的数据 所有外设驱动都应有以下信号
-  input wire[`WordRange] addr,
-  input wire en, // 使能
-  input wire[3:0] byte_sel,
-  input wire[`WordRange] data_in, // 数据输入（来自cpu）
-  input wire we, //写使能
-  
   // TODO: Replace interface.
   input cs, // 片选
   input rd, // 读模式
