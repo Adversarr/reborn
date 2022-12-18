@@ -33,13 +33,13 @@ test_bitwise:
     nop
 
 test_shift:
-    addi    $t0, $0, 2 
-    addi    $t1, $0, 5 
+    addi    $t0, $0, 2
+    addi    $t1, $0, 5
     addi    $t2, $0, -6
     nop
     sll     $t3, $t1, 2     # $t3 = 0x14 (b'0001_0100)
     srl     $t4, $t1, 2     # $t4 = 1    (b'0000_0001)
-    srl     $t5, $t2, 2     # $t5 = 1    (b'0000_0001)
+    srl     $t5, $t2, 2     # $t5 = 3fff_fffe
     sra     $t6, $t1, 2     # $t6 = 1    (b'0000...0001)
     sra     $t7, $t2, 2     # $t7 = -2   (b'1111...1110)
     nop
@@ -112,7 +112,7 @@ test_lw:
     addi    $t0, $0, 0
     lw      $t0, 0xFC60 ($0)    # save LED
     addi    $t0, $0, 4567
-    lw      $t0, 0x1234 ($0)    # load 
+    lw      $t0, 0x1234 ($0)    # load
     addi    $t0, $0, 0
     sw      $t0, 0x1234 ($0)    # save, $t0 = 0x4567
     nop

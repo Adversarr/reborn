@@ -11,18 +11,18 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="5600160000fs"></ZoomStartTime>
-      <ZoomEndTime time="6740160001fs"></ZoomEndTime>
-      <Cursor1Time time="6188670000fs"></Cursor1Time>
+      <ZoomStartTime time="2499798150fs"></ZoomStartTime>
+      <ZoomEndTime time="2776298151fs"></ZoomEndTime>
+      <Cursor1Time time="2657520000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="225"></NameColumnWidth>
-      <ValueColumnWidth column_width="134"></ValueColumnWidth>
+      <ValueColumnWidth column_width="130"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="36" />
+   <WVObjectSize size="32" />
    <wave_markers>
-      <marker time="1350500000" label="" />
-      <marker time="1210762000" label="" />
+      <marker time="2821720000" label="" />
+      <marker time="2657520000" label="" />
    </wave_markers>
    <wvobject fp_name="/minsys_sim/rst" type="logic">
       <obj_property name="ElementShortName">rst</obj_property>
@@ -32,33 +32,33 @@
       <obj_property name="ElementShortName">cpu_clk</obj_property>
       <obj_property name="ObjectShortName">cpu_clk</obj_property>
    </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_if/pc" type="array">
-      <obj_property name="ElementShortName">pc[31:0]</obj_property>
-      <obj_property name="ObjectShortName">pc[31:0]</obj_property>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/imem_addr_out" type="array">
+      <obj_property name="ElementShortName">imem_addr_out[31:0]</obj_property>
+      <obj_property name="ObjectShortName">imem_addr_out[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/branch_addr_out" type="array">
-      <obj_property name="ElementShortName">branch_addr_out[31:0]</obj_property>
-      <obj_property name="ObjectShortName">branch_addr_out[31:0]</obj_property>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/mem_wreg_addr_in" type="array">
+      <obj_property name="ElementShortName">mem_wreg_addr_in[4:0]</obj_property>
+      <obj_property name="ObjectShortName">mem_wreg_addr_in[4:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/link_addr_out" type="array">
-      <obj_property name="ElementShortName">link_addr_out[31:0]</obj_property>
-      <obj_property name="ObjectShortName">link_addr_out[31:0]</obj_property>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/mem_wreg_data_in" type="array">
+      <obj_property name="ElementShortName">mem_wreg_data_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">mem_wreg_data_in[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_if_id/if_ins" type="array">
-      <obj_property name="ElementShortName">if_ins[31:0]</obj_property>
-      <obj_property name="ObjectShortName">if_ins[31:0]</obj_property>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/mem_wreg_en_in" type="logic">
+      <obj_property name="ElementShortName">mem_wreg_en_in</obj_property>
+      <obj_property name="ObjectShortName">mem_wreg_en_in</obj_property>
    </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_if_id/if_pc" type="array">
-      <obj_property name="ElementShortName">if_pc[31:0]</obj_property>
-      <obj_property name="ObjectShortName">if_pc[31:0]</obj_property>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/wb_wreg_addr_in" type="array">
+      <obj_property name="ElementShortName">wb_wreg_addr_in[4:0]</obj_property>
+      <obj_property name="ObjectShortName">wb_wreg_addr_in[4:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id_ex/id_ins" type="array">
-      <obj_property name="ElementShortName">id_ins[31:0]</obj_property>
-      <obj_property name="ObjectShortName">id_ins[31:0]</obj_property>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/wb_wreg_data_in" type="array">
+      <obj_property name="ElementShortName">wb_wreg_data_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">wb_wreg_data_in[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/ex_wreg_en_in" type="logic">
-      <obj_property name="ElementShortName">ex_wreg_en_in</obj_property>
-      <obj_property name="ObjectShortName">ex_wreg_en_in</obj_property>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/wb_wreg_en_in" type="logic">
+      <obj_property name="ElementShortName">wb_wreg_en_in</obj_property>
+      <obj_property name="ObjectShortName">wb_wreg_en_in</obj_property>
    </wvobject>
    <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/ex_wreg_addr_in" type="array">
       <obj_property name="ElementShortName">ex_wreg_addr_in[4:0]</obj_property>
@@ -68,53 +68,79 @@
       <obj_property name="ElementShortName">ex_wreg_data_in[31:0]</obj_property>
       <obj_property name="ObjectShortName">ex_wreg_data_in[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/mem_wreg_e_in" type="logic">
-      <obj_property name="ElementShortName">mem_wreg_e_in</obj_property>
-      <obj_property name="ObjectShortName">mem_wreg_e_in</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/mem_wreg_addr_in" type="array">
-      <obj_property name="ElementShortName">mem_wreg_addr_in[4:0]</obj_property>
-      <obj_property name="ObjectShortName">mem_wreg_addr_in[4:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/mem_wreg_data_in" type="array">
-      <obj_property name="ElementShortName">mem_wreg_data_in[31:0]</obj_property>
-      <obj_property name="ObjectShortName">mem_wreg_data_in[31:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/wb_wreg_e_in" type="logic">
-      <obj_property name="ElementShortName">wb_wreg_e_in</obj_property>
-      <obj_property name="ObjectShortName">wb_wreg_e_in</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/wb_wreg_addr_in" type="array">
-      <obj_property name="ElementShortName">wb_wreg_addr_in[4:0]</obj_property>
-      <obj_property name="ObjectShortName">wb_wreg_addr_in[4:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/wb_wreg_data_in" type="array">
-      <obj_property name="ElementShortName">wb_wreg_data_in[31:0]</obj_property>
-      <obj_property name="ObjectShortName">wb_wreg_data_in[31:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/reg1_data_in" type="array">
-      <obj_property name="ElementShortName">reg1_data_in[31:0]</obj_property>
-      <obj_property name="ObjectShortName">reg1_data_in[31:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/reg2_data_in" type="array">
-      <obj_property name="ElementShortName">reg2_data_in[31:0]</obj_property>
-      <obj_property name="ObjectShortName">reg2_data_in[31:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/ex_wreg_en_in" type="logic">
+      <obj_property name="ElementShortName">ex_wreg_en_in</obj_property>
+      <obj_property name="ObjectShortName">ex_wreg_en_in</obj_property>
    </wvobject>
    <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/reg1_addr_out" type="array">
       <obj_property name="ElementShortName">reg1_addr_out[4:0]</obj_property>
       <obj_property name="ObjectShortName">reg1_addr_out[4:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/reg2_addr_out" type="array">
       <obj_property name="ElementShortName">reg2_addr_out[4:0]</obj_property>
       <obj_property name="ObjectShortName">reg2_addr_out[4:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/reg1_data_in" type="array">
+      <obj_property name="ElementShortName">reg1_data_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">reg1_data_in[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/reg2_data_in" type="array">
+      <obj_property name="ElementShortName">reg2_data_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">reg2_data_in[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/op" type="array">
+      <obj_property name="ElementShortName">op[5:0]</obj_property>
+      <obj_property name="ObjectShortName">op[5:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/rs" type="array">
+      <obj_property name="ElementShortName">rs[4:0]</obj_property>
+      <obj_property name="ObjectShortName">rs[4:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/rt" type="array">
+      <obj_property name="ElementShortName">rt[4:0]</obj_property>
+      <obj_property name="ObjectShortName">rt[4:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/rd" type="array">
+      <obj_property name="ElementShortName">rd[4:0]</obj_property>
+      <obj_property name="ObjectShortName">rd[4:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/shamt" type="array">
+      <obj_property name="ElementShortName">shamt[4:0]</obj_property>
+      <obj_property name="ObjectShortName">shamt[4:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/func" type="array">
+      <obj_property name="ElementShortName">func[5:0]</obj_property>
+      <obj_property name="ObjectShortName">func[5:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id_ex/pause" type="logic">
+      <obj_property name="ElementShortName">pause</obj_property>
+      <obj_property name="ObjectShortName">pause</obj_property>
+   </wvobject>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_ex/u_alu/data1" type="array">
+      <obj_property name="ElementShortName">data1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">data1[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_ex/u_alu/data2" type="array">
+      <obj_property name="ElementShortName">data2[31:0]</obj_property>
+      <obj_property name="ObjectShortName">data2[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_ex/u_alu/op" type="array">
+      <obj_property name="ElementShortName">op[5:0]</obj_property>
+      <obj_property name="ObjectShortName">op[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_ex/alu_res" type="array">
+      <obj_property name="ElementShortName">alu_res[31:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_res[31:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/branch_e_out" type="logic">
       <obj_property name="ElementShortName">branch_e_out</obj_property>
@@ -123,70 +149,20 @@
    <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/data1_out" type="array">
       <obj_property name="ElementShortName">data1_out[31:0]</obj_property>
       <obj_property name="ObjectShortName">data1_out[31:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/data2_out" type="array">
       <obj_property name="ElementShortName">data2_out[31:0]</obj_property>
       <obj_property name="ObjectShortName">data2_out[31:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_id/immed" type="array">
       <obj_property name="ElementShortName">immed[31:0]</obj_property>
       <obj_property name="ObjectShortName">immed[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_gpr/regs[18]" type="array">
-      <obj_property name="ElementShortName">[18][31:0]</obj_property>
-      <obj_property name="ObjectShortName">[18][31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_gpr/regs[17]" type="array">
-      <obj_property name="ElementShortName">[17][31:0]</obj_property>
-      <obj_property name="ObjectShortName">[17][31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_gpr/regs[16]" type="array">
-      <obj_property name="ElementShortName">[16][31:0]</obj_property>
-      <obj_property name="ObjectShortName">[16][31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_gpr/regs[15]" type="array">
-      <obj_property name="ElementShortName">[15][31:0]</obj_property>
-      <obj_property name="ObjectShortName">[15][31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_gpr/regs[14]" type="array">
-      <obj_property name="ElementShortName">[14][31:0]</obj_property>
-      <obj_property name="ObjectShortName">[14][31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_gpr/regs[13]" type="array">
-      <obj_property name="ElementShortName">[13][31:0]</obj_property>
-      <obj_property name="ObjectShortName">[13][31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_gpr/regs[12]" type="array">
-      <obj_property name="ElementShortName">[12][31:0]</obj_property>
-      <obj_property name="ObjectShortName">[12][31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_gpr/regs[11]" type="array">
-      <obj_property name="ElementShortName">[11][31:0]</obj_property>
-      <obj_property name="ObjectShortName">[11][31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_gpr/regs[10]" type="array">
-      <obj_property name="ElementShortName">[10][31:0]</obj_property>
-      <obj_property name="ObjectShortName">[10][31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_gpr/regs[9]" type="array">
-      <obj_property name="ElementShortName">[9][31:0]</obj_property>
-      <obj_property name="ObjectShortName">[9][31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_gpr/regs[8]" type="array">
-      <obj_property name="ElementShortName">[8][31:0]</obj_property>
-      <obj_property name="ObjectShortName">[8][31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
+   <wvobject fp_name="/minsys_sim/my_minisys/cpu_inst/u_gpr/regs" type="array">
+      <obj_property name="ElementShortName">regs[31:0][31:0]</obj_property>
+      <obj_property name="ObjectShortName">regs[31:0][31:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
 </wave_config>

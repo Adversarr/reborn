@@ -8,8 +8,8 @@ module ex (
 
   input rst,
   input wire[`ALUOpRange] aluop_in,
-  input wire[`WordRange] data1_in,  // 一般是rs
-  input wire[`WordRange] data2_in,  // 一般是rt
+  input wire[`WordRange] data1_in,  // �?般是rs
+  input wire[`WordRange] data2_in,  // �?般是rt
   input wire[`RegRangeLog2] wreg_addr_in,
   input wire wreg_e_in,
 
@@ -17,14 +17,14 @@ module ex (
   output reg wreg_e_out,
   output reg[`WordRange] wreg_data_out,
 
-  input wire[`WordRange] hi_data_in,  // 此条指令（译码阶段）hi给出的结果
-  input wire[`WordRange] lo_data_in,  // lo给出的结果
-  input wire mem_hilo_we_in, // 目前处于访存阶段的hi,lo的写使能（即此条指令的上一条指令）
-  input wire[`WordRange] mem_hi_data_in,  // 访存阶段写入hi的值
-  input wire[`WordRange] mem_lo_data_in,  // 访存阶段写入lo的值
+  input wire[`WordRange] hi_data_in,  // 此条指令（译码阶段）hi给出的结�?
+  input wire[`WordRange] lo_data_in,  // lo给出的结�?
+  input wire mem_hilo_we_in, // 目前处于访存阶段的hi,lo的写使能（即此条指令的上�?条指令）
+  input wire[`WordRange] mem_hi_data_in,  // 访存阶段写入hi的�??
+  input wire[`WordRange] mem_lo_data_in,  // 访存阶段写入lo的�??
   input wire wb_hilo_we_in,  // 目前处于写回阶段的hilo写使能（即词条指令的上两条指令）
-  input wire[`WordRange] wb_hi_data_in,  // 写回阶段写入hi的值
-  input wire[`WordRange] wb_lo_data_in,  // 写回阶段写入lo的值
+  input wire[`WordRange] wb_hi_data_in,  // 写回阶段写入hi的�??
+  input wire[`WordRange] wb_lo_data_in,  // 写回阶段写入lo的�??
   
   output reg hilo_we_out,  // 此条指令是否要写hilo
   output reg[`WordRange] hi_data_out,  // 写入的hi数据
@@ -32,17 +32,17 @@ module ex (
 
   output reg pause_req,
 
-  input wire[`WordRange] link_addr_in, // 保存的返回地址
+  input wire[`WordRange] link_addr_in, // 保存的返回地�?
 
-  output reg[`WordRange] div_data1_signed,  // 有符号除法的被除数
+  output reg[`WordRange] div_data1_signed,  // 有符号除法的被除�?
   output reg[`WordRange] div_data2_signed, // 有符号除法的除数
-  output reg[`WordRange] div_data1_unsigned, // 无符号除法的被除数
+  output reg[`WordRange] div_data1_unsigned, // 无符号除法的被除�?
   output reg[`WordRange] div_data2_unsigned, // 无符号除法的除数
-  output reg div_data_valid_signed, // 有符号除法数据是否有效（是否开始除法）
-  output reg div_data_valid_unsigned, // 无符号除法数据是否有效
-  input wire[`DivMulResultRange] div_result_signed,  // 结果64位
+  output reg div_data_valid_signed, // 有符号除法数据是否有效（是否�?始除法）
+  output reg div_data_valid_unsigned, // 无符号除法数据是否有�?
+  input wire[`DivMulResultRange] div_result_signed,  // 结果64�?
   input wire div_result_valid_signed,  // 有符号除法结果是否有效（有效说明除法结束，应该获取结果）
-  input wire[`DivMulResultRange] div_result_unsigned, // 结果64位
+  input wire[`DivMulResultRange] div_result_unsigned, // 结果64�?
   input wire div_result_valid_unsigned, // 无符号除法结果是否有效（有效说明除法结束，应该获取结果）
 
   output reg[`WordRange] mul_data1,
@@ -57,25 +57,25 @@ module ex (
 
   input is_in_delayslot, // 新增的延迟槽信号，代表处于执行阶段的指令是否是延迟槽指令
 
-  input wire[`WordRange] ins_in, // 新增的指令信号，从id阶段一直传递过来
-  output reg[`ALUOpRange] aluop_out, // 要向访存部分传递aluop
-  output reg[`WordRange] mem_addr_out, // 要向访存部分传递计算出的内存地址（所有存储相关指令均会用到）
-  output reg[`WordRange] mem_data_out, // 要向访存部分传递写入内存的数据（store指令才会用到）
+  input wire[`WordRange] ins_in, // 新增的指令信号，从id阶段�?直传递过�?
+  output reg[`ALUOpRange] aluop_out, // 要向访存部分传�?�aluop
+  output reg[`WordRange] mem_addr_out, // 要向访存部分传�?�计算出的内存地�?（所有存储相关指令均会用到）
+  output reg[`WordRange] mem_data_out, // 要向访存部分传�?�写入内存的数据（store指令才会用到�?
 
   //cp0相关
-  input wire[`WordRange] cp0_data_in,//从cp0读取的数据  只是用来给通用寄存器的
-  output reg[4:0] cp0_raddr_out, //直接传给cp0的地址
+  input wire[`WordRange] cp0_data_in,//从cp0读取的数�?  只是用来给�?�用寄存器的
+  output reg[4:0] cp0_raddr_out, //直接传给cp0的地�?
 
   input wire f_mem_cp0_we_in, //当前处在访存阶段的指令是否要写cp0
-  input wire[4:0] f_mem_cp0_w_addr, //要写的地址
+  input wire[4:0] f_mem_cp0_w_addr, //要写的地�?
   input wire[`WordRange] f_mem_cp0_w_data, //要写入的数据
   input wire f_wb_cp0_we_in,   //同理  当前处在写回阶段的指令是否要写cp0
-  input wire[4:0] f_wb_cp0_w_addr, //写入的地址
-  input wire[`WordRange] f_wb_cp0_w_data,  //写入的数据
+  input wire[4:0] f_wb_cp0_w_addr, //写入的地�?
+  input wire[`WordRange] f_wb_cp0_w_data,  //写入的数�?
 
   output reg cp0_we_out,    //cp0是否要被写（当前指令 向下传入流水
-  output reg[4:0] cp0_waddr_out,  //cp0写地址   向下传入流水
-  output reg[`WordRange] cp0_w_data_out,   //要写入cp0的数据 向下传入流水
+  output reg[4:0] cp0_waddr_out,  //cp0写地�?   向下传入流水
+  output reg[`WordRange] cp0_w_data_out,   //要写入cp0的数�? 向下传入流水
 
 
   //新增加的要向下级流水传的数据
@@ -85,10 +85,12 @@ module ex (
   input wire[`WordRange] current_ex_pc_addr_in,
   input wire[`WordRange] abnormal_type_in,
   output reg[`WordRange] abnormal_type_out,
-  output reg[`WordRange] current_ex_pc_addr_out
+  output reg[`WordRange] current_ex_pc_addr_out,
+  
+  output reg is_load_mem
 );
 
-  wire[`WordRange] alu_res;  // alu的结果
+  wire[`WordRange] alu_res;  // alu的结�?
   reg[`WordRange] mov_res;  // 转移指令（如读hi和lo）的结果
   
   reg[`WordRange] hi_temp;  // 暂存hi
@@ -124,6 +126,7 @@ module ex (
       wreg_data_out = `ZeroWord;
       abnormal_type_out = `ZeroWord;
       current_ex_pc_addr_out = `ZeroWord;
+      is_load_mem = `Disable;
     end else begin
       ins_out = ins_in;
       wreg_e_out = wreg_e_in;
@@ -138,12 +141,13 @@ module ex (
       mul_data1 = `ZeroWord;
       mul_data2 = `ZeroWord;
       mul_valid = `Disable;
-      mem_addr_out = data1_in + {{16{ins_in[15]}}, ins_in[15:0]};  // 在这里计算是为了让传递的信号少，并且时序逻辑清晰，增加在ex部分的工作
+      mem_addr_out = data1_in + {{16{ins_in[15]}}, ins_in[15:0]};  // 在这里计算是为了让传递的信号少，并且时序逻辑清晰，增加在ex部分的工�?
       aluop_out = aluop_in;
-      mem_data_out = data2_in; // 无论是什么存储操作，都会去使用rt的数据
+      mem_data_out = data2_in; // 无论是什么存储操作，都会去使用rt的数�?
       wreg_data_out = alu_res;
       abnormal_type_out = abnormal_type_in;
       current_ex_pc_addr_out = current_ex_pc_addr_in;
+      is_load_mem = `Disable;
       case (aluop_in)
         `ALUOP_DIV: begin
           if (div_result_valid_signed == `Disable) begin  // 除法尚未结束
@@ -218,6 +222,13 @@ module ex (
         `EXOP_MFHI:begin
           wreg_data_out = mov_res;
         end
+        `EXOP_LW,
+        `EXOP_LH,
+        `EXOP_LHU,
+        `EXOP_LB,
+        `EXOP_LBU: begin
+          is_load_mem = `Enable;
+        end
       endcase
     end
   end
@@ -251,7 +262,7 @@ module ex (
         `EXOP_MFLO: begin
           mov_res = lo_temp;
         end
-        `EXOP_MFC0: begin //要写入cp0寄存器，得看一下数据是不是最新的
+        `EXOP_MFC0: begin //要写入cp0寄存器，得看�?下数据是不是�?新的
           cp0_raddr_out = ins_in[15:11];
           mov_res = cp0_data_in;
           if(f_mem_cp0_we_in == `Enable && f_mem_cp0_w_addr == ins_in[15:11])begin

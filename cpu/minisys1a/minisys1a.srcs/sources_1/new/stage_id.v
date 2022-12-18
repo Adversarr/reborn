@@ -4,15 +4,15 @@
 `include "public.v"
 
 // 指令译码模块
-// 对指令进行译码，输出包括�?
-// 源操作数1、源操作�?2、写入的目的寄存器的运算类型（�?�辑、移位�?�算术）
+// 对指令进行译码，输出包括�??
+// 源操作数1、源操作�??2、写入的目的寄存器的运算类型（�?�辑、移位�?�算术）
 module id (
 
   input rst, // 复位
   input wire[`WordRange] pc_in, // 输入的PC值，译码阶段指令地址
   input wire[`WordRange] ins_in, // 输入的指令，即取出的指令
 
-  // 寄存器来向数据相关接�?
+  // 寄存器来向数据相关接�??
   input wire[`WordRange] reg1_data_in, // 输入的寄存器数据1
   input wire[`WordRange] reg2_data_in, // 输入的寄存器数据2
   output reg reg1_ren_out, // 寄存器读使能1
@@ -20,23 +20,23 @@ module id (
   output reg[`RegRangeLog2] reg1_addr_out, // 寄存器读地址1
   output reg[`RegRangeLog2] reg2_addr_out, // 寄存器读地址2
 
-  // 告诉执行单元应执行何种操�?
+  // 告诉执行单元应执行何种操�??
   output reg[`ALUOpRange] exop_out, // 输出的ALUOp
 
-  // �?终决定的数据
-  output reg[`WordRange] data1_out, // 输出的数�?1
-  output reg[`WordRange] data2_out, // 输出的数�?2
+  // �??终决定的数据
+  output reg[`WordRange] data1_out, // 输出的数�??1
+  output reg[`WordRange] data2_out, // 输出的数�??2
   
-  // 寄存器去向相关接�?
+  // 寄存器去向相关接�??
   output reg wreg_wen_out, // 写寄存器使能输出
   output reg[`RegRangeLog2] wreg_addr_out, // 写寄存器地址输出
 
-  // 下面部分用于采用数据前推（转移）法解决相�?0条（ID-EX）和相隔1条（ID-MEM）阶段的RAW数据相关
-  // EX阶段运算结果（即上条指令�?
+  // 下面部分用于采用数据前推（转移）法解决相�??0条（ID-EX）和相隔1条（ID-MEM）阶段的RAW数据相关
+  // EX阶段运算结果（即上条指令�??
   input wire ex_wreg_en_in,
   input wire[`WordRange] ex_wreg_data_in,
   input wire[`RegRangeLog2] ex_wreg_addr_in,
-  // MEM阶段运算结果（上两条指令�?
+  // MEM阶段运算结果（上两条指令�??
   input wire mem_wreg_en_in,
   input wire[`WordRange] mem_wreg_data_in,
   input wire[`RegRangeLog2] mem_wreg_addr_in,
@@ -47,17 +47,17 @@ module id (
 
   output reg pause_req, // 要求进行流水暂停信号
 
-  // 延迟槽相�?
+  // 延迟槽相�??
   input wire in_delayslot_in, // 当前要进入（译码阶段）指令是否是延迟槽内指令（必须执行）
-  output reg in_delayslot_out,  // 当前要出（译码阶段）指令是否是延迟槽内指令（必须执行�?
+  output reg in_delayslot_out,  // 当前要出（译码阶段）指令是否是延迟槽内指令（必须执行�??
   output reg next_in_delayslot_out, // 下条指令是否处是延迟槽内指令（即当前指令是否要跳转）
   
   // 分支相关
   output reg branch_en_out,  // 分支生效信号
   output reg[`WordRange] branch_addr_out, // 分支跳转地址
-  output reg[`WordRange] link_addr_out, // 转移指令�?要保存的地址
+  output reg[`WordRange] link_addr_out, // 转移指令�??要保存的地址
   
-  output reg[`WordRange] ins_out,   // 向流水线后续传�?�的指令 在添加存储指令时�?要用�?
+  output reg[`WordRange] ins_out,   // 向流水线后续传�?�的指令 在添加存储指令时�??要用�??
 
   // 异常相关
   // abnormal_type_out
@@ -66,12 +66,12 @@ module id (
   // 10 systemcall
   // 9...8 abnormal info
   // 7...0 interrupt info
-  output reg[`WordRange] abnormal_type_out,//指令的异常信�?
-  output reg[`WordRange] current_id_pc_addr_out //当前处在译码阶段指令的地�?
-
+  output reg[`WordRange] abnormal_type_out,//指令的异常信�??
+  output reg[`WordRange] current_id_pc_addr_out, //当前处在译码阶段指令的地�??
+  input wire ex_is_load_mem
 );
 
-  // 指令的各个可能组�?
+  // 指令的各个可能组�??
   wire[5:0] op = ins_in[`OpRange];
   wire[4:0] rs = ins_in[`RsRange];
   wire[4:0] rt = ins_in[`RtRange];
@@ -89,7 +89,7 @@ module id (
 
   // 指令译码
   always @(*) begin
-    // rst时关掉所有使能，清空立即�?
+    // rst时关掉所有使能，清空立即�??
     if (rst == `Enable) begin
       exop_out = `ALUOP_NOP;
       wreg_wen_out = `Disable;
@@ -106,7 +106,7 @@ module id (
       wreg_wen_out = `Disable;
       reg1_ren_out = `Disable;
       reg2_ren_out = `Disable;
-      // �?0�?
+      // �??0�??
       immed = `ZeroWord;
       // 没有分支
       link_addr_out = `ZeroWord;
@@ -115,13 +115,13 @@ module id (
       branch_addr_out = `ZeroWord;
       // 没有异常信息
       abnormal_type_out = `ZeroWord;
-      // 把指令地�?�?下传
+      // 把指令地�??�??下传
       current_id_pc_addr_out = pc_in;
       // 根据op翻译
       if (ins_in == 32'd0) begin
         // nop
       end else begin
-        // R类指�?
+        // R类指�??
       if (op == `OP_RTYPE) begin
         case (func)
           `FUNC_OR: begin
@@ -330,7 +330,7 @@ module id (
             reg2_addr_out = rt;
             exop_out = `ALUOP_MULTU;
           end
-          // 跳转�?
+          // 跳转�??
           `FUNC_JR: begin   // rs->pc
             wreg_wen_out = `Disable;
             reg1_ren_out = `Enable;
@@ -349,7 +349,7 @@ module id (
             reg2_ren_out = `Disable;
             branch_en_out = `Enable;
             branch_addr_out = data1_out;
-            // Link操作，保存返回地�?是PC+8
+            // Link操作，保存返回地�??是PC+8
             link_addr_out = pc_in + 32'd8;
             next_in_delayslot_out = `Enable;
             exop_out = `EXOP_JALR;
@@ -371,7 +371,7 @@ module id (
           end
         endcase
       end else begin
-        // I类或J�?
+        // I类或J�??
         case (op)
           `OP_ORI: begin
             wreg_wen_out = `Enable;
@@ -401,7 +401,7 @@ module id (
             exop_out = `ALUOP_XOR;
           end
           `OP_LUI: begin
-            // 借助rs=$0的特性，可等价如下实�?
+            // 借助rs=$0的特性，可等价如下实�??
             wreg_wen_out = `Enable;
             wreg_addr_out = rt;
             reg1_ren_out = `Enable;
@@ -457,7 +457,7 @@ module id (
           end
           `OP_JAL: begin
             wreg_wen_out = `Enable;
-            wreg_addr_out = `RegCountLog2'd31; // 固定�?$ra
+            wreg_addr_out = `RegCountLog2'd31; // 固定�??$ra
             reg1_ren_out = `Disable;
             reg2_ren_out = `Disable;
             branch_en_out = `Enable;
@@ -488,7 +488,7 @@ module id (
             reg1_addr_out = rs;
             reg2_ren_out = `Disable;
             branch_en_out = `Disable;
-            // 判断�?0�?
+            // 判断�??0�??
             if (data1_out[31] == 1'b0 && data1_out != `ZeroWord) begin
               branch_en_out = `Enable;
               branch_addr_out = pc_in + 32'd4 + {{14{offset[15]}}, offset[15:0], 2'b00};
@@ -682,26 +682,31 @@ module id (
     end
   end
 
-  // 下面�?始确定�?�到EX的数据具体来自于哪里
+  // 下面�??始确定�?�到EX的数据具体来自于哪里
   // 这取决于来源是寄存器，还是立即数
   always @(*) begin
     // rst时固定出0x0
+    pause_req = `Disable;
     if (rst == `Enable) begin
       data1_out = `ZeroWord;
     // 解决相隔0条（ID-EX）的流水数据相关
-    // 如果前面的EX要写的就是后面的ID要读的，则穿透（转发�?
+    // 如果前面的EX要写的就是后面的ID要读的，则穿透（转发�??
     end else if (ex_wreg_en_in == `Enable && reg1_ren_out == `Enable && reg1_addr_out == ex_wreg_addr_in) begin
-      data1_out = ex_wreg_data_in;
+      if (ex_is_load_mem) begin
+        pause_req = `Enable;
+      end else begin
+        data1_out = ex_wreg_data_in;
+      end
     // 解决相隔1条（ID-MEM）的流水数据相关
-    // 如果前面的MEM要写的就是后面的ID要读的，则穿透（转发�?
+    // 如果前面的MEM要写的就是后面的ID要读的，则穿透（转发�??
     end else if (mem_wreg_en_in == `Enable && reg1_ren_out == `Enable && reg1_addr_out == mem_wreg_addr_in) begin
       data1_out = mem_wreg_data_in;
     end else if (wb_wreg_en_in == `Enable && reg1_ren_out == `Enable && reg1_addr_out == wb_wreg_addr_in) begin
       data1_out = wb_wreg_data_in;  
-    // 如果指令译码的结果需要读reg1，就说明操作�?1来自寄存器（rs�?
+    // 如果指令译码的结果需要读reg1，就说明操作�??1来自寄存器（rs�??
     end else if (reg1_ren_out == `Enable) begin
       data1_out = reg1_data_in;
-    // 如果指令译码的结果不�?要读reg1，就说明操作�?1是立即数
+    // 如果指令译码的结果不�??要读reg1，就说明操作�??1是立即数
     end else if (reg1_ren_out == `Disable) begin
       data1_out = immed;
     // 兜底
@@ -712,15 +717,20 @@ module id (
 
   // 逻辑同上
   always @(*) begin
+    pause_req = `Disable;
     if (rst == `Enable) begin
       data2_out = `ZeroWord;
     end else if (ex_wreg_en_in == `Enable && reg2_ren_out == `Enable && reg2_addr_out == ex_wreg_addr_in) begin
-      data2_out = ex_wreg_data_in;
+       if (ex_is_load_mem) begin
+         pause_req = `Enable;
+       end else begin
+         data2_out = ex_wreg_data_in;
+      end
     end else if (mem_wreg_en_in == `Enable && reg2_ren_out == `Enable && reg2_addr_out == mem_wreg_addr_in) begin
       data2_out = mem_wreg_data_in;  
     end else if (wb_wreg_en_in == `Enable && reg2_ren_out == `Enable && reg2_addr_out == wb_wreg_addr_in) begin
       data2_out = wb_wreg_data_in;
-    end else if (reg2_ren_out == `Enable) begin //（rt�?
+    end else if (reg2_ren_out == `Enable) begin //（rt�??
       data2_out = reg2_data_in;
     end else if (reg2_ren_out == `Disable) begin
       data2_out = immed;

@@ -26,6 +26,7 @@ module ex_mem (
   output reg[`WordRange] mem_lo_data,
 
   input wire pause,
+  input wire pause_res_ex,
 
   input wire[`ALUOpRange] f_ex_aluop,
   input wire[`WordRange] f_ex_mem_addr,
@@ -72,7 +73,7 @@ module ex_mem (
       t_mem_cp0_wdata = `ZeroWord;
       t_mem_pc_addr_out = `ZeroWord;
       t_mem_abnormal_type = `ZeroWord;
-    end else if (flush == `Enable) begin
+    end else if (flush == `Enable || (pause == `Disable && pause_res_ex == `Enable)) begin
       mem_wreg_e = `Disable;
       mem_wreg_data = `ZeroWord;
       mem_hilo_we = `Disable;

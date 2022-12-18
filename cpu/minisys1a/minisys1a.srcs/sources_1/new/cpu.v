@@ -114,6 +114,7 @@ module cpu(
   wire[`WordRange] ex_cp0_w_data_out;
   wire[`WordRange] ex_current_pc_addr_out;
   wire[`WordRange] ex_abnormal_type_out;
+  wire ex_is_load_mem;
 
   // MEM输入
   wire mem_wreg_e_in;
@@ -290,7 +291,8 @@ module cpu(
   .next_in_delayslot_out    (next_is_in_delayslot),
   .ins_out                  (id_ins_out),
   .abnormal_type_out        (id_abnormal_type_out),
-  .current_id_pc_addr_out      (id_current_pc_addr_out)
+  .current_id_pc_addr_out   (id_current_pc_addr_out),
+  .ex_is_load_mem           (ex_is_load_mem)
   );
 
   // ID-EX
@@ -383,7 +385,8 @@ module cpu(
   .current_ex_pc_addr_in    (ex_current_pc_addr_in),
   .abnormal_type_in         (ex_abnormal_type_in),
   .abnormal_type_out        (ex_abnormal_type_out),
-  .current_ex_pc_addr_out   (ex_current_pc_addr_out)      
+  .current_ex_pc_addr_out   (ex_current_pc_addr_out),      
+  .is_load_mem              (ex_is_load_mem)
   );
 
   div_signed u_div_signed(
@@ -438,6 +441,7 @@ module cpu(
   .mem_hi_data              (mem_hi_data_in),
   .mem_lo_data              (mem_lo_data_in),
   .pause                    (pause_res_mem),
+  .pause_res_ex             (pause_res_ex),
   .f_ex_aluop               (ex_aluop_out),
   .f_ex_mem_addr            (ex_mem_addr_out),
   .f_ex_mem_data            (ex_mem_data_out),
