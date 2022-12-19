@@ -133,7 +133,7 @@ module bus(
      .we(is_write),
      .data_out(keyboard_data)
   );
-  digit7 digit7_inst(
+  digits_roting digit7_inst(
     .rst(rst),
     .clk(clk),
     .addr(addr),

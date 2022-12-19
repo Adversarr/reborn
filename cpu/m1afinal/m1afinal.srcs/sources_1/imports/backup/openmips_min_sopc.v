@@ -131,6 +131,7 @@ module minisys1a(
     .keyboard_cols_in(keyboard_cols_in),
     .keyboard_rows_out(keyboard_rows_out),
     .digits_sel_out(digits_sel_out),
+    .digits_data_out(digits_data_out),
     .beep_out(beep_out),
     .led_RLD_out(led_RLD_out),
     .led_GLD_out(led_GLD_out),

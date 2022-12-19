@@ -3,9 +3,11 @@ vlib modelsim_lib/msim
 
 vlib modelsim_lib/msim/xil_defaultlib
 vlib modelsim_lib/msim/xpm
+vlib modelsim_lib/msim/blk_mem_gen_v8_4_1
 
 vmap xil_defaultlib modelsim_lib/msim/xil_defaultlib
 vmap xpm modelsim_lib/msim/xpm
+vmap blk_mem_gen_v8_4_1 modelsim_lib/msim/blk_mem_gen_v8_4_1
 
 vlog -work xil_defaultlib -64 -incr -sv \
 "C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv" \
@@ -14,8 +16,11 @@ vlog -work xil_defaultlib -64 -incr -sv \
 vcom -work xpm -64 -93 \
 "C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_VCOMP.vhd" \
 
+vlog -work blk_mem_gen_v8_4_1 -64 -incr \
+"../../../ipstatic/simulation/blk_mem_gen_v8_4.v" \
+
 vlog -work xil_defaultlib -64 -incr \
-"../../../../m1afinal.srcs/sources_1/ip/blk_mem_gen_1/blk_mem_gen_1_sim_netlist.v" \
+"../../../../m1afinal.srcs/sources_1/ip/blk_mem_gen_1/sim/blk_mem_gen_1.v" \
 
 vlog -work xil_defaultlib \
 "glbl.v"
