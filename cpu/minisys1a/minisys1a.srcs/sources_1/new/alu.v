@@ -3,7 +3,7 @@
 
 `include "public.v"
 
-// ALUï¼Œå¤„ç†é™¤äº†ä¹˜é™¤æ³•ä»¥å¤–çš„æ‰€æœ‰ç®—æœ¯-é€»è¾‘è¿ç®—
+// ALU£¬´¦Àí³ıÁË³Ë³ı·¨ÒÔÍâµÄËùÓĞËãÊõ-Âß¼­ÔËËã
 module alu (
 
   input[`WordRange] data1,
@@ -11,74 +11,74 @@ module alu (
   input[`ALUOpRange] op,
   
   output[`WordRange] res,
-  output wire zf, // zero-flagï¼Œç»“æœä¸º0æ—¶ä¸º1
-  output wire cf, // carry-flagï¼Œæ— ç¬¦å·è¿›ä½æ—¶ä¸º1
-  output wire sf, // sign-flagï¼Œä¸ºè´Ÿæ•°æ—¶ä¸º1
-  output wire of // overflow-flagï¼Œæœ‰ç¬¦å·æº¢å‡ºæ—¶ä¸º1
+  output wire zf, // zero-flag£¬½á¹ûÎª0Ê±Îª1
+  output wire cf, // carry-flag£¬ÎŞ·ûºÅ½øÎ»Ê±Îª1
+  output wire sf, // sign-flag£¬Îª¸ºÊıÊ±Îª1
+  output wire of // overflow-flag£¬ÓĞ·ûºÅÒç³öÊ±Îª1
 
 );
 
-  // ç»“æœæš‚å­˜ï¼Œæœ€é«˜ä½æ”¾æº¢å‡ºç»“æœ
+  // ½á¹ûÔİ´æ£¬×î¸ßÎ»·ÅÒç³ö½á¹û
   reg [32:0] result;
 
-  // dataçš„æœ‰ç¬¦å·ç‰ˆæœ¬
+  // dataµÄÓĞ·ûºÅ°æ±¾
   wire signed [31:0] s_data1;
   wire signed [31:0] s_data2;
   assign s_data1 = data1;
   assign s_data2 = data2;
 
-  // è¾“å‡º32ä½ç»“æœ
+  // Êä³ö32Î»½á¹û
   assign res = result[`WordRange];
 
   always @(*) begin
     case (op)
-      `ALUOP_NOP: begin // æ— æ“ä½œ
+      `ALUOP_NOP: begin // ÎŞ²Ù×÷
         result = `ZeroWord;
       end
-      `ALUOP_ADDU: begin // æ— ç¬¦å·åŠ 
+      `ALUOP_ADDU: begin // ÎŞ·ûºÅ¼Ó
         result = data1 + data2;
       end
-      `ALUOP_ADD: begin // æœ‰ç¬¦å·åŠ 
+      `ALUOP_ADD: begin // ÓĞ·ûºÅ¼Ó
         result = s_data1 + s_data2;
       end
-      `ALUOP_SUBU: begin // æ— ç¬¦å·å‡
+      `ALUOP_SUBU: begin // ÎŞ·ûºÅ¼õ
         result = data1 - data2;
       end
-      `ALUOP_SUB: begin // æœ‰ç¬¦å·å‡
+      `ALUOP_SUB: begin // ÓĞ·ûºÅ¼õ
         result = s_data1 - s_data2;
       end
-      `ALUOP_AND: begin // æŒ‰ä½ä¸
+      `ALUOP_AND: begin // °´Î»Óë
         result = data1 & data2;
       end
-      `ALUOP_OR: begin // æŒ‰ä½æˆ–
+      `ALUOP_OR: begin // °´Î»»ò
         result = data1 | data2;
       end
-      `ALUOP_XOR: begin // æŒ‰ä½å¼‚æˆ–
+      `ALUOP_XOR: begin // °´Î»Òì»ò
         result = data1 ^ data2;
       end
-      `ALUOP_NOR: begin // æŒ‰ä½æˆ–é
+      `ALUOP_NOR: begin // °´Î»»ò·Ç
         result = ~(data1 | data2);
       end
-      `ALUOP_SLL: begin // é€»è¾‘å·¦ç§»
-        result = data2 << data1[4:0]; // æ³¨æ„data1æ‰æ˜¯ç§»åŠ¨çš„ä½æ•°
+      `ALUOP_SLL: begin // Âß¼­×óÒÆ
+        result = data2 << data1[4:0]; // ×¢Òâdata1²ÅÊÇÒÆ¶¯µÄÎ»Êı
       end
-      `ALUOP_SRL: begin // é€»è¾‘å³ç§»
+      `ALUOP_SRL: begin // Âß¼­ÓÒÒÆ
         result = data2 >> data1[4:0];
       end
-      `ALUOP_SRA: begin // ç®—æœ¯å³ç§»
+      `ALUOP_SRA: begin // ËãÊõÓÒÒÆ
         // https://blog.csdn.net/qq_41634276/article/details/80414488
         result = s_data2 >>> s_data1[4:0];
       end
-      `ALUOP_SLT: begin // less-thanï¼ˆæœ‰ç¬¦å·ï¼‰
+      `ALUOP_SLT: begin // less-than£¨ÓĞ·ûºÅ£©
         result = s_data1 < s_data2 ? 33'd1 : 33'd0;
       end
-      `ALUOP_SLTU: begin // less-thanï¼ˆæ— ç¬¦å·ï¼‰
+      `ALUOP_SLTU: begin // less-than£¨ÎŞ·ûºÅ£©
         result = data1 < data2 ? 33'd1 : 33'd0;  
       end
     endcase
   end
 
-  // è¾“å‡ºå„flag
+  // Êä³ö¸÷flag
   assign cf = result[32];
   assign zf = result[31:0] == 32'd0 ? 1'b1 : 1'b0;
   assign sf = result[31];

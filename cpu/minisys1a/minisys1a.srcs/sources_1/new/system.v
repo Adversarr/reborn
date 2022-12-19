@@ -21,29 +21,29 @@
 
 
 module system(
-  input board_rst, // æ¿ä¸Šé‡ç½®
-  input board_clk, // æ¿ä¸Šæ—¶é’Ÿ
+  input board_rst, // °åÉÏÖØÖÃ
+  input board_clk, // °åÉÏÊ±ÖÓ
   
-  // æ‹¨ç å¼€å…³
+  // ²¦Âë¿ª¹Ø
   input wire[23:0] switches_in,
-  // æŒ‰é’®
+  // °´Å¥
   input wire[4:0] buttons_in,
-  // çŸ©é˜µé”®ç›˜
+  // ¾ØÕó¼üÅÌ
   input wire[3:0] keyboard_cols_in,
   output wire[3:0] keyboard_rows_out,
-  // æ•°ç ç®¡
+  // ÊıÂë¹Ü
   output wire[7:0] digits_sel_out,
   output wire[7:0] digits_data_out,
-  // èœ‚é¸£å™¨
+  // ·äÃùÆ÷
   output wire beep_out,
-  // LEDç¯
+  // LEDµÆ
   output wire[7:0] led_RLD_out,
   output wire[7:0] led_YLD_out,
   output wire[7:0] led_GLD_out,
   
   
-  input wire rx, //UARTæ¥æ”¶
-  output wire tx // UARTå‘é€
+  input wire rx, //UART½ÓÊÕ
+  output wire tx // UART·¢ËÍ
   );
   // Clocking
   wire cpu_clk, uart_clk, cpu_rst;
@@ -62,7 +62,7 @@ module system(
   wire [`WordRange] imem_cpu_data, cpu_imem_addr;
   wire cpu_imem_en;
   
-  // uartç›¸å…³
+  // uartÏà¹Ø
   wire upg_clk_o, upg_wen_o, upg_done_o, upg_rst;
   wire[14:0] upg_adr_o;
   wire[`WordRange] upg_dat_o;

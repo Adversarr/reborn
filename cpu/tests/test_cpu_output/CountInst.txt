@@ -56,4 +56,4 @@ bltzal	0
 lui	2
 j	2
 jal	1
-nop	1
+nop	5

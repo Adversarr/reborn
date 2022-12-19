@@ -21,29 +21,29 @@
 
 
 module timer_interface(
-  input rst, // 閲嶇疆
-  input clk, // 鏃堕挓
+  input rst, // 重置
+  input clk, // 时钟
 
-  //浠庢?荤嚎鏉ョ殑鏁版嵁 鎵?鏈夊璁鹃┍鍔ㄩ兘搴旀湁浠ヤ笅淇″彿
+  //从???线来的数据 ??有外设驱动都应有以下信号
   input wire[`WordRange] addr,
-  input wire en, // 浣胯兘
+  input wire en, // 使能
   input wire[3:0] byte_sel,
-  input wire[`WordRange] data_in, // 鏁版嵁杈撳叆锛堟潵鑷猚pu锛?
-  input wire we, //鍐欎娇鑳?
+  input wire[`WordRange] data_in, // 数据输入（来自cpu??
+  input wire we, //写使??
 
-  //鍙戦?佺粰浠茶鍣? 鎵?鏈夊璁鹃兘搴旀湁姝よ緭鍑?
+  //发???给仲裁?? ??有外设都应有此输??
   output reg[`WordRange] data_out,
 
   input wire external_pulse
     );
 
-  // 鐘舵?佸瘎瀛樺櫒
+  // 状???寄存器
   reg [16:0] cnt0_value, cnt1_value;
   reg [16:0] cnt0_init_value, cnt1_init_value;
   reg cnt0_valid, cnt1_valid;
   reg cnt0_count_done, cnt1_count_done;
   reg cnt0_timer_done, cnt1_timer_done;
-  // 鏂瑰紡瀵勫瓨鍣?
+  // 方式寄存??
   reg [1:0] cnt0f, cnt1f;
   wire is_enabled_actual = addr[16:4] == 28'hffff_fc2;
   always @(posedge clk) begin

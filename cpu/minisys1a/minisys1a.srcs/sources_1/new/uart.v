@@ -16,7 +16,7 @@ module uart(
 
   wire spg_bufg;
   BUFG U1(.I(uart_button), .O(spg_bufg)); 
-  //åŽ»æŠ–
+  //È¥¶¶
   reg upg_rst;
   assign upg_rst_o = upg_rst;
   always @(posedge board_clk)begin
@@ -30,7 +30,7 @@ module uart(
   
   uart_bmpg_0 u_uartpg(
     .upg_clk_i    (uart_clk),    // 10MHz   
-    .upg_rst_i    (upg_rst),    // é«˜ç”µå¹³æœ‰æ•ˆ
+    .upg_rst_i    (upg_rst),    // ¸ßµçÆ½ÓÐÐ§
     // blkram signals
     .upg_clk_o    (upg_clk_o),
     .upg_wen_o    (upg_wen_o),
