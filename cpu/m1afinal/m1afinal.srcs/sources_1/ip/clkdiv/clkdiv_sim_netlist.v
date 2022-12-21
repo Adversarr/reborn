@@ -1,14 +1,14 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
-// Date        : Mon Dec 19 10:43:22 2022
+// Date        : Tue Dec 20 16:55:39 2022
 // Host        : DESKTOP-GH9H0GG running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim
 //               C:/Users/JerryYang/Repo/reborn/cpu/m1afinal/m1afinal.srcs/sources_1/ip/clkdiv/clkdiv_sim_netlist.v
 // Design      : clkdiv
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
-// Device      : xc7a12ticsg325-1L
+// Device      : xc7a100tfgg484-1
 // --------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
@@ -94,7 +94,7 @@ module clkdiv_clkdiv_clk_wiz
     .CLKFBOUT_USE_FINE_PS("FALSE"),
     .CLKIN1_PERIOD(10.000000),
     .CLKIN2_PERIOD(0.000000),
-    .CLKOUT0_DIVIDE_F(100.000000),
+    .CLKOUT0_DIVIDE_F(50.000000),
     .CLKOUT0_DUTY_CYCLE(0.500000),
     .CLKOUT0_PHASE(0.000000),
     .CLKOUT0_USE_FINE_PS("FALSE"),

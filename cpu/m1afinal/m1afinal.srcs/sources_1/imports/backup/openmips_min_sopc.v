@@ -74,32 +74,39 @@ module minisys1a(
   wire[5:0] int;
   wire timer_int;
   
+  reg [5:0] status_data = 6'b0000_00;
+  
+  
   wire watchdog_rst;
   
   
   //assign int = {5'b00000, timer_int, gpio_int, uart_int};
   assign int = {5'b00000, timer_int};
   // uart相关
-  wire upg_clk, upg_we, upg_done, upg_rst, start_pg;
-  wire[14:0] upg_addr;
-  wire[`WordRange] upg_data;
+  wire upg_clk, upg_we, upg_done, start_pg;
+  wire [14:0] upg_addr;
+  wire [31:0] upg_data;
   wire uart_clk, cpuclk;
-  wire cpu_rst = rst | (upg_rst | (~upg_rst & upg_done));
   //TODO: for now, watchdog does not take effect! watchdog_rst;
-  assign start_pg = buttons_in[3];
-  clkdiv clkdiv0 (
-    .clk_in1(clk),
-    .cpuclk(cpuclk),
-    .uartclk(uart_clk)
-  );
-
-  uart uart_inst(
-    .board_clk  (clk),
-    .board_rst  (rst),
-    .uart_clk    (uart_clk),    // 10MHz
-    .uart_button(buttons_in[3]),
+  assign start_pg = buttons_in[2];
+  wire spg_bufg;
+  BUFG U1(.I(start_pg), .O(spg_bufg)); 
+  //去抖
+  reg upg_rst;
+  always @(posedge clk)begin
+    if(spg_bufg)begin
+      upg_rst = 0;
+    end
+    if(rst)begin
+      upg_rst = 1;
+    end
+  end
+  wire cpu_rst = rst | !upg_rst;
+  
+  uart_bmpg_1 u_uartpg(
+    .upg_clk_i    (uart_clk),    // 10MHz   
+    .upg_rst_i    (upg_rst),    // 高电平有效
     // blkram signals
-    .upg_rst_o    (upg_rst),
     .upg_clk_o    (upg_clk),
     .upg_wen_o    (upg_we),
     .upg_adr_o    (upg_addr),
@@ -108,6 +115,12 @@ module minisys1a(
     // uart signals
     .upg_rx_i    (rx),
     .upg_tx_o    (tx)
+  );
+  
+  clkdiv clkdiv0 (
+    .clk_in1(clk),
+    .cpuclk(cpuclk),
+    .uartclk(uart_clk)
   );
 
   inst_rom inst_rom0(
@@ -126,6 +139,7 @@ module minisys1a(
   bus bus0(
     .clk(~cpuclk),
     .rst(rst),
+    .cpu_rst(cpu_rst),
     .switches_in(switches_in),
     .buttons_in(buttons_in),
     .keyboard_cols_in(keyboard_cols_in),
@@ -153,7 +167,7 @@ module minisys1a(
 
   openmips cpu0(
     .clk(cpuclk),
-    .rst(rst),
+    .rst(cpu_rst),
     .rom_addr_o(inst_addr),
     .rom_data_i(inst),
     .rom_ce_o(rom_ce),

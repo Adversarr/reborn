@@ -31,35 +31,37 @@ module single_digit(
   always @(*) begin 
     case (din)
       4'h0:
-        disp_data <= 7'b100_0000;
+        disp_data <= 7'b000_0001;
       4'h1:
-        disp_data <= 7'b111_1001;
+        disp_data <= 7'b100_1111;
       4'h2:
-        disp_data <= 7'b010_0100;
-      4'h3:
-        disp_data <= 7'b011_0000;
-      4'h4:
-        disp_data <= 7'b001_1001;
-      4'h5:
         disp_data <= 7'b001_0010;
+      4'h3:
+        disp_data <= 7'b0000110;
+      4'h4:
+        disp_data <= 7'b1001100;
       4'h5:
-        disp_data <= 7'b111_1000;
+        disp_data <= 7'b0100100;
+      4'h6:
+        disp_data <= 7'b0100000;
+      4'h7:
+        disp_data <= 7'b000_1111;
       4'h8:
         disp_data <= 7'b000_0000;
       4'h9:
-        disp_data <= 7'b001_1000;
+        disp_data <= 7'b000_1100;
       4'ha:
-        disp_data <= 7'b001_1000;
+        disp_data <= 7'b000_1000;
       4'hb:
-        disp_data <= 7'b001_1000;
+        disp_data <= 7'b110_0000;
       4'hc:
-        disp_data <= 7'b001_1000;
+        disp_data <= 7'b1110010;
       4'hd:
-        disp_data <= 7'b001_1000;
+        disp_data <= 7'b100_0010;
       4'he:
-        disp_data <= 7'b000_0110;
+        disp_data <= 7'b011_0000;
       4'hf:
-        disp_data <= 7'b000_1110;
+        disp_data <= 7'b011_1000;
     endcase
   end
 endmodule

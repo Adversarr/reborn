@@ -32,7 +32,7 @@ module watchdog(
   input wire we, //写使能
   output reg cpu_rst // 通知CPU复位
   );
-    
+  
   reg[15:0] current; // 当前计数值
   reg[1:0] keeper; // 辅助保持4个时钟周期的cpu_rst
 

@@ -37,19 +37,17 @@ module timer_interface(
   input wire external_pulse
     );
 
-  // ×´???¼Ä´æÆ÷
+  // ×´Ì¬¼Ä´æÆ÷
   reg [16:0] cnt0_value, cnt1_value;
   reg [16:0] cnt0_init_value, cnt1_init_value;
   reg cnt0_valid, cnt1_valid;
   reg cnt0_count_done, cnt1_count_done;
   reg cnt0_timer_done, cnt1_timer_done;
-  // ·½Ê½¼Ä´æ??
+  // ·½Ê½¼Ä´æ
   reg [1:0] cnt0f, cnt1f;
   wire is_enabled_actual = addr[16:4] == 28'hffff_fc2;
   always @(posedge clk) begin
     if (rst == `Enable) begin
-      cnt0_value <= 0;
-      cnt1_value <= 0;
       cnt0f <= 1;
       cnt1f <= 1;
       data_out <= 0;
@@ -68,16 +66,8 @@ module timer_interface(
           data_out <= cnt1_value;
         end
       end
-    end
-  end
-
-
-  always @(negedge clk) begin
-    if (rst) begin
-      cnt0f <= 0;
-      cnt1f <= 0;
-    end else begin
-      // Write Logic...
+      
+      
       if (we && is_enabled_actual) begin
         if (addr[3:0] == 4'b0000 /* FC20 */) begin
           cnt0f = data_in[1:0];

@@ -24,6 +24,7 @@
 module bus(
   // <- board
   input wire clk, input wire rst,
+  input wire cpu_rst,
   // 开关
   input wire[23:0] switches_in,
   // 按钮
@@ -57,8 +58,8 @@ module bus(
   input wire upg_done,
   output wire watchdog_cpu_rst
   );
-  wire [`WordRange] led_data_out, dmem_data, digit7_data, buzzer_data,
-    pwm_data, led_light_data, switch_data, uart_data, watch_dog_data, 
+  wire [`WordRange] dmem_data, digit7_data, buzzer_data,
+    pwm_data, led_light_data, switch_data, 
     counter_data, keyboard_data;
  
   mem_for_test data_ram(
@@ -78,20 +79,32 @@ module bus(
     .upg_done               (upg_done)
   );
   
+  wire [7:0] led_RLD_fake;
+  wire [7:0] led_YLD_fake;
+  wire [7:0] led_GLD_fake;
   // LED
   leds leds_inst(
-    .rst(rst),
+    // TODO: reset should be done in bios.
+    .rst(cpu_rst),
     .clk(clk),
     .addr(addr),
     .en(enable),
     .data_in(write_data),
+    .byte_sel(byte_sel),
     .we(is_write),
-    .data_out(led_data_out),
+    .data_out(led_light_data),
     // LED Data Actual:
-    .RLD(led_RLD_out),
-    .YLD(led_YLD_out),
-    .GLD(led_GLD_out)
+    .RLD(led_RLD_fake),
+    .YLD(led_YLD_fake),
+    .GLD(led_GLD_fake)
   );
+
+  // real, cpurst, upg_wen
+  assign led_RLD_out = {led_RLD_fake[7:5], led_RLD_fake[4], led_RLD_fake[3] | upg_done, 
+      led_RLD_fake[2] | buttons_in[2], led_RLD_fake[1] | ~upg_rst, led_RLD_fake[0] | upg_wen};
+  wire cpu_en = upg_rst | (~upg_rst & upg_done);
+  assign led_YLD_out = {1'b0, (!cpu_en ? upg_adr[14:8] : 7'b000_0000)} | led_YLD_fake;
+  assign led_GLD_out = (!cpu_en ? upg_adr[7:0] : 7'b000_0000) | led_GLD_fake;
 
   switches switch_inst(
     .rst(rst),
@@ -100,9 +113,11 @@ module bus(
     .en(enable),
     .data_in(write_data),
     .we(is_write),
+    .byte_sel(byte_sel),
     .data_out(switch_data),
     .switch_in(switches_in)
   );
+
   beep beep_inst(
     .rst(rst),
     .clk(clk),
@@ -110,7 +125,8 @@ module bus(
     .en(enable),
     .data_in(write_data),
     .we(is_write),
-    .data_out(keyboard_data),
+    .byte_sel(byte_sel),
+    .data_out(buzzer_data),
     .signal_out(beep_out)
   );
   keyboard keys_inst(
@@ -119,6 +135,7 @@ module bus(
       .addr(addr),
       .en(enable),
       .data_in(write_data),
+      .byte_sel(byte_sel),
       .we(is_write),
       .data_out(keyboard_data),
       .cols(keyboard_cols_in),
@@ -128,10 +145,11 @@ module bus(
      .rst(rst),
      .clk(clk),
      .addr(addr),
+     .byte_sel(byte_sel),
      .en(enable),
      .data_in(write_data),
      .we(is_write),
-     .data_out(keyboard_data)
+     .data_out(pwm_data)
   );
   digits_roting digit7_inst(
     .rst(rst),
@@ -139,6 +157,7 @@ module bus(
     .addr(addr),
     .en(enable),
     .data_in(write_data),
+    .byte_sel(byte_sel),
     .we(is_write),
     .data_out(digit7_data),
     .sel_out(digits_sel_out),
@@ -150,6 +169,7 @@ module bus(
     .addr(addr),
     .en(enable),
     .data_in(write_data),
+    .byte_sel(byte_sel),
     .we(is_write),
     .data_out(counter_data),
     .external_pulse(`Enable)
@@ -158,6 +178,7 @@ module bus(
    .rst(rst),
    .clk(clk),
    .addr(addr),
+   .byte_sel(byte_sel),
    .en(enable),
    .data_in(write_data),
    .we(is_write),
@@ -165,6 +186,7 @@ module bus(
   );
 
   // uart, unused:
+  wire [31:0] uart_data;
   assign uart_data = 32'h00000000;
   
   // 总线仲裝，仅输出
@@ -173,7 +195,7 @@ module bus(
         data_out = 32'h0000_0000;
       end else if(addr[31:16] == 16'h0000)begin
           data_out = dmem_data;
-      end else if(addr[31:10] == {20'hfffff,2'b11})begin
+      end else begin
           case (addr[9:4])
               `IO_SEVEN_DISPLAY: begin
                   data_out = digit7_data;
@@ -194,7 +216,7 @@ module bus(
                   data_out = uart_data;
               end
               `IO_WATCH_DOG: begin
-                  data_out = watch_dog_data;
+                  data_out = 32'h0000_0000;
               end
               `IO_COUNTER: begin
                   data_out = counter_data;
@@ -206,8 +228,6 @@ module bus(
                   data_out = `ZeroWord;
               end
           endcase
-      end else begin
-          data_out = `ZeroWord;
       end
   end
 endmodule

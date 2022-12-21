@@ -25,15 +25,17 @@ module sim_top(
     );
   reg clk;
   reg rst;
-  
+  reg [23:0] switches;
   minisys1a spoc(
     .clk(clk),
-    .rst(rst)
+    .rst(rst),
+    .switches_in(switches)
   );
   
   initial begin
     clk = 0;
     rst = 1;
+    switches = 24'h00_00F0;
     
     #500 rst = 0;
   end

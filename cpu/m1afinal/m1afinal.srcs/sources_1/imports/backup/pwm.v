@@ -39,60 +39,42 @@ module pwm(
 
   reg[15:0] threshold; // 最大值寄存器
   reg[15:0] compare; // 对比值寄存器
-  reg[7:0] ctrl; // 控制寄存器
+  reg enable; // 控制寄存器
   reg[15:0] current; // 当前值
-  assign data_out = addr[3:2] == 2'b00 ? {compare, threshold} : 
-                    addr[3:2] == 2'b01 ? {24'h0000_00, ctrl} : `ZeroWord;
-
-  always @(posedge clk) begin //写是上升沿写
-    if(addr[31:4] == {28'hfffffc3} && en == `Enable && we == `Enable)begin
-      if(addr[3:2] == 2'b00) begin
-        if(byte_sel[0] == 1'b1)begin
-          threshold[7:0] <= data_in[7:0];
-        end
-        if(byte_sel[1] == 1'b1)begin
-          threshold[15:8] <= data_in[15:8];
-        end
-        if(byte_sel[2] == 1'b1) begin
-          compare[7:0] <= data_in[23:16];
-        end
-        if(byte_sel[3] == 1'b1) begin
-          compare[15:8] <= data_in[31:24];
-        end
-      end else if(addr[3:2] == 2'b01) begin
-        if(byte_sel[0] == 1'b1) begin
-          ctrl <= data_in[7:0];
-        end
-      end
-    end
-  end
+  assign data_out = `ZeroWord;
 
   always @(posedge clk) begin
-    // 重设
-    if (rst == `Enable) begin
-      threshold <= 16'hffff;
-      compare <= 16'h7fff;
-      ctrl <= 8'd1;
-      current <= 16'd0;
-      result <= `Enable;
+    if (rst) begin
+      threshold <= 16'hFFFF;
+      compare <= 16'h7FFF;
+      enable <= 0;
+      current <= 0;
     end else begin
+      // internal logic
       if (current == threshold) begin
-        current <= 16'd0;
-        result <= `Enable;
-      end
-        // 一般情况下加一即可
-        current = current + 16'd1;
-    end
-      // 只有在使能，且控制寄存器[0]位有效时，才保证输出可靠
-    if ( ctrl[0] ) begin
-      if (current > compare) begin
-        result <= `Disable;
+        current <= 0;
       end else begin
-        result <= `Enable;
+        current <= current + 1;
+      end
+      
+      // result logic
+      if (current > compare) begin
+        result <= 1;
+      end else begin
+        result <= 0; 
+      end
+      
+      
+      // write logic
+      if (we && en && addr[31:4] == 28'hfffffc3) begin
+        if (addr[3:0] == 4'b0000) begin
+          threshold <= data_in[15:0];
+        end else if (addr[3:0] == 4'b0010) begin
+          compare <= data_in[15:0];
+        end else if (addr[3:0] == 4'b0100) begin
+          enable <= data_in[0];
+        end
       end
     end
   end
-
-
-
 endmodule

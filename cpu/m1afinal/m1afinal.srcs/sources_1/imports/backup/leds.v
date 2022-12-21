@@ -44,8 +44,8 @@ module leds(
   always @(posedge clk) begin  //写需要上升沿(minisys: ~cpuclk)
     if (rst == `Enable) begin
       RLD <= 8'h00;
-      YLD <= 8'hff;
-      GLD <= 8'hff;
+      YLD <= 8'h00;
+      GLD <= 8'h00;
     end else if(addr == 32'hfffffc60 && en == `Enable && we == `Enable) begin //地址正确 写使能有效 总使能有效
       RLD <= data_in[23:16];
       YLD <= data_in[15:8];

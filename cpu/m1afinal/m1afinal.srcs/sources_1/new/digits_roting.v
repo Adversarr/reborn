@@ -39,8 +39,6 @@ module digits_roting(
   output wire[7:0] digital_out // ¶ÎÊ¹ÄÜ£¨DP, G-A£©
   );
   wire digit_clk;
-  assign digit_clk = clk;
-  // TODO: Clock div.
   reg [3:0] data_hi[3:0];
   reg [3:0] data_lo[3:0];
   reg dot;
@@ -50,16 +48,20 @@ module digits_roting(
   wire [6:0] out_digit;
   wire en_actual = en && (addr[31:4] == 28'hFFFF_FC0);
   integer i;
+  
+  reg dived_clk = 1'b0;
+  reg [15:0] internal_cnt = 0;
+  assign digit_clk = internal_cnt[13];
+    
+  
   // update data.
   always @(posedge clk) begin
+    internal_cnt <= internal_cnt + 1;
     if (rst) begin
-      select <= 3'b0000;
       for (i = 0; i < 4; i = i + 1) begin
         data_hi[i] <= 0;
         data_lo[i] <= 0;
       end
-      
-      sel_out <= 8'b1111_1111;
       enable_digit <= 8'b0000_0000;
       data_dot <= 8'b0000_0000;
     end
@@ -97,10 +99,14 @@ module digits_roting(
     .dout(out_digit)
   );
   always @(posedge digit_clk) begin
-      select = select + 4'h1;
+    if (rst) begin
+      select <= 3'h0;
+      sel_out <= 8'b1111_1111;
+    end else begin
+      select = select + 3'h1;
       sel_out = 8'b1111_1111;
       sel_out[select] = ~enable_digit[select];
-      
+    end
   end
   
   assign digital_out = {out_digit, data_dot[select]};

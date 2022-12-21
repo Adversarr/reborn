@@ -7,15 +7,16 @@ vlib modelsim_lib/msim/xpm
 vmap xil_defaultlib modelsim_lib/msim/xil_defaultlib
 vmap xpm modelsim_lib/msim/xpm
 
-vlog -work xil_defaultlib -64 -incr -sv "+incdir+../../../../m1afinal.srcs/sources_1/ip/clkdiv" "+incdir+../../../../m1afinal.srcs/sources_1/ip/clkdiv" \
+vlog -work xil_defaultlib -64 -incr -sv "+incdir+../../../ipstatic" "+incdir+../../../ipstatic" \
 "C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv" \
 "C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv" \
 
 vcom -work xpm -64 -93 \
 "C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_VCOMP.vhd" \
 
-vlog -work xil_defaultlib -64 -incr "+incdir+../../../../m1afinal.srcs/sources_1/ip/clkdiv" "+incdir+../../../../m1afinal.srcs/sources_1/ip/clkdiv" \
-"../../../../m1afinal.srcs/sources_1/ip/clkdiv/clkdiv_sim_netlist.v" \
+vlog -work xil_defaultlib -64 -incr "+incdir+../../../ipstatic" "+incdir+../../../ipstatic" \
+"../../../../m1afinal.srcs/sources_1/ip/clkdiv/clkdiv_clk_wiz.v" \
+"../../../../m1afinal.srcs/sources_1/ip/clkdiv/clkdiv.v" \
 
 vlog -work xil_defaultlib \
 "glbl.v"

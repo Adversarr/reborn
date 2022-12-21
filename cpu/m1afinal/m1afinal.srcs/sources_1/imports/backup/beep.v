@@ -36,31 +36,28 @@ module beep(
   output reg signal_out // 声信号输出
   );
   
-  reg[15:0] count;
+  reg [19:0] count;
+  reg [19:0] mcnt;
   
   always @(posedge clk) begin  //写是上升沿
     if(rst == `Enable) begin
       signal_out <= 1'b0;
       count <= 16'd0;
-    end else begin
-      if(en == `Enable && addr == 32'hfffffd10 && we == `Enable) begin //使能有效  地址正确  并且是写操作
-        if(data_in != 32'd0)begin
-          signal_out <= 1'b1;
-        end else begin
-          signal_out <= 1'b0;
-        end
+      mcnt  <= 0; // zero -> no beep!
+    end else if (mcnt != 20'h00000) begin
+      count <= count + 20'h0_0001;
+      if (count == mcnt) begin
+        signal_out <= ~signal_out;
+        count <= 20'h00000;
+      end
+    end
+    if (en == `Enable && addr == 32'hFFFF_FD10) begin
+      if (we) begin
+        mcnt <= data_in[20:1];
+        data_out <= `ZeroWord;
+      end else begin
+        data_out <= {11'b0, mcnt[19:0], 1'b0};
       end
     end
   end
-  
-  always @(*) begin //读是随时读
-    if(rst == `Enable)begin
-      data_out <= `ZeroWord;
-    end else if(en == `Enable && addr == 32'hfffffd10 && we == `Disable) begin
-      data_out <= {28'h0000000,3'b000,signal_out};
-    end else begin
-      data_out <= `ZeroWord;
-    end
-  end
-
 endmodule
