@@ -1,3 +1,6 @@
 [submodule "krill"]
 	path = krill
 	url = https://github.com/lee-plus-plus/krill.git
+[submodule "mias"]
+	path = mias
+	url = https://github.com/Adversarr/mias
