@@ -1,6 +1,15 @@
 # reborn
 CSE Project for SEU19s
 
+1. `cpu/m1afinal`: CPU Design
+2. `krill`: C-Compiler
+3. `linker`: Linker Design
+4. `mias`: MInisys ASsembler
+5. `mide`: Minisys IDE
+6. `mua`: Minisys Uart Assist
+
+---
+
 NOTE: For convinience, I gave all the permission to you. However, developing on `main` branch is not permitted, please checkout to your branch and start your job.
 
 If you are going to submit a feature to the `main` branch, please:
@@ -18,10 +27,10 @@ We will check your code depend on what you have illustrated, and merge it to the
 
 Hardware:
 
-- [ ] CPU Design: Minisys-1
-- [ ] CPU Design: Minisys-1A
-- [ ] Memory
-- [ ] Interface
+- [x] CPU Design: Minisys-1
+- [x] CPU Design: Minisys-1A
+- [x] Memory
+- [x] Interface
 
 > Note: In hardware part, I am going to support basic SIMD support to the CPU. The basic logic is similar to `<xmminstr>`
 > 
@@ -30,11 +39,11 @@ Hardware:
 Software:
 
 
-- [ ] `as`
+- [x] `as`
 - [ ] `cc`
 - [ ] BIOS
 - [ ] `ld`
-- [ ] IDE- based on vim/vscode/... (or lsp support?)
+- [x] IDE- based on vim/vscode/... (or lsp support?)
 
 Integration:
 
