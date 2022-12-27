@@ -3,8 +3,8 @@
 // Tool Version: Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
 // Date        : Tue Dec 20 14:01:49 2022
 // Host        : DESKTOP-GH9H0GG running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode synth_stub
-//               C:/Users/JerryYang/Repo/reborn/cpu/m1afinal/m1afinal.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top blk_mem_gen_0 -prefix
+//               blk_mem_gen_0_ blk_mem_gen_0_stub.v
 // Design      : blk_mem_gen_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a100tfgg484-1

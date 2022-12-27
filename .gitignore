@@ -54,3 +54,5 @@ build
 **/build
 .cache
 .DS_Store
+
+**/.xmake

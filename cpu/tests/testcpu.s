@@ -1,7 +1,10 @@
 .data
-  NUM1:  	.word 0x00000055
-  NUM2:  	.word 0x000000AA
-  NUM3:  	.word 0x00000000
+  NUM1:  	
+.word 0x00000055
+  NUM2:  	
+.word 0x000000AA
+  NUM3:  	
+.word 0x00000000
 .text
 start:
   lui   $1,0xFFFF
