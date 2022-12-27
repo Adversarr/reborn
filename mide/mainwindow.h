@@ -66,5 +66,7 @@ private slots:
 private:
   Ui::MainWindow *ui;
   Highlighter *highlighter;
+
+    QString bc_hex;
 };
 #endif // MAINWINDOW_H

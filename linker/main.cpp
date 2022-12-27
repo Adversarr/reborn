@@ -2,7 +2,6 @@
 #include <cstdio>
 #include <cstring>
 #include <fstream>
-#include <io.h>
 #include <iostream>
 #include <sstream>
 #include <vector>

@@ -1,9 +1,8 @@
 #include "asmer.h"
+#include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <fstream>
 #include <sstream>
-
 
 #include "data_seg.hpp"
 #include "prog_seg.hpp"
@@ -216,13 +215,12 @@ void GenerateOutput(std::ostream &os, uint32_t kbs, bool fill_zero,
   }
 }
 
-Asmer::Asmer()
-{
-
-}
-
+Asmer::Asmer() {}
 
 QString Asmer::Run(QString str) {
+std::istringstream iss(str.toStdString());
+  RunInput(iss);
+  spdlog::set_level(spdlog::level::debug);
   mias::DataSegParser dp;
   dp.Parse(desc.data);
   auto dseg = dp.Describe();
@@ -232,8 +230,11 @@ QString Asmer::Run(QString str) {
   auto pseg = pp.Describe();
   std::ostringstream oss;
   GenerateOutput(oss, kbs, true, pseg, dseg);
+  if (!path.isEmpty()) {
+    GenerateCOE((path + "/prgmem.coe").toStdString(), pseg.binary_instrs, kbs);
+    GenerateCOE((path + "/dmem.coe").toStdString(), dseg.dmem_value, kbs);
+    std::ofstream off((path + "/out.txt").toStdString());
+    GenerateOutput(off, kbs, true, pseg, dseg);
+  }
   return QString(oss.str().c_str());
 }
-
-
-
