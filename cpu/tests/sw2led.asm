@@ -25,6 +25,6 @@ start:
   lw $10, switch($0)  # $10 = switch
   lw $11, 0($10)      # $11 = switch data
   sw $11, 0x00($2)  # digits = switch data
-  sw $11, 0x00($3)   # beep = switch data
+  sw $11, 0xFD10($0)   # beep = switch data
   j start
   nop

@@ -62,7 +62,7 @@ module bus(
     pwm_data, led_light_data, switch_data, 
     counter_data, keyboard_data;
  
-  mem_for_test data_ram(
+  dmem data_ram(
     .clk                    (clk),
     .enable                 (enable),
     .we                     (is_write),

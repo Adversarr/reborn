@@ -127,7 +127,7 @@ void RunInput(std::istream &input) {
       auto l = it->substr(0, comma);
       if (std::all_of(l.begin(), l.end(), [](char c) {
             return std::isalpha(c) || std::isdigit(c) || std::isspace(c) ||
-                   c == '_';
+                   c == '_' || c == '.';
           })) {
         // yes
         auto lc = remove_ws(it->substr(0, comma + 1));

@@ -1,5 +1,4 @@
-add_requires("spdlog", {config={fmt="external"}})
-
+add_requires("spdlog", {configs={fmt_external=true}})
 
 target("mide")
     add_rules("qt.widgetapp")

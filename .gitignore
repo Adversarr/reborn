@@ -56,3 +56,4 @@ build
 .DS_Store
 
 **/.xmake
+**/compile_commands.json

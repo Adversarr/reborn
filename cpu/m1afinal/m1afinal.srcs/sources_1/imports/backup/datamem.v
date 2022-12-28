@@ -61,7 +61,7 @@ module dmem(
   dmem8 ramB(
       .addra         (kickOff ?   addr[15:2]      :   upg_adr),
       .clka          (kickOff ?   clk             :   upg_clk),
-      .dina          (kickOff ?   data_in[15:8]   :   upg_dat[7:0]),
+      .dina          (kickOff ?   data_in[15:8]   :   upg_dat[15:8]),
       .douta         (data_out[15:8]),
 //      .ena           (kickOff ?   ram_enable       :   1'b1),
       .wea           (kickOff ?   weA             :   upg_wen)
@@ -69,7 +69,7 @@ module dmem(
   dmem8 ramC(
       .addra         (kickOff ?   addr[15:2]      :   upg_adr),
       .clka          (kickOff ?   clk             :   upg_clk),
-      .dina          (kickOff ?   data_in[23:16]  :   upg_dat[7:0]),
+      .dina          (kickOff ?   data_in[23:16]  :   upg_dat[23:16]),
       .douta         (data_out[23:16]),
 //      .ena           (kickOff ?   ram_enable       :   1'b1),
       .wea           (kickOff ?   weA             :   upg_wen)
@@ -77,7 +77,7 @@ module dmem(
   dmem8 ramD(
       .addra         (kickOff ?   addr[15:2]      :   upg_adr),
       .clka          (kickOff ?   clk             :   upg_clk),
-      .dina          (kickOff ?   data_in[31:24]  :   upg_dat[7:0]),
+      .dina          (kickOff ?   data_in[31:24]  :   upg_dat[31:24]),
       .douta         (data_out[31:24]),
 //      .ena           (kickOff ?   ram_enable       :   1'b1),
       .wea           (kickOff ?   weA             :   upg_wen)

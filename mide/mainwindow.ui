@@ -98,7 +98,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>37</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -116,8 +116,17 @@
     <addaction name="actionAssemble"/>
     <addaction name="actionUart_Transmit"/>
    </widget>
+   <widget class="QMenu" name="menuEnvironment">
+    <property name="title">
+     <string>Environment</string>
+    </property>
+    <addaction name="actionkrill"/>
+    <addaction name="actionmias"/>
+    <addaction name="actionmua"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuCommands"/>
+   <addaction name="menuEnvironment"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionCompile">
@@ -143,6 +152,21 @@
   <action name="actionQuit">
    <property name="text">
     <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionkrill">
+   <property name="text">
+    <string>krill</string>
+   </property>
+  </action>
+  <action name="actionmias">
+   <property name="text">
+    <string>mias</string>
+   </property>
+  </action>
+  <action name="actionmua">
+   <property name="text">
+    <string>mua</string>
    </property>
   </action>
  </widget>
